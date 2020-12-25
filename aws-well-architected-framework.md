@@ -67,6 +67,24 @@
 ### Design Principles
 
 - **Automatically Recover From Failure**
+  - Monitor workloads for Key Performance Indicators (KPIs), and trigger automation once a threshold is breached
+    - KPIs should measure business value, not simply technical aspects
+
+- **Test Recovery Procedures**
+  - In the cloud, you can simulate different failure scenarios, and test recovery procedures
+    - Exposes testable failure pathways that can be remediated before a real scenario occurs
+
+- **Scale Horizontally to Increase Workload Availability**
+  - Split one large resource into multiple, smaller resources
+    - Reduces impact of a single failure on the overall workload
+
+- **Stop Guessing Capacity**
+  - Many cloud services implement auto-scaling and self-healing to maintain the optimal amount of resources without under- or over-provisioning
+
+- **Manage Changes with Automation**
+  - Changes to infrastructure should be made using automation
+    - Is consistent
+    - Can be tracked and reviewed
 
 ### Best Practices
 
