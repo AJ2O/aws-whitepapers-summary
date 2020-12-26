@@ -14,9 +14,6 @@
 **Architecture**
 - Describes how components work together in a workload, sometimes using the help of a diagram
 
-**Technology Portfolio**
-- Collection of workloads required for the business to operate
-
 ### The Five Pillars of the Framework - PROCS / CROPS
 **Performance Effciency**
 - The ability to: 
@@ -54,7 +51,7 @@
       - Managed NoSQL database service in DynamoDB
       - CI/CD tools such as CodePipeline
 
-- **Experiment more often**
+- **Experiment More Often**
   - Cloud resources are virtual and automatable, so comparative testing can be quickly achieved
     - Ex. Quick to compare instance configurations or storage solutions
 
@@ -68,15 +65,15 @@
 
 - **Automatically Recover From Failure**
   - Monitor workloads for Key Performance Indicators (KPIs), and trigger automation once a threshold is breached
-    - KPIs should measure business value, not simply technical aspects
+    - KPIs should measure business value, not simply technical aspects of the infrastructure
 
 - **Test Recovery Procedures**
   - In the cloud, you can simulate different failure scenarios, and test recovery procedures
     - Exposes testable failure pathways that can be remediated before a real scenario occurs
 
 - **Scale Horizontally to Increase Workload Availability**
-  - Split one large resource into multiple, smaller resources
-    - Reduces impact of a single failure on the overall workload
+  - Split one large resource into multiple, smaller resources, and distribute workload tasks among them
+    - Reduces the impact of a single failure on the overall workload
 
 - **Stop Guessing Capacity**
   - Many cloud services implement auto-scaling and self-healing to maintain the optimal amount of resources without under- or over-provisioning
@@ -90,6 +87,24 @@
 
 ## 5P - Operational Excellence
 ### Design Principles
+- **Perform Environment Operations as Code**
+  - Apply the same discipline for application to your cloud environment
+    - The entire workload and environment can be defined and updated as code
+    - Ex. CloudFormation
+  - Reduces human error, and enables consistency
+
+- **Make Frequent, Small, Reversible Changes**
+  - Design workload components to be updated regularly
+  - Small changes can be easily reversed if they cause failure
+
+- **Refine Operations Procedures Frequently**
+  - As the workload evolves, evolve operation procedures accordingly
+
+- **Anticipate Failure**
+  - Regularly test failure scenarios and validate associated response procedures, so teams are familiar with their execution
+
+- **Learn From All Operational Failures**
+  - Share what is learned across teams and the organization to drive improvement
 
 ### Best Practices
 
