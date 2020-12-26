@@ -1,7 +1,7 @@
 # **AWS Well-Architected Framework**
 
 # Overview
-- [Source Whitepaper](http://d1.awsstatic.com/whitepapers/architecture/AWS_Well-Architected_Framework.pdf)
+- [Source Whitepaper](http://d1.awsstatic.com/whitepapers/architecture/AWS_Well-Architected_Framework.pdf) - 97 Pages
 - [Documentation Format](https://docs.aws.amazon.com/wellarchitected/latest/framework/welcome.html)
 
 This summary is based off of the July 2020 revision of the AWS Well-Architected Framework whitepaper.
