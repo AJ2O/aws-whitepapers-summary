@@ -125,9 +125,33 @@
 
 - **Analyze and Attribute Expenditure**
   - In the cloud it's east to identify and attribute usage & system costs to owners
+  - Ex. Cost Allocation Tags
 
 ## 5P - Security
 ### Design Principles
+- **Implement Strong Security Foundation**
+  - Principle of Least Privilege
+  - Eliminate reliance on long-term static credentials
 
-### Best Practices
+- **Enable Traceability**
+  - Monitor, alert, and audit actions and changes to your environment in real-time
+    - Ex. CloudTrail, AWS Config
 
+- **Apply Security at All Layers**
+  - Ex. NACL, Security Groups, Load Balancers, Application Code, Server
+
+- **Automate Security Best Practices**
+  - Allows security mechanisms to scale rapidly and cost-effectively
+  - Define and manage security architectures and controls as code in templates
+
+- **Protect Data in Transit and at Rest**
+  - Ex. SSL/TLS (Transit)
+  - Ex. AWS Managed keys, KMS, CloudHSM (Rest)
+
+- **Keep People Away from Data**
+  - Use cloud services to reduce or eliminate the need for data direct access
+    - Ex. Encryption, SSM Parameter Store, Secrets Manager
+
+- **Prepare For Security Events**
+  - Run incident response simulations
+  - Use automated tools to increase detection speed and recovery
