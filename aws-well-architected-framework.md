@@ -42,24 +42,47 @@
 
 ## 5P - Performance Efficiency
 ### Design Principles
-- **Delegate Advanced Technology Tasks to Cloud Vendor**
-  - Ex. Storage (S3), Media Transcoding (Elastic Transcoder), Machine Learning (SageMaker, Lex, Rekognition, etc.) and more, are all managed services
-  - Development teams don't need to learn about hosting and running these technologies on servers
-    - Can focus on product development
+**Delegate Advanced Technology Tasks to Cloud Vendor**
+- Ex. Storage (S3), Media Transcoding (Elastic Transcoder), Machine Learning (SageMaker, Lex, Rekognition, etc.) and more, are all managed services
+- Development teams don't need to learn about hosting and running these technologies on servers
+  - Can focus on product development
 
-- **Use Serverless Architectures**
-  - No need to manage underlying servers, and take advantage of scaling and high availability
-    - Ex:
-      - Hosting a static website on S3 instead of a server
-      - Managed NoSQL database service in DynamoDB
-      - CI/CD tools such as CodePipeline
+**Use Serverless Architectures**
+- No need to manage underlying servers, and take advantage of scaling and high availability
+  - Ex:
+    - Hosting a static website on S3 instead of a server
+    - Managed NoSQL database service in DynamoDB
+    - CI/CD tools such as CodePipeline
 
-- **Experiment More Often**
-  - Cloud resources are virtual and automatable, so comparative testing can be quickly achieved
-    - Ex. Quick to compare instance configurations or storage solutions
+**Experiment More Often**
+- Cloud resources are virtual and automatable, so comparative testing can be quickly achieved
+  - Ex. Quick to compare instance configurations or storage solutions
 
-- **Mechanical Sympathy**
-  - Consider how cloud services are used, and select the most appropriate service for your workload
+**Mechanical Sympathy**
+- Consider how cloud services are used, and select the most appropriate service for your workload
+
+### Best Practices
+
+**Selection**
+- Well-Architected systems use multiple solutions and features to improve performance
+  - The best solution for a workload varies depending on its components
+  - Each component may use different resources and configurations to optimize performance
+- Compute solutions can used for different components, but the wrong selection leads to performance degradation
+- Storage solutions include object (S3), block (EBS), and file (EFS) storage
+  - The optimal solution should be selected based on the application's data access patterns
+- Database solutions should be selected based on features such as latency, query capability, consistency, etc.
+
+**Review**
+- Take advantage of continually evolving cloud innovation
+- New services and features can positively increase performance efficiency
+
+**Monitoring**
+- System performance can degrade over time
+- Identify degradation and remediate internal or external factors
+  - Ex. Operating system, application load
+
+**Tradeoffs**
+- Performance is often optimized by trading consistency, durability, or space for latency
 
 ## 5P - Reliability
 ### Design Principles
