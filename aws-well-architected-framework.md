@@ -87,25 +87,25 @@
 ## 5P - Reliability
 ### Design Principles
 
-- **Automatically Recover From Failure**
-  - Monitor workloads for Key Performance Indicators (KPIs), and trigger automation once a threshold is breached
-    - KPIs should measure business value, not simply technical aspects of the infrastructure
+**Automatically Recover From Failure**
+- Monitor workloads for Key Performance Indicators (KPIs), and trigger automation once a threshold is breached
+  - KPIs should measure business value, not simply technical aspects of the infrastructure
 
-- **Test Recovery Procedures**
-  - In the cloud, you can simulate different failure scenarios, and test recovery procedures
-    - Exposes testable failure pathways that can be remediated before a real scenario occurs
+**Test Recovery Procedures**
+- In the cloud, you can simulate different failure scenarios, and test recovery procedures
+  - Exposes testable failure pathways that can be remediated before a real scenario occurs
 
-- **Scale Horizontally to Increase Workload Availability**
-  - Split one large resource into multiple, smaller resources, and distribute workload tasks among them
-    - Reduces the impact of a single failure on the overall workload
+**Scale Horizontally to Increase Workload Availability**
+- Split one large resource into multiple, smaller resources, and distribute workload tasks among them
+  - Reduces the impact of a single failure on the overall workload
 
-- **Stop Guessing Capacity**
-  - Many cloud services implement auto-scaling and self-healing to maintain the optimal amount of resources without under- or over-provisioning
+**Stop Guessing Capacity**
+- Many cloud services implement auto-scaling and self-healing to maintain the optimal amount of resources without under- or over-provisioning
 
-- **Manage Changes with Automation**
-  - Changes to infrastructure should be made using automation
-    - Is consistent
-    - Can be tracked and reviewed
+**Manage Changes with Automation**
+- Changes to infrastructure should be made using automation
+  - Is consistent
+  - Can be tracked and reviewed
 
 ### Best Practices
 
@@ -132,24 +132,48 @@
 
 ## 5P - Operational Excellence
 ### Design Principles
-- **Perform Environment Operations as Code**
-  - Apply the same discipline for application to your cloud environment
-    - The entire workload and environment can be defined and updated as code
-    - Ex. CloudFormation
-  - Reduces human error, and enables consistency
+**Perform Environment Operations as Code**
+- Apply the same discipline for application to your cloud environment
+  - The entire workload and environment can be defined and updated as code
+  - Ex. CloudFormation
+- Reduces human error, and enables consistency
 
-- **Make Frequent, Small, Reversible Changes**
-  - Design workload components to be updated regularly
-  - Small changes can be easily reversed if they cause failure
+**Make Frequent, Small, Reversible Changes**
+- Design workload components to be updated regularly
+- Small changes can be easily reversed if they cause failure
 
-- **Refine Operations Procedures Frequently**
-  - As the workload evolves, evolve operation procedures accordingly
+**Refine Operations Procedures Frequently**
+- As the workload evolves, evolve operation procedures accordingly
 
-- **Anticipate Failure**
-  - Regularly test failure scenarios and validate associated response procedures, so teams are familiar with their execution
+**Anticipate Failure**
+- Regularly test failure scenarios and validate associated response procedures, so teams are familiar with their execution
 
-- **Learn From All Operational Failures**
-  - Share what is learned across teams and the organization to drive improvement
+**Learn From All Operational Failures**
+- Share what is learned across teams and the organization to drive improvement
+
+### Best Practices
+
+**Organization**
+- Your organization's teams need a shared understanding of the entire workload, their roles in it, business goals, and priorities to enable business success
+- Teams need to understand the role of other teams in their success, and have shared goals
+- Helps focus efforts and maximizes benefits from all teams
+
+**Prepare**
+- Design workloads to provide the information necessary to understand its internal state
+  - Ex. metrics, logs, events, traces
+- Adopt approaches that:
+  - Improve the flow of changes into production
+  - Enable refactoring
+  - Fast feedback on quality, bug fixing, and rapid recovery
+- Evaluate and understand the operational risks of the workload before deploying
+
+**Operate**
+- Define expected outcomes and how success is measured, and identify the metrics used in those calculations
+  - Evaluate workload metrics to determine the health of the workload
+  - Evaluate operations metrics to determine the health of operations events
+
+**Evolve**
+- Dedicate time and resources for continuous incremental improvement of your operations
 
 ## 5P - Cost Optimization
 ### Design Principles
