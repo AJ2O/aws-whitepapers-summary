@@ -6,6 +6,8 @@
 
 This summary is based off of the July 2020 revision of the AWS Well-Architected Framework whitepaper.
 
+The Well-Architected Framework helps organizations learn the best architectural practices for designing and operating systems in the cloud. Well-architected systems greatly increase the likelihood of business success.
+
 # Definitions
 
 ## Common Terminology
@@ -252,3 +254,25 @@ This summary is based off of the July 2020 revision of the AWS Well-Architected 
 - Use automated tools to increase detection speed and recovery
 
 ## Best Practices
+
+**Security**
+- Securely operate the workload by apply best practices to every area of security
+  - Stay up-to-date with AWS and industry standards to evolve your threat model and control objectives
+
+**Identity and Access Management**
+
+**Detection**
+- Capture and analyze events from logs and metrics to gain visibility
+  - Ex. CloudTrail, Config, GuardDuty
+- Take actions on potential threats to help secure the workload
+
+**Infrastructure Protection**
+- Protect network and compute resources using available defense mechanisms
+
+**Data Protection**
+- Classify data based on criticality and sensitivity
+- Protect data at rest and in transit
+
+**Incident Response**
+- Preparation is critical to timely and effective investigation, response to, and recovery from security incidents
+- Helps minimize disruption to your organization
