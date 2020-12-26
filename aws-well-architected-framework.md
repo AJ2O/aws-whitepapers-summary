@@ -1,5 +1,8 @@
 # AWS Well-Architected Framework
 
+## Overview
+- [Source Whitepaper](https://docs.aws.amazon.com/wellarchitected/latest/framework/welcome.html)
+
 ## Definitions
 
 ### Common Terminology
@@ -58,8 +61,6 @@
 - **Mechanical Sympathy**
   - Consider how cloud services are used, and select the most appropriate service for your workload
 
-### Best Practices
-
 ## 5P - Reliability
 ### Design Principles
 
@@ -83,8 +84,6 @@
     - Is consistent
     - Can be tracked and reviewed
 
-### Best Practices
-
 ## 5P - Operational Excellence
 ### Design Principles
 - **Perform Environment Operations as Code**
@@ -106,12 +105,26 @@
 - **Learn From All Operational Failures**
   - Share what is learned across teams and the organization to drive improvement
 
-### Best Practices
-
 ## 5P - Cost Optimization
 ### Design Principles
+- **Implement Cloud Financial Management**
+  - Your organization needs to dedicate time and resources to learn how to become cost-efficient in the cloud and increase business value
+    - Learned through knowledge building, programs, resources, etc.
 
-### Best Practices
+- **Adopt a Consumption Model**
+  - Pay only for required resources, and scale usage depending on business requirements
+    - Ex. Use Dev environments for 40 hours a week, then shut down instances to save costs
+
+- **Measure Overall Efficiency**
+  - Measure the business value delivered from the workload, and the costs associated with running it
+    - Use this measure to know the gains made by increasing output and reducing costs
+
+- **Stop Spending Money on Undifferentiated Heavy Lifting**
+  - No need to manage data center operations (ex. racking, stacking, maintaining servers)
+  - Allows you to focus on business projects rather than IT infrastructure
+
+- **Analyze and Attribute Expenditure**
+  - In the cloud it's east to identify and attribute usage & system costs to owners
 
 ## 5P - Security
 ### Design Principles
