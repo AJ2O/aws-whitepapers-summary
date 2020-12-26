@@ -44,7 +44,7 @@
 ### Design Principles
 **Delegate Advanced Technology Tasks to Cloud Vendor**
 - Ex. Storage (S3), Media Transcoding (Elastic Transcoder), Machine Learning (SageMaker, Lex, Rekognition, etc.) and more, are all managed services
-- Development teams don't need to learn about hosting and running these technologies on servers
+- Dev teams don't need to learn about hosting and running these technologies on servers
   - Can focus on product development
 
 **Use Serverless Architectures**
@@ -106,6 +106,29 @@
   - Changes to infrastructure should be made using automation
     - Is consistent
     - Can be tracked and reviewed
+
+### Best Practices
+
+**Foundations**
+- Foundational requirements that influence reliably must be addressed before architecting any system
+  - Ex. Sufficient bandwith to your data center
+- AWS handles most requirements, or they can be addressed as needed
+  - Ex. Increasing service quotas
+
+**Workload Architecture**
+- Build highly scalable and reliable workloads using a Service-Oriented Architecture (SOA) or microservices architecture
+- These distributed components operate in a way to not negatively impact other components in the workload
+  - Workload withstands component stresses or failures, and can quickly recover
+
+**Change Management**
+- Changes to the workload must be accomodated for to maintain reliability
+- Use logs and metrics to monitor resources
+- Enable elasticity
+
+**Failure Management**
+- Take advantage of automation to react to monitored data
+- Where possible, implement:
+  - Regular backups, fault isolation boundaries, disaster recovery (DR) plans
 
 ## 5P - Operational Excellence
 ### Design Principles
