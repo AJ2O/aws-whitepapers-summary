@@ -1,11 +1,14 @@
-# AWS Well-Architected Framework
+# **AWS Well-Architected Framework**
 
-## Overview
-- [Source Whitepaper](https://docs.aws.amazon.com/wellarchitected/latest/framework/welcome.html)
+# Overview
+- [Source Whitepaper](http://d1.awsstatic.com/whitepapers/architecture/AWS_Well-Architected_Framework.pdf)
+- [Documentation Format](https://docs.aws.amazon.com/wellarchitected/latest/framework/welcome.html)
 
-## Definitions
+This summary is based off of the July 2020 revision of the AWS Well-Architected Framework whitepaper.
 
-### Common Terminology
+# Definitions
+
+## Common Terminology
 **Component**
 - Code, configuration, and AWS resources that deliver against a requirement
 - The smallest "unit", decoupled from other components
@@ -17,7 +20,7 @@
 **Architecture**
 - Describes how components work together in a workload, sometimes using the help of a diagram
 
-### The Five Pillars of the Framework - PROCS / CROPS
+## The Five Pillars of the Framework - PROCS / CROPS
 **Performance Effciency**
 - The ability to: 
   - Use computing resources to meet requirements
@@ -40,8 +43,8 @@
   - Protect data, systems, and assets
   - Leverage cloud technologies to improve security
 
-## 5P - Performance Efficiency
-### Design Principles
+# 5P - Performance Efficiency
+## Design Principles
 **Delegate Advanced Technology Tasks to Cloud Vendor**
 - Ex. Storage (S3), Media Transcoding (Elastic Transcoder), Machine Learning (SageMaker, Lex, Rekognition, etc.) and more, are all managed services
 - Dev teams don't need to learn about hosting and running these technologies on servers
@@ -61,7 +64,7 @@
 **Mechanical Sympathy**
 - Consider how cloud services are used, and select the most appropriate service for your workload
 
-### Best Practices
+## Best Practices
 
 **Selection**
 - Well-Architected systems use multiple solutions and features to improve performance
@@ -84,8 +87,8 @@
 **Tradeoffs**
 - Performance is often optimized by trading consistency, durability, or space for latency
 
-## 5P - Reliability
-### Design Principles
+# 5P - Reliability
+## Design Principles
 
 **Automatically Recover From Failure**
 - Monitor workloads for Key Performance Indicators (KPIs), and trigger automation once a threshold is breached
@@ -107,7 +110,7 @@
   - Is consistent
   - Can be tracked and reviewed
 
-### Best Practices
+## Best Practices
 
 **Foundations**
 - Foundational requirements that influence reliably must be addressed before architecting any system
@@ -130,8 +133,8 @@
 - Where possible, implement:
   - Regular backups, fault isolation boundaries, disaster recovery (DR) plans
 
-## 5P - Operational Excellence
-### Design Principles
+# 5P - Operational Excellence
+## Design Principles
 **Perform Environment Operations as Code**
 - Apply the same discipline for application to your cloud environment
   - The entire workload and environment can be defined and updated as code
@@ -151,7 +154,7 @@
 **Learn From All Operational Failures**
 - Share what is learned across teams and the organization to drive improvement
 
-### Best Practices
+## Best Practices
 
 **Organization**
 - Your organization's teams need a shared understanding of the entire workload, their roles in it, business goals, and priorities to enable business success
@@ -175,53 +178,77 @@
 **Evolve**
 - Dedicate time and resources for continuous incremental improvement of your operations
 
-## 5P - Cost Optimization
-### Design Principles
-- **Implement Cloud Financial Management**
-  - Your organization needs to dedicate time and resources to learn how to become cost-efficient in the cloud and increase business value
-    - Learned through knowledge building, programs, resources, etc.
+# 5P - Cost Optimization
+## Design Principles
+**Implement Cloud Financial Management**
+- Your organization needs to dedicate time and resources to learn how to become cost-efficient in the cloud and increase business value
+  - Learned through knowledge building, programs, resources, etc.
 
-- **Adopt a Consumption Model**
-  - Pay only for required resources, and scale usage depending on business requirements
-    - Ex. Use Dev environments for 40 hours a week, then shut down instances to save costs
+**Adopt a Consumption Model**
+- Pay only for required resources, and scale usage depending on business requirements
+  - Ex. Use Dev environments for 40 hours a week, then shut down instances to save costs
 
-- **Measure Overall Efficiency**
-  - Measure the business value delivered from the workload, and the costs associated with running it
-    - Use this measure to know the gains made by increasing output and reducing costs
+**Measure Overall Efficiency**
+- Measure the business value delivered from the workload, and the costs associated with running it
+  - Use this measure to know the gains made by increasing output and reducing costs
 
-- **Stop Spending Money on Undifferentiated Heavy Lifting**
-  - No need to manage data center operations (ex. racking, stacking, maintaining servers)
-  - Allows you to focus on business projects rather than IT infrastructure
+**Stop Spending Money on Undifferentiated Heavy Lifting**
+- No need to manage data center operations (ex. racking, stacking, maintaining servers)
+- Allows you to focus on business projects rather than IT infrastructure
 
-- **Analyze and Attribute Expenditure**
-  - In the cloud it's east to identify and attribute usage & system costs to owners
-  - Ex. Cost Allocation Tags
+**Analyze and Attribute Expenditure**
+- In the cloud it's east to identify and attribute usage & system costs to owners
+- Ex. Cost Allocation Tags
 
-## 5P - Security
-### Design Principles
-- **Implement Strong Security Foundation**
-  - Principle of Least Privilege
-  - Eliminate reliance on long-term static credentials
+## Best Practices
 
-- **Enable Traceability**
-  - Monitor, alert, and audit actions and changes to your environment in real-time
-    - Ex. CloudTrail, AWS Config
+**Practice Cloud Financial Management**
+- Enables organizations to realize business value and financial success as they optimize their cost, usage, and scale on AWS
 
-- **Apply Security at All Layers**
-  - Ex. NACL, Security Groups, Load Balancers, Application Code, Server
+**Expenditure and Usage Awareness**
+- Establish policies and mechanisms to:
+  - Ensure appropriate costs are incurred while objectives are achieved
+  - Monitor and allocate costs to measure cost efficiency of a workload
+  - Decommission unused resources
 
-- **Automate Security Best Practices**
-  - Allows security mechanisms to scale rapidly and cost-effectively
-  - Define and manage security architectures and controls as code in templates
+**Cost-Effective Resources**
+- Select appropriate building-block services, and managed services
+- Use the pricing model most appropriate for resources to minimize expense
 
-- **Protect Data in Transit and at Rest**
-  - Ex. SSL/TLS (Transit)
-  - Ex. AWS Managed keys, KMS, CloudHSM (Rest)
+**Manage Supply and Demand Resources**
+- Ensure that everything paid for is used
 
-- **Keep People Away from Data**
-  - Use cloud services to reduce or eliminate the need for data direct access
-    - Ex. Encryption, SSM Parameter Store, Secrets Manager
+**Optimize Over Time**
+- As new services and features are released, evaluate them against your existing solutions
+  - Ensure your solutions stays the most cost effective
 
-- **Prepare For Security Events**
-  - Run incident response simulations
-  - Use automated tools to increase detection speed and recovery
+# 5P - Security
+## Design Principles
+**Implement Strong Security Foundation**
+- Principle of Least Privilege
+- Eliminate reliance on long-term static credentials
+
+**Enable Traceability**
+- Monitor, alert, and audit actions and changes to your environment in real-time
+  - Ex. CloudTrail, AWS Config
+
+**Apply Security at All Layers**
+- Ex. NACL, Security Groups, Load Balancers, Application Code, Server
+
+**Automate Security Best Practices**
+- Allows security mechanisms to scale rapidly and cost-effectively
+- Define and manage security architectures and controls as code in templates
+
+**Protect Data in Transit and at Rest**
+- Ex. SSL/TLS (Transit)
+- Ex. AWS Managed keys, KMS, CloudHSM (Rest)
+
+**Keep People Away from Data**
+- Use cloud services to reduce or eliminate the need for data direct access
+  - Ex. Encryption, SSM Parameter Store, Secrets Manager
+
+**Prepare For Security Events**
+- Run incident response simulations
+- Use automated tools to increase detection speed and recovery
+
+## Best Practices
