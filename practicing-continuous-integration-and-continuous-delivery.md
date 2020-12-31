@@ -3,8 +3,6 @@
 # Overview
 - [Source Whitepaper](https://docs.aws.amazon.com/whitepapers/latest/practicing-continuous-integration-continuous-delivery/practicing-continuous-integration-continuous-delivery.pdf) - 33 Pages
 - [Documentation Format](https://docs.aws.amazon.com/whitepapers/latest/practicing-continuous-integration-continuous-delivery/welcome.html)
-- [What is Continuous Integration?](https://aws.amazon.com/devops/continuous-integration/)
-- [What is Continuous Delivery?](https://aws.amazon.com/devops/continuous-delivery/)
 
 This summary is based off of the June 2017 revision of the Practicing Continuous Integration and Continuous Delivery on AWS whitepaper.
 
