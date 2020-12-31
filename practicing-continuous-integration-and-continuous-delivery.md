@@ -133,8 +133,19 @@ This test type is the most expensive in this stage:
 # Deployment Methods
 
 - **All at Once / In-Place Deployment**
+  - Deploys the new version to all servers at once
 - **Rolling Deployment**
-- **Immutable and Blue/Green Deployment**
+  - Deploys the new version to sections of servers one at a time
+    - If a deployment fails, only one section of the servers will be down
+- **Immutable Deployment**
+  - Deploys the new version to a new fleet of servers, and deletes the old servers
+- **Blue/Green Deployment**
+  - Keeps two isolated environments, a "Blue" environment and a "Green" environment
+  - The "Green" environment has the new version deployed to it
+  - The "Blue" environment is the old environment in-case a rollback is needed
+
+# Conclusion
+When CI/CD is used, code changes are integrated, tested, and deployed with reliability and speed every time. Aside from velocity, this allows for software updates to be delivered with confidence since each change goes through a standardized process. It also removes repetitive and manual steps, so developers can focus on improving their applications and products.
 
 # References
 - [Whitepaper (PDF)](https://docs.aws.amazon.com/whitepapers/latest/practicing-continuous-integration-continuous-delivery/practicing-continuous-integration-continuous-delivery.pdf)
