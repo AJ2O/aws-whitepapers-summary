@@ -70,16 +70,60 @@ AWS recommends to organize workloads in separate accounts and group accounts bas
 
 # Identity and Access Management
 
+## Identity Management
+There are two types of identities in AWS. **Human Identities** include administrators, operators, developers, consumers, etc. **Machine Identities** include applications, operational tools, and components. Identity management recommendations by AWS are listed below:
+- **Rely on a Centralized Identity Provider**
+  - For federations with indiviual AWS accounts, you can use centralized identities with a [SAML 2.0](https://docs.aws.amazon.com/IAM/latest/UserGuide/id_roles_providers_saml.html)-based provider
+  - For federation to multiple accounts in your AWS Organization, you can configure your identity source in [AWS SSO](http://aws.amazon.com/single-sign-on/) to specify where your users and groups are stored
+  - For managing consumers of your applications, such as for a mobile app, you can use [Amazon Cognito](http://aws.amazon.com/cognito/) and sign users in through a third party such as Amazon, Facebook or Google
+- **Leverage User Groups and Attributes**
+  - You can assign users to a group, and assign permissions (through attached policies) to the group to apply to all its members
+- **Use Strong Sign-In Mechanisms**
+  - You can specify a complex password policy or enforce MFA
+- **Audit and Rotate Credentials Periodically**
+- **Store and Use Secrets Securely**
+
+## Permissions Management
+
+- **Define Permission Guardrails of your Organization**
+  - Using AWS Organizations, you can use service control policies to apply allow or deny permissions at the account-level and organization unit-levels
+- **Grant Least Privilege Access**
+  - Ensures identities are only permitted to perform the minimal set of functions necessary to fulfill a specific task
+- **Analyze Public and Cross Account Access**
+- **Share Resources Securely**
+- **Establish Emergency Access Process**
+
 # Detection
+
+## Configure
+
+
+## Investigate
+
 
 # Infrastructure Protection
 
+## Protecting Networks
+
+
+## Protecting Compute
+
+
 # Data Protection
+
+## Data Classification
+
+
+## Protecting Data at Rest
+
+
+## Protecting Data in Transit
+
 
 # Incident Response
 
 # Conclusion
 
 # References
-- [Whitepaper (PDF)](https://docs.aws.amazon.com/wellarchitected/latest/security-pillar/wellarchitected-security-pillar.pdf) - 37 Pages
+- [Whitepaper (PDF)](https://docs.aws.amazon.com/wellarchitected/latest/security-pillar/wellarchitected-security-pillar.pdf)
 - [Whitepaper (Documentation Format)](https://docs.aws.amazon.com/wellarchitected/latest/security-pillar/welcome.html)
