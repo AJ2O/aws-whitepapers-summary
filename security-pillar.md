@@ -170,8 +170,16 @@ There are two types of identities in AWS. **Human Identities** include administr
 - **Implement Secure Key and Certificate Management**
 
 # Incident Response
-
-# Conclusion
+- **Educate** your security operations and incident response staff about cloud technologies and how your organization intends to use them
+- **Prepare** your incident response team to:
+  - Detect and responds to incidents in the cloud
+  - Enable detective capabilities
+  - Ensure appropriate access to necessary tools and cloud services
+- **Simulate** expected and unexpected security events within your cloud environment to understand the effectiveness of your preparation
+- **Iterate** on the outcome of your simulation to:
+  - Improve the scale of your response posture
+  - Reduce time to value
+  - Further reduce risk
 
 # References
 - [Whitepaper (PDF)](https://docs.aws.amazon.com/wellarchitected/latest/security-pillar/wellarchitected-security-pillar.pdf)
