@@ -117,10 +117,29 @@ There are two types of identities in AWS. **Human Identities** include administr
 # Infrastructure Protection
 
 ## Protecting Networks
-
+- **Create Network Layers**
+  - Resources that need reachability requirements are segmented into layers formed by subnets
+  - Mitigates the impact of a single layer misconfiguration
+- **Control Traffic at all Layers**
+  - Use multiple controls with a defense in-depth approach
+    - Ex. Network ACLs, Subnets, Route Tables, Security Groups
+- **Implement Inspection and Protection**
+  - Inspect and filter traffic at each layer
+    - Ex. Use [AWS WAF](http://aws.amazon.com/waf) to monitor and block HTTP requests
+- **Automate Network Protection**
+  - Provide a self-defending network based on threat intelligence and anomaly detection
 
 ## Protecting Compute
-
+- **Perform Vulnerability Management**
+  - Frequently scan and patch for vulnerabilities in code, dependencies, and infrastructure
+- **Reduce Attack Surface**
+  - Harden operating systems, minimize components, libraries, and consumable services
+- **Enable People to Perform Actions at a Distance**
+  - Reducing interactive access reduces the risk of human error
+  - Ex. [AWS Systems Manager](https://aws.amazon.com/systems-manager/) can automate a variety of maintenance and deployment tasks
+- **Implement Managed Services**
+- **Validate Software Integrity**
+- **Automate Compute Protection**
 
 # Data Protection
 
