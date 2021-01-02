@@ -144,13 +144,30 @@ There are two types of identities in AWS. **Human Identities** include administr
 # Data Protection
 
 ## Data Classification
-
+- **Identify the Data Within your Workload**
+  - For your workload data, you need to understand it's:
+    - Associated business processes
+    - Owner(s)
+    - Controls
+    - Legal and compliance requirements
+    - Storage location
+- **Define Data Protection Controls**
+  - Ex. IAM policies, Service Control Policies [AWS KMS](https://aws.amazon.com/kms/), [AWS CloudHSM](https://aws.amazon.com/cloudhsm/)
+- **Define Data Lifecycle Management**
+  - Should be based on the data's sensitivity level and legal/organizational requirements
+- **Automate Identification and Classification**
+  - Reducing direct access reduces the risk of human error and exposure
 
 ## Protecting Data at Rest
-
+- **Enforce Encryption at Rest**
+- **Enforce Access Control**
+- **Implement Secure Key Management**
+- **Implement Mechanisms to Keep People Away from Data**
 
 ## Protecting Data in Transit
-
+- **Enforce Encryption in Transit**
+- **Authenticate Network Communications**
+- **Implement Secure Key and Certificate Management**
 
 # Incident Response
 
