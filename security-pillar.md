@@ -96,10 +96,23 @@ There are two types of identities in AWS. **Human Identities** include administr
 # Detection
 
 ## Configure
-
+- **Configure Service and Application Logging**
+  - At the account level:
+    - [AWS CloudTrail](https://aws.amazon.com/cloudtrail/) - event history of AWS API calls
+    - [AWS Config](https://aws.amazon.com/config/) - monitor and record AWS resource configurations
+    - [AWS GuardDuty](https://aws.amazon.com/guardduty/) - threat detection service that monitors for malicious activity
+    - [AWS Security Hub](http://aws.amazon.com/security-hub) - aggregates, organizes, and prioritizes security alerts or findings from multiple AWS services
+  - Many core AWS services provide service-level logging features
+- **Analyze Logs, Findings, and Metrics Centrally**
+  - Deeply integrate the flow of security events and findings into a notification and workflow system
+    - Ex. ticketing system, bug/issue system
+    - Allows you to route, escalate, and manage events or findings
 
 ## Investigate
-
+- **Implement Actionable Security Events**
+  - Establish a [runbook](https://wa.aws.amazon.com/wat.concept.runbook.en.html) for each detective mechanism you have
+- **Automate Response Events**
+  - Can be achieved using [Amazon EventBridge](http://aws.amazon.com/eventbridge)
 
 # Infrastructure Protection
 
