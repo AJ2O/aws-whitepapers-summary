@@ -80,10 +80,13 @@ The AWS implementation of this model below:
     - Ex. [RDS](https://docs.aws.amazon.com/whitepapers/latest/web-application-hosting-best-practices/failover-with-aws.html) can utilize multi-AZ deployments, so that if your primary database goes down, the secondary database (with replicated data) automatically becomes the new primary database, with little to no downtime
 
 # Key Considerations When Using AWS for Web Hosting
-
-
-# Conclusion
-
+- **No More Physical Network Appliances**
+  - Firewalls, routers, load balancers, etc. must be software solutions
+- **Firewalls Everywhere**
+- **Consider the Availability of Multiple Data Centers**
+  - Consider each Avaliability Zone as a separate Data Center
+- **Treat Hosts as Ephemeral and Dynamic**
+- **Consider a Serverless Architecture**
 
 # References
 - [Whitepaper (PDF)](https://docs.aws.amazon.com/whitepapers/latest/web-application-hosting-best-practices/web-application-hosting-best-practices.pdf)
