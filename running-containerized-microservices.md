@@ -55,9 +55,7 @@ To achieve these microservice characteristics, the [Twelve-Factor App](https://1
 12. **Admin Processes** 
     - Run administration & management tasks as one-off processes
 
-# Characteristics of Microservices Architecture
-
-## Componentization Via Services
+# Componentization Via Services
 
 To help explain componentization, let's use a car for an analogy. A car is composed of multiple components: the engine, battery, and wheels just to name a few. If we blow out a tire, it can easily be replaced with another one. If the battery ages and doesn't work properly, we can simply replace it for a newer, better-performing battery. The theme is that none of these issues require replacing the entire vehicle, but we can swap in and out parts as we choose to.
 
@@ -73,7 +71,7 @@ To help explain componentization, let's use a car for an analogy. A car is compo
 - **Disposability**
    - Containers are easily be discarded when they stop running, and are re-built from an image repository
 
-## Organized Around Business Capabilities
+# Organized Around Business Capabilities
 
 Services should be organized around **business capabilities**. This means that for each microservice (or small group of microservices), its associated team must own all aspects of it, from development all the way to the customer. This may include development, deployment, user-interface, databases, production support and other aspects.
 
@@ -89,11 +87,11 @@ When architecture is organized into defined business capabilities, it allows for
 - **Admin processes**
   - Each microservice has its own administration tasks so that it functions as designed
 
-## Products Not Projects
+# Products Not Projects
 
 Treat software components as **products** that can be progressively improved and are constantly evolving. This is in contrast to handling components as **projects** that are developed by an engineering team and handed off to an operations team responsible for running it.
 
-### Essentials to Adopting a Product Mindset
+### Essentials to Adopting a "Product Mindset"
 - **Automated Provisioning**
   - Operations should be automated rather than manual, increasing velocity
 - **Self-service**
@@ -113,15 +111,31 @@ Treat software components as **products** that can be progressively improved and
 - **Dev/prod parity**
   - Software treated as a product can be iteratively developed in smaller pieces that take less time to complete and deploy, allowing development and production to be closer in parity
 
-## Smart Endpoints and Dump Pipes
+# Smart Endpoints and Dumb Pipes
 
-## Decentralized Governance
+In a microservices architecture, an environment can have its components distributed across a group of servers, meaning that services may not even be located on the same server. For them to communicate, there are two primary methods:
+- **Request/Response**
+  - One service explicitly invokes another service by making a request to either store data in it or retrieve data from it.
+- **Publish/Subscribe**
+  - One service "A" (or many) subscribes to another service "B" to watch for events. When service "B" publishes events, any subscribed services will be invoked automatically.
 
-## Infrastructure Automation
+Building **smart endpoints** means concentrating the production and consumption logic of requests in each service. **Dumb pipes** refer to refraining from coupling services to specific and complicated messaging services, which keeps the transferred messages simple, or "dumb".
 
-## Design For Failure
+### Relevant Twelve-Factors
+- **Port Binding**
+  - Services bind to a port to watch for incoming requests or to send requests to ports of other services
+- **Backing services**
+  - Dumb pipes allow for a background service to be attached to another service in the same way you can attach a database
+- **Concurrency**
+  - Several observer service can respond and work in parallel to a single event produced by another service
 
-## Evolutionary Design
+# Decentralized Governance
+
+# Infrastructure Automation
+
+# Design For Failure
+
+# Evolutionary Design
 
 # Conclusion
 
