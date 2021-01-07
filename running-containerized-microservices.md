@@ -81,3 +81,4 @@ To achieve these microservice characteristics, the [Twelve-Factor App](https://1
 - [Whitepaper (PDF)](https://docs.aws.amazon.com/whitepapers/latest/running-containerized-microservices/running-containerized-microservices.pdf)
 - [Whitepaper (Documentation Format)](https://docs.aws.amazon.com/whitepapers/latest/running-containerized-microservices/welcome.html)
 - [martinFowler.com - Microservices](https://martinfowler.com/articles/microservices.html)
+- [The Twelve-Factor App](https://12factor.net/)
