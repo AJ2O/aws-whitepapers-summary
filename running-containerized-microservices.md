@@ -91,6 +91,28 @@ When architecture is organized into defined business capabilities, it allows for
 
 ## Products Not Projects
 
+Treat software components as **products** that can be progressively improved and are constantly evolving. This is in contrast to handling components as **projects** that are developed by an engineering team and handed off to an operations team responsible for running it.
+
+### Essentials to Adopting a Product Mindset
+- **Automated Provisioning**
+  - Operations should be automated rather than manual, increasing velocity
+- **Self-service**
+  - Engineers should be able to configure and provision their own dependencies
+- **Continuous Integration**
+  - Engineers should check in code frequently so that incremental improvements are available for review and testing as quickly as possible
+  - [Read More on Continuous Integration](https://aws.amazon.com/devops/continuous-integration/)
+- **Continuous Build and Delivery**
+  - Automate the process of building code and delivering it to production
+  - [Read More on Continuous Delivery](https://aws.amazon.com/devops/continuous-delivery/)
+
+### Relevant Twelve-Factors
+- **Build, release, run**
+  - Engineers adopt a [DevOps](https://aws.amazon.com/devops/what-is-devops/) culture that allows them to optimize all three stages
+- **Config**
+  - Engineers build better configuration management for software because of their involvement with how that software is used by the customer
+- **Dev/prod parity**
+  - Software treated as a product can be iteratively developed in smaller pieces that take less time to complete and deploy, allowing development and production to be closer in parity
+
 ## Smart Endpoints and Dump Pipes
 
 ## Decentralized Governance
