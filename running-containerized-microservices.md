@@ -75,6 +75,20 @@ To help explain componentization, let's use a car for an analogy. A car is compo
 
 ## Organized Around Business Capabilities
 
+Services should be organized around **business capabilities**. This means that for each microservice (or small group of microservices), its associated team must own all aspects of it, from development all the way to the customer. This may include development, deployment, user-interface, databases, production support and other aspects.
+
+When architecture is organized into defined business capabilities, it allows for dependencies between components to be loosely coupled, and for teams to work independently without being reliant on, or affecting other components.
+
+### Relevant Twelve-Factors
+- **Codebase**
+  - Each microservice has its own codebase in a separate repository
+- **Build, release, run**
+  - Each microservice has its own deployment pipeline and frequency
+- **Processes**
+  - Each microservice does one thing, and does that one thing very well
+- **Admin processes**
+  - Each microservice has its own administration tasks so that it functions as designed
+
 ## Products Not Projects
 
 ## Smart Endpoints and Dump Pipes
