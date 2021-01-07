@@ -59,6 +59,20 @@ To achieve these microservice characteristics, the [Twelve-Factor App](https://1
 
 ## Componentization Via Services
 
+To help explain componentization, let's use a car for an analogy. A car is composed of multiple components: the engine, battery, and wheels just to name a few. If we blow out a tire, it can easily be replaced with another one. If the battery ages and doesn't work properly, we can simply replace it for a newer, better-performing battery. The theme is that none of these issues require replacing the entire vehicle, but we can swap in and out parts as we choose to.
+
+**Componentization** of  an application works the same way. Each microservice should be its own independent, scalable, and replaceable component, without affecting or interrupting other components in the application. 
+
+**Containerization** can be used to achieve componentization, as it is an operating-system-level virtualization method. Virtual machines allow for multiple applications to run on one server, but containers take this one step further and allow for multiple applications to run on one operating system, with each running as its own isolated process. Each microservice's total functionality is built into its container image, so we can easily swap and upgrade the service by modifying its underlying image.
+
+### Relevant Twelve-Factors
+- **Dependencies**
+   - Dependencies are self-contained within the container and not shared with other services
+- **Concurrency**
+   - Each container (or groups of containers at a time) can be auto-scaled independently in a memory- and CPU-efficient manner
+- **Disposability**
+   - Containers are easily be discarded when they stop running, and are re-built from an image repository
+
 ## Organized Around Business Capabilities
 
 ## Products Not Projects
@@ -82,3 +96,4 @@ To achieve these microservice characteristics, the [Twelve-Factor App](https://1
 - [Whitepaper (Documentation Format)](https://docs.aws.amazon.com/whitepapers/latest/running-containerized-microservices/welcome.html)
 - [martinFowler.com - Microservices](https://martinfowler.com/articles/microservices.html)
 - [The Twelve-Factor App](https://12factor.net/)
+- [IBM - Containerization](https://www.ibm.com/cloud/learn/containerization)
