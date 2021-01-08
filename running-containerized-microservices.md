@@ -160,9 +160,25 @@ Data should only be communicated through smart endpoints and dumb pipes. This al
 
 # Infrastructure Automation
 
+An automated infrastructure provides repeatability for quickly setting up environments. Using **infrastructure as code**, it can be checked into source control to allow for easily deploying different types of infrastructure, and easily rolling back if an error occurs. This reduces the risk of change and as a result, promotes innovation and experiments.
+
+### Relevant Twelve-Factors
+- **Codebase**
+  - Infrastructure can be described as code, so treat all code similarly and keep it in the service repository
+- **Config**
+  - The environment should hold and share its own specificities
+- **Build, release, run**
+  - One environment for each purpose (ex. development, integration, performance testing, production)
+- **Dev/prod parity**
+  - Keep infrastructure code for development, staging, and production similar
+
 # Design For Failure
 
+
+
 # Evolutionary Design
+
+
 
 # Conclusion
 
