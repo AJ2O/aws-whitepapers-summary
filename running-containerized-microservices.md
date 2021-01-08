@@ -174,14 +174,18 @@ An automated infrastructure provides repeatability for quickly setting up enviro
 
 # Design For Failure
 
+As a consequence of services being components, applications need to be designed so that they can tolerate the failure of services. Connections between services need to be monitored and managed. Latency and timeouts should be assumed and gracefully handled. Since services can fail at any time, so it's important to detect failures quickly, and if possible, automatically restore the service. 
 
+Designing for failure also means regularly testing the design and monitoring how services cope with the deteriorating conditions. There are various ways of simulating deteriorating conditions, as explained in the tech blog: [The Netflix Simian Army](https://netflixtechblog.com/the-netflix-simian-army-16e57fbab116).
+
+### Relevant Twelve-Factors
+- **Disposability**
+  - Produce smaller container images and strive for processes that can start and stop in seconds
+- **Logs**
+  - If part of a system fails, troubleshooting is necessary
+  - Ensure that logs and metrics exist to aid in troubleshooting
 
 # Evolutionary Design
-
-
-
-# Conclusion
-
 
 
 # References
@@ -190,3 +194,4 @@ An automated infrastructure provides repeatability for quickly setting up enviro
 - [martinFowler.com - Microservices](https://martinfowler.com/articles/microservices.html)
 - [The Twelve-Factor App](https://12factor.net/)
 - [IBM - Containerization](https://www.ibm.com/cloud/learn/containerization)
+- [Netflix Tech Blog - The Netflix Simian Army](https://netflixtechblog.com/the-netflix-simian-army-16e57fbab116)
