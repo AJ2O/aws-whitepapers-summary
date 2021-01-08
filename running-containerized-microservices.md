@@ -187,6 +187,21 @@ Designing for failure also means regularly testing the design and monitoring how
 
 # Evolutionary Design
 
+Having a detailed design phase at the very beginning of a project is impractical, and services have to evolve through various iterations of the software. This is done through learning from real-world usage of the service.
+
+A service team should build the minimum viable set of features needed to roll out the service to users. New features are tested by rolling them out in a [canary release](https://martinfowler.com/bliki/CanaryRelease.html), and once customer feedback comes in, the team evolves the service in response. At a later stage, the team can decide to refactor the service after they feel confident that they have enough feedback.
+
+### Relevant Twelve-Factors
+- **Codebase**
+  - Helps evolve features faster since new feedback can be quickly incorporated
+- **Dependencies**
+  - Enables quick iterations of the design since features are tightly coupled with externalities
+- **Config**
+  - Configuration is stored in the environment, outside of the code
+  - This allows
+- **Build, release, run**
+  - Use various deployment techniques to help roll out new features
+  - Each release has a specific ID and can be used to gain design efficiency and user feedback
 
 # References
 - [Whitepaper (PDF)](https://docs.aws.amazon.com/whitepapers/latest/running-containerized-microservices/running-containerized-microservices.pdf)
