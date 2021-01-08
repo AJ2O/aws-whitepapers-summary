@@ -117,9 +117,9 @@ In a microservices architecture, an environment can have its components distribu
 - **Request/Response**
   - One service explicitly invokes another service by making a request to either store data in it or retrieve data from it.
 - **Publish/Subscribe**
-  - One service "A" (or many) subscribes to another service "B" to watch for events. When service "B" publishes events, any subscribed services will be invoked automatically.
+  - One service "A" (or many) subscribes to another service "B" to watch for events. When service "B" publishes events, any subscribed services will be invoked implicitly.
 
-Building **smart endpoints** means concentrating the production and consumption logic of requests in each service. **Dumb pipes** refer to refraining from coupling services to specific and complicated messaging services, which keeps the transferred messages simple, or "dumb".
+Building **smart endpoints** means concentrating the production and consumption logic of requests in each service. **Dumb pipes** refer to refraining from coupling services to specific and complicated messaging frameworks, which keeps the transferred requests simple, or "dumb".
 
 ### Relevant Twelve-Factors
 - **Port Binding**
@@ -130,6 +130,20 @@ Building **smart endpoints** means concentrating the production and consumption 
   - Several observer service can respond and work in parallel to a single event produced by another service
 
 # Decentralized Governance
+
+With **decentralized governance**, each team can use its expertise to select the best tools to develop and manage their associated service. 
+
+Different services solve different problems, so teams can use the best tools that address their specific problem. This means that two teams can use two different types of databases, or even two different coding languages for their service. This feature doesn't necessitate using different solutions for different teams, but it at least presents the option.
+
+### Relevant Twelve-Factors
+- **Dependencies**
+  - Teams can choose their own dependencies, so dependencies should be isolated
+- **Build, release, run**
+  - Teams can use different build processes, but releasing and running the code should still be seamless
+- **Backing services**
+  - Services can be refactored or developed in different ways, as long as they obey an external contract for communication with other services
+
+# Decentralized Data Management
 
 # Infrastructure Automation
 
