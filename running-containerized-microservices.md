@@ -145,6 +145,19 @@ Different services solve different problems, so teams can use the best tools tha
 
 # Decentralized Data Management
 
+**Decentralized data management** encompasses that each service gets its own data storage and doesn't directly share its data with any other service. This also means there is no shared, external database for services to access. 
+
+Data should only be communicated through smart endpoints and dumb pipes. This allows teams to choose the best data storage solution for their service, whether it be an object store, key-value store, file store, block store, or a relational database.
+
+### Relevant Twelve-Factors
+- **Disposability**
+  - Services are robust and not dependent on externalities
+- **Backing services**
+  - A backing service is any service that the app consumes over the network such as data stores and messaging systems
+  - The app should make no distinction between a local and an external service
+- **Admin processes**
+  - Admin processes should be run in a similar manner, irrespective of environments
+
 # Infrastructure Automation
 
 # Design For Failure
