@@ -51,7 +51,16 @@ Modern software is usually delivered as a service in the form of *web apps* or *
   - Allows for easily swapping services between deploys by modifying the config
 
 ## V. Build, Release, Run
+**Strictly separate build and run stages**
 
+A codebase is transformed into a deploy through 3 separate stages:
+1. **Build**
+  - Converts a code repo into an executable bundle known as a *build*
+2. **Release**
+  - Takes the build produced by the build stage and combines it with the deploy's *config*, resulting in a *release*, ready for immediate execution
+  - Every release should have its own unique ID
+3. **Run**
+  - Runs the app in the execution environment, by launching some set of the app's processes against a selected release
 
 ## VI. Processes
 
