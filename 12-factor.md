@@ -71,7 +71,14 @@ A codebase is transformed into a deploy through 3 separate stages:
   - A future request should be able to be served by a different process with no issue, hence being stateless
 
 ## VII. Port Binding
+**Export services via port binding**
 
+- The app exports services by binding them to a port, and listen to requests coming in on that port
+- The port-binding approach means that one app can become the backing service for another consuming app
+  - The URL to the backing app can be provided to the consuming app via its config
+- Ex. Webserver
+  - Export HTTP to port 8000
+  - Visiting `http://<host-ip>:5000` accesses the web service
 
 ## VIII. Concurrency
 
