@@ -25,7 +25,7 @@ Modern software is usually delivered as a service in the form of *web apps* or *
 
 - A twelve-factor app **never relies on implicit existence of system-wide packages**
 - It declares all dependencies via a **dependency declaration manifest**
-- It uses a **dependency isolation tool** during execution to ensure that no implicit dependencies "leak in" from the system
+- It uses a **dependency isolation tool** during execution to ensure that no implicit dependencies "leak in" from the surrounding system
 - Ex. For Python
   - Declaration: [Pip](http://www.pip-installer.org/en/latest/)
   - Isolation: [Virtualenv](http://www.virtualenv.org/en/latest/)
@@ -38,7 +38,7 @@ Modern software is usually delivered as a service in the form of *web apps* or *
   - Credentials to external services
   - Canonical hostname for the deploy
 - Config should be stored in **environmental variables** (shortened to *env vars*)
-  - Env vars are easy to change between deploys, and are a language- and OS-agnostic standard
+  - Env vars are easy to change between deploys, and are a standard across programming languages
 
 ## IV. Backing Services
 **Treat backing services as attached resources**
@@ -63,7 +63,12 @@ A codebase is transformed into a deploy through 3 separate stages:
   - Runs the app in the execution environment, by launching some set of the app's processes against a selected release
 
 ## VI. Processes
+**Execute the app as one or more stateless processes**
 
+- Twelve-factor processes are **stateless** and **share-nothing**
+  - Any data that needs to persist must be stored in a stateful backing service, such as a database
+- The app should never assume that anything cached in memory or on disk will be available on a future request or job
+  - A future request should be able to be served by a different process with no issue, hence being stateless
 
 ## VII. Port Binding
 
