@@ -11,6 +11,13 @@ Modern software is usually delivered as a service in the form of *web apps* or *
 # The Twelve Factors
 
 ## I. Codebase
+**One codebase tracked in revision control, many deploys**
+
+- A **codebase** is any single repo, or a set of repos that share a root commit (such as [Git](https://git-scm.com/))
+  - There is always a **one-to-one** correlation between a codebase and an app
+- A **deploy** is a running instance of the app, such as a production site, or multiple staging sites
+  - Additionally, every dev has their own local environment, each of which also qualifies as a deploy
+- The codebase is the same for all deploys, but each deploy may contain a different version
 
 
 ## II. Dependencies
