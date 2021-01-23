@@ -31,7 +31,14 @@ Modern software is usually delivered as a service in the form of *web apps* or *
   - Isolation: [Virtualenv](http://www.virtualenv.org/en/latest/)
 
 ## III. Config
+**Store config in the environment**
 
+- An app's **config** is anything likely to vary between deploys, such as:
+  - Resource handles to the database, Memcached, and other [backing services](https://12factor.net/backing-services)
+  - Credentials to external services
+  - Canonical hostname for the deploy
+- Config should be stored in **environmental variables** (shortened to *env vars*)
+  - Env vars are easy to change between deploys, and are a language- and OS-agnostic standard
 
 ## IV. Backing Services
 
