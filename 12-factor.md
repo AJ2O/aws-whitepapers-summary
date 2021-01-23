@@ -2,32 +2,49 @@
 
 # Overview
 
+Modern software is usually delivered as a service in the form of *web apps* or *software-as-a-service (SaaS)*. The **twelve-factor app** is a methodology for building SaaS apps and can be applied to any programming language. Some features achieved by this methodology include:
+- **app isolation** from operating systems and underlying execution environments
+- **minimized differences** between development and production environments
+- **scaling** without major changes to architecture, tooling, or development practices
+- **declarative formats** to automate setup of apps
 
 # The Twelve Factors
 
 ## I. Codebase
 
+
 ## II. Dependencies
+
 
 ## III. Config
 
+
 ## IV. Backing Services
+
 
 ## V. Build, Release, Run
 
+
 ## VI. Processes
+
 
 ## VII. Port Binding
 
+
 ## VIII. Concurrency
+
 
 ## IX. Disposability
 
+
 ## X. Dev/Prod Parity
+
 
 ## XI. Logs
 
+
 ## XII. Admin Processes
+
 
 # References
 - [12factor.net](https://12factor.net/)
