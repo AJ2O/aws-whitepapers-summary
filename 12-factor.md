@@ -81,7 +81,14 @@ A codebase is transformed into a deploy through 3 separate stages:
   - Visiting `http://<host-ip>:5000` accesses the web service
 
 ## VIII. Concurrency
+**Scale out via the process model**
 
+- To handle diverse workloads, each type of work should be assigned to a **process type**
+  - Example: HTTP requests would be handled by a *web process*
+  - Example: Long-running background tasks would be handled by a *worker process*
+- To scale out the app, just add more running processes of the designated process types
+- This allows for scaling individual components of the app as needed
+  - Example: If the app is receiving very high HTTP traffic, only the web process needs to be scaled out, rather than the entire app
 
 ## IX. Disposability
 
