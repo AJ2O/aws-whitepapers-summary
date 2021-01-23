@@ -21,7 +21,14 @@ Modern software is usually delivered as a service in the form of *web apps* or *
 
 
 ## II. Dependencies
+**Explicitly declare and isolate dependencies**
 
+- A twelve-factor app **never relies on implicit existence of system-wide packages**
+- It declares all dependencies via a **dependency declaration manifest**
+- It uses a **dependency isolation tool** during execution to ensure that no implicit dependencies "leak in" from the system
+- Ex. For Python
+  - Declaration: [Pip](http://www.pip-installer.org/en/latest/)
+  - Isolation: [Virtualenv](http://www.virtualenv.org/en/latest/)
 
 ## III. Config
 
