@@ -41,7 +41,14 @@ Modern software is usually delivered as a service in the form of *web apps* or *
   - Env vars are easy to change between deploys, and are a language- and OS-agnostic standard
 
 ## IV. Backing Services
+**Treat backing services as attached resources**
 
+- A **backing service** is any service the app consumes over the network as part of its normal operation
+  - Ex. databases, messaging/queueing systems, mail services, caching systems
+- Each distinct backing service is a **distinct resource**
+- A twelve-factor app **makes no distinction between local and third party services**
+  - The service is only accessed via URL or other credentials stored in the [config](https://12factor.net/config)
+  - Allows for easily swapping services between deploys by modifying the config
 
 ## V. Build, Release, Run
 
