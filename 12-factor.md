@@ -111,7 +111,7 @@ A codebase is transformed into a deploy through 3 separate stages:
   - Facilitates elastic scaling and rapid deployment of [code](#i-codebase) or [config](#iii-config) changes
 - Processes should strive to **minimize startup time**
   - From the launch command to being ready to receive requests, this should take a few seconds
-- Processes should **shut down gracefully** when they receive a [SIGTERM](https://en.wikipedia.org/wiki/Signal_(IPC)#SIGTERM) signal
+- Processes should **shut down gracefully** when they receive a [`SIGTERM`](https://en.wikipedia.org/wiki/Signal_(IPC)#SIGTERM) signal
   - This may include to stop listening for requests, allow current requests to complete, then exiting
 - Processes should be **robust against sudden death**, such as the case of hardware failure
   - Example: use a queueing backend that returns jobs to the queue when clients disconnect or time out, such as [Beanstalkd](https://beanstalkd.github.io/) or [Amazon Simple Queue Service (SQS)](https://aws.amazon.com/sqs/)
@@ -141,7 +141,13 @@ A codebase is transformed into a deploy through 3 separate stages:
     - Use as similar tools as possible, including the same versions of the tools
 
 ## XI. Logs
+**Treat logs as event streams**
 
+- The app should never concern itself with the routing or storage of its output stream
+- Each running processes writes its event stream, unbuffered, to `stdout`
+- The collection, routing, and end destinations of process event streams will be completely managed by the **execution environment**, rather than the app itself
+  - Open-source log routers such as [Logplex](https://github.com/heroku/logplex) and [Fluentd](https://github.com/fluent/fluentd) are available for this purpose
+  - End destinations may simply be files, log analysis systems such as [Splunk](http://www.splunk.com/) or data warehousing systems such as [Hadoop/Hive](http://hive.apache.org/)
 
 ## XII. Admin Processes
 
