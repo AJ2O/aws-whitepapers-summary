@@ -117,7 +117,28 @@ A codebase is transformed into a deploy through 3 separate stages:
   - Example: use a queueing backend that returns jobs to the queue when clients disconnect or time out, such as [Beanstalkd](https://beanstalkd.github.io/) or [Amazon Simple Queue Service (SQS)](https://aws.amazon.com/sqs/)
 
 ## X. Dev/Prod Parity
+**Keep development, staging, and production as similar as possible**
 
+- Keep the gap between environments as small as possible
+- Gaps can occur in 3 areas:
+  - **Time**
+    - New code may take days, weeks, or months before it goes into production
+  - **Personnel**
+    - Developers write code, Operations Engineers deploy it
+  - **Tools**
+    - Devs and Ops may use different tools
+    - Devs tend to use lightweight [backing services](#iv-backing-services) for quick development and testing
+    - Ops use more serious and robust backing services in production
+    - Examples:
+      - Nginx vs. Apache
+      - SQLite vs. MySQL
+- To remediate each gap:
+  - **Time**
+    - Deploy new code hours or even minutes later
+  - **Personnel**
+    - Devs who write code are closely involved in deploying and monitoring it in production
+  - **Tools**
+    - Use as similar tools as possible, including the same versions of the tools
 
 ## XI. Logs
 
