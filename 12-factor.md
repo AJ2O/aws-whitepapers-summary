@@ -2,7 +2,7 @@
 
 # Overview
 
-Modern software is usually delivered as a service in the form of *web apps* or *software-as-a-service (SaaS)*. The **twelve-factor app** is a methodology for building SaaS apps and can be applied to any programming language. Some features achieved by this methodology include:
+Modern software is usually delivered as a service in the form of *web apps* or *software-as-a-service (SaaS)*. The [**twelve-factor app**](https://12factor.net/) is a methodology for building SaaS apps and can be applied to any programming language. Some features achieved by this methodology include:
 - **app isolation** from operating systems and underlying execution environments
 - **minimized differences** between development and production environments
 - **scaling** without major changes to architecture, tooling, or development practices
@@ -103,6 +103,7 @@ A codebase is transformed into a deploy through 3 separate stages:
 - To scale out the app, just add more running processes of the designated process types
 - This allows for scaling individual components of the app as needed
   - Example: If the app is receiving very high HTTP traffic, only the web process needs to be scaled out, rather than the entire app
+- The array of process types, and number of each process type, is referred to as the app's **process formation**
 
 ## IX. Disposability
 **Maximize robustness with fast startup and graceful shutdown**
@@ -150,7 +151,17 @@ A codebase is transformed into a deploy through 3 separate stages:
   - End destinations may simply be files, log analysis systems such as [Splunk](http://www.splunk.com/) or data warehousing systems such as [Hadoop/Hive](http://hive.apache.org/)
 
 ## XII. Admin Processes
+**Run admin/management tasks as one-off processes**
 
+- **One-off administrative tasks** for an app may include:
+  - Running database migrations
+  - Running one-time scripts committed into the app's repo
+  - Running a console to run arbitrary code or inspect the app against a live database
+
+- One-off admin tasks should be run as processes, and in a similar manner to the app's regular, [long-running processes](#vi-processes)
+  - Run against a [release](#v-build-release-run), using the same [codebase](#i-codebase) and [config](#iii-config) as any process run against that release
+  - Use [dependency isolation](#ii-dependencies)
+- Admin code must ship with application code to avoid synchronization issues
 
 # References
 - [12factor.net](https://12factor.net/)
