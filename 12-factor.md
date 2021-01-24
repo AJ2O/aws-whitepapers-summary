@@ -10,6 +10,20 @@ Modern software is usually delivered as a service in the form of *web apps* or *
 
 # The Twelve Factors
 
+- **[I. Codebase](#i-codebase)**
+- **[II. Dependencies](#ii-dependencies)**
+- **[III. Config](#iii-config)**
+- **[IV. Backing Services](#iv-backing-services)**
+- **[V. Build, Release, Run](#v-build-release-run)**
+- **[VI. Processes](#vi-processes)**
+- **[VII. Port Binding](#vii-port-binding)**
+- **[VIII. Concurrency](#viii-concurrency)**
+- **[IX. Disposability](#ix-disposability)**
+- **[X. Dev/Prod Parity](#x-devprod-parity)**
+- **[XI. Logs](#xi-logs)**
+- **[XII. Admin Processes](#xii-admin-processes)**
+
+
 ## I. Codebase
 **One codebase tracked in revision control, many deploys**
 
@@ -34,7 +48,7 @@ Modern software is usually delivered as a service in the form of *web apps* or *
 **Store config in the environment**
 
 - An app's **config** is anything likely to vary between deploys, such as:
-  - Resource handles to the database, Memcached, and other [backing services](https://12factor.net/backing-services)
+  - Resource handles to the database, caching systems, and other [backing services](#iv-backing-services)
   - Credentials to external services
   - Canonical hostname for the deploy
 - Config should be stored in **environmental variables** (shortened to *env vars*)
@@ -47,7 +61,7 @@ Modern software is usually delivered as a service in the form of *web apps* or *
   - Ex. databases, messaging/queueing systems, mail services, caching systems
 - Each distinct backing service is a **distinct resource**
 - A twelve-factor app **makes no distinction between local and third party services**
-  - The service is only accessed via URL or other credentials stored in the [config](https://12factor.net/config)
+  - The service is only accessed via URL or other credentials stored in the [config](#iii-config)
   - Allows for easily swapping services between deploys by modifying the config
 
 ## V. Build, Release, Run
@@ -55,7 +69,7 @@ Modern software is usually delivered as a service in the form of *web apps* or *
 
 A codebase is transformed into a deploy through 3 separate stages:
 1. **Build**
-  - Converts a code repo into an executable bundle known as a *build*
+  - Converts a [code repository](#i-codebase) into an executable bundle known as a *build*
 2. **Release**
   - Takes the build produced by the build stage and combines it with the deploy's *config*, resulting in a *release*, ready for immediate execution
   - Every release should have its own unique ID
@@ -74,8 +88,8 @@ A codebase is transformed into a deploy through 3 separate stages:
 **Export services via port binding**
 
 - The app exports services by binding them to a port, and listen to requests coming in on that port
-- The port-binding approach means that one app can become the backing service for another consuming app
-  - The URL to the backing app can be provided to the consuming app via its config
+- The port-binding approach means that one app can become the [backing service](#iv-backing-services) for another consuming app
+  - The URL to the backing app can be provided to the consuming app via its [config](#iii-config)
 - Ex. Webserver
   - Export HTTP to port 8000
   - Visiting `http://<host-ip>:5000` accesses the web service
@@ -91,7 +105,16 @@ A codebase is transformed into a deploy through 3 separate stages:
   - Example: If the app is receiving very high HTTP traffic, only the web process needs to be scaled out, rather than the entire app
 
 ## IX. Disposability
+**Maximize robustness with fast startup and graceful shutdown**
 
+- Processes should be **disposable**, meaning they can be started or stopped any time
+  - Facilitates elastic scaling and rapid deployment of [code](#i-codebase) or [config](#iii-config) changes
+- Processes should strive to **minimize startup time**
+  - From the launch command to being ready to receive requests, this should take a few seconds
+- Processes should **shut down gracefully** when they receive a [SIGTERM](https://en.wikipedia.org/wiki/Signal_(IPC)#SIGTERM) signal
+  - This may include to stop listening for requests, allow current requests to complete, then exiting
+- Processes should be **robust against sudden death**, such as the case of hardware failure
+  - Example: use a queueing backend that returns jobs to the queue when clients disconnect or time out, such as [Beanstalkd](https://beanstalkd.github.io/) or [Amazon Simple Queue Service (SQS)](https://aws.amazon.com/sqs/)
 
 ## X. Dev/Prod Parity
 
