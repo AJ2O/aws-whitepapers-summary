@@ -20,6 +20,8 @@ This whitepaper highlights how AWS can help an organization achieve the aforemen
 ### Definition
 **Continuous Integration (CI)** is a software development practice where code developers regularly merge their code into a central code repository, which then automatically triggers  builds and executes tests against the changed code.
 
+<img src="Diagrams/ContinuousIntegration.png" alt="CI"/>
+
 ### Benefits 
 - find and address bugs quicker
 - reduce the time needed to validate new software updates
@@ -32,19 +34,56 @@ This whitepaper highlights how AWS can help an organization achieve the aforemen
 - [**CodeArtifact**](https://aws.amazon.com/codeartifact) - fully managed artifact repository service that can be used to store, publish, and share software packages
   - Works with common package managers and tools such as Maven, Gradle, yarn, pip, etc.
 
+
 # Continuous Delivery
+
+### Definition
+
+**Continuous Delivery (CD)** is a softeare development practice
+
+### Benefits
+
+### Services
 
 # Deployment Strategies
 
+
 # Infrastructure as Code
+
+### Definition
+
+### Benefits
+
+### Services
 
 # Automation
 
+
 # Monitoring and Logging
+
+### Definition
+
+### Benefits
+
+### Services
+
 
 # Communication and Collaboration
 
+### Definition
+
+### Benefits
+
+### Services
+
+
 # Security
+
+### Definition
+
+### Benefits
+
+### Services
 
 # Conclusion
 
