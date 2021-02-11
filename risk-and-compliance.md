@@ -18,14 +18,23 @@ AWS secures the components of the host operating systems and below, down to the 
   - Ex. code vulnerabilities, data encryption
 - Networking
   - Ex. firewalls, host-based intrusion detection
+- Essentially any configurations that the customer can directly control
 
 AWS helps customers by managing controls associated with the physical infrastructure of the AWS environment. Customers can then use the **AWS control and compliance documentation** available to perform their control and verification procedures as required.
 
 ## Evaluating and Integrating AWS Controls
 
-AWS provides a wide range of information about its IT control environment via technical papers, reports, certifications, and other third-party attestations. These documents provide AWS customers with visibility and independent validation of the control environment, and may relieve some requirements to perform validation work themselves of their IT environment running on the AWS cloud.
+AWS provides a wide range of information about its IT control environment via: 
+- technical papers
+- reports
+- certifications
+- other third-party attestations
+
+These documents provide AWS customers with visibility and independent validation of the control environment, and may relieve some requirements for customers to perform validation work themselves of their AWS environment.
 
 # AWS Risk and Compliance Program
+
+
 
 # Customer Cloud Compliance Governance
 
