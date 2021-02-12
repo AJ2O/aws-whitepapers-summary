@@ -181,6 +181,11 @@ Resources:
 - CloudWatch Logs is a service that can aggregate logs across AWS services so that they can be centrally monitored
   - CloudWatch Logs Insights enables interactive querying and visualization of log data, supporting various log formats
 
+### CloudWatch Logs and Metrics Aggregation Diagram
+- Below is just one possible AWS architecture, and CloudWatch automatically collects data from each service and resource
+
+<img src="Diagrams/MonitoringAndLogging.png" alt="Monitoring"/>
+
 ### Amazon EventBridge
 - Provides a near real-time stream of system events that describe changes to AWS resources
 - You customize rules to match system events, and create targets functions or streams
@@ -197,7 +202,8 @@ Resources:
 
 # Communication and Collaboration
 
-### Definition
+### Principles
+- The smaller the team, the better the collaboration
 
 ### Benefits
 
