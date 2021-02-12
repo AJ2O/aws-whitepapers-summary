@@ -80,12 +80,18 @@ This whitepaper highlights how AWS can help an organization achieve the aforemen
 
 ### Services
 - [CloudFormation](https://aws.amazon.com/cloudformation/) - enables the creation and updates of AWS resources in an orderly and predictable method, using JSON or YAML template files. A single template file can create and update an entire AWS environment, or multiple templates can be used for multiple layers within an environment. CloudFormation also has built-in rollback to the previous template version if an error occurs.
-- []
+- [AWS Cloud Development Kit (AWS CDK)](https://aws.amazon.com/cdk/) - open-source software development framework to model and provision cloud resources using familiar programming languages
+  - Currently supports TypeScript, Python, Java, and .NET
 
 ### Example Partial CloudFormation Template
 - The following CloudFormation template is written in YAML
 - The full template creates a VPC with multiple subnets and availability zones, and launches EC2 instances within it, **all in about 5 minutes**
   - The link to the full template is [here](https://github.com/AJ2O/aws-short-projects/blob/main/1-vpc-from-scratch/vpc-cloudformation.yaml)
+- From this excerpt, we can find details on the created resources:
+  - A VPC with a defined CIDR range
+  - An internet gateway to allow outbound internet access
+  - A public subnet with a CIDR range, in the VPC
+  - An EC2 instance launched in a public subnet
 ```
 Resources:
   # Create VPC
@@ -146,6 +152,7 @@ Resources:
   - Security groups to control access to instances
   
 <img src="Diagrams/InfrastructureAsCode.png" alt="IaC"/>
+
 - **Note:** this diagram is simplified and doesn't contain every type of resource created
 
 # Automation
