@@ -157,6 +157,18 @@ Resources:
 
 # Automation
 
+### Definition
+**Automation** in the DevOps world focuses on the automatic configuration, deployment, and support of infrastructure, and of the applications that run on it. The removal of manual processes is key to succesful automation. Manual processes are error prone, time-consuming, and may lead to nonstandard environments.
+
+### Benefits
+- Repeatable configurations
+- Rapid changes
+- Improved productivity
+- Automated testing
+- Leveraged elasticity
+
+### Services
+- [OpsWorks](https://aws.amazon.com/opsworks) - application management service utilizing configuration management software (Chef or Puppet), and application lifecycle management. Lifecycle management defines when resources are set up, configured, deployed, undeployed, or shut down. Applications can also be defined as highly configurable, independently-managed stacks. An application may have stacks including a web tier, database tier, load balancing, etc.
 
 # Monitoring and Logging
 
