@@ -203,12 +203,9 @@ Resources:
 # Communication and Collaboration
 
 ### Principles
-- The smaller the team, the better the collaboration
-
-### Benefits
-
-### Services
-
+- **Shared Responsibility:** Teams set strong cultural norms around information sharing between them, allowing all parts of an organization to align more closely on goals and projects.
+  - Can be facilitated through chat applications, project-tracking systems, and wikis.
+- **Two-Pizza Teams:** the smaller the team, the better the collaboration. Meaningful conversations hit limits as group sizes increase, according to the [communication rule](http://www.businessinsider.com/jeff-bezos-two-pizza-rule-for-productive-meetings-2013-10).
 
 # Security
 
@@ -221,3 +218,5 @@ Resources:
 # Conclusion
 
 # References
+- [Whitepaper (Documentation)](https://docs.aws.amazon.com/whitepapers/latest/introduction-devops-aws/welcome.html)
+- [What is DevOps? (AWS)](https://aws.amazon.com/devops/what-is-devops/)
