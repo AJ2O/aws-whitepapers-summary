@@ -6,7 +6,7 @@
 This summary is based off of the October 2020 revision of the Introduction to DevOps on AWS whitepaper.
 
 **DevOps** is the combination of cultural and practical practices, as well as tools that increase the speed and stability of software development in an organization. The essential practices associated with DevOps are the following:
-- [Continuous Integration](continuous-integration)
+- [Continuous Integration](#continuous-integration)
 - [Continuous Delivery](#continuous-delivery)
 - [Infrastructure as Code](#infrastructure-as-code)
 - [Automation](#automation)
@@ -35,7 +35,6 @@ This whitepaper highlights how AWS can help an organization achieve the aforemen
   - Can use GitHub, BitBucket, CodeCommit, or S3 as the source code provider
 - [**CodeArtifact**](https://aws.amazon.com/codeartifact) - fully managed artifact repository service that can be used to store, publish, and share software packages
   - Works with common package managers and tools such as Maven, Gradle, yarn, pip, etc.
-
 
 # Continuous Delivery
 
@@ -222,8 +221,6 @@ Resources:
 
 ### Services
 - [Identity and Access Management (IAM)](https://aws.amazon.com/iam/) - defines the controls and policies used to manage access to AWS resources. It is used to centrally manage users, groups, service roles and security credentials such as passwords, access keys, and permissions policies that determine which AWS resources can be accessed by whom.
-
-# Conclusion
 
 # References
 - [Whitepaper (AWS Documentation)](https://docs.aws.amazon.com/whitepapers/latest/introduction-devops-aws/welcome.html)
