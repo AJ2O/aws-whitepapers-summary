@@ -173,11 +173,27 @@ Resources:
 # Monitoring and Logging
 
 ### Definition
+**Monitoring and Logging** refers to processes involving the collecting and examining of metrics from the application and/or its underlying infrastructure. This is an essential process for feedback on the application, which is fundamental for the practice of [communication and collaboration](#communication-and-collaboration). AWS provides feedback with three core services, [CloudWatch](https://aws.amazon.com/cloudwatch/), [EventBridge](https://aws.amazon.com/eventbridge/), and [CloudTrail](https://aws.amazon.com/cloudtrail/).
 
-### Benefits
+### Amazon CloudWatch
+- CloudWatch automatically gathers metrics from AWS services, which can be organized into dashboards, alarms, or events that can trigger operations in the AWS account
+  - Using the [PutMetric API Call](https://docs.aws.amazon.com/AmazonCloudWatch/latest/APIReference/API_PutMetricData.html), custom metrics from within applications can be pushed and viewed from CloudWatch as well
+- CloudWatch Logs is a service that can aggregate logs across AWS services so that they can be centrally monitored
+  - CloudWatch Logs Insights enables interactive querying and visualization of log data, supporting various log formats
 
-### Services
+### Amazon EventBridge
+- Provides a near real-time stream of system events that describe changes to AWS resources
+- You customize rules to match system events, and create targets functions or streams
+- Once matched, the targets operate as you defined, such as taking corrective action, sending notification messages, invoking Lamdba functions, etc.
 
+### AWS CloudTrail
+- An auditing service that logs API calls to AWS services, with detailed information for each invocation, such as:
+  - The API call, and whether it was denied or accepted
+  - The user or role that invoked it
+  - The caller's IP address
+  - The time it was invoked
+  - The options the call was invoked with
+  - etc...
 
 # Communication and Collaboration
 
