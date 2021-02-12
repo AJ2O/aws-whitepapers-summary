@@ -39,7 +39,6 @@ This whitepaper highlights how AWS can help an organization achieve the aforemen
 # Continuous Delivery
 
 ### Definition
-
 **Continuous Delivery (CD)** is a software development practice that expands upon CI, by deploying the code changes to a testing and/or production environment after a successful build stage.
 
 ### Benefits
@@ -70,16 +69,84 @@ This whitepaper highlights how AWS can help an organization achieve the aforemen
 
 <img src="Diagrams/ContinuousDeliveryEC2.png" alt="CD"/>
 
-# Deployment Strategies
-
-
 # Infrastructure as Code
 
 ### Definition
+**Infrastructure as Code (IaC)** involves applying the same principles of application code development to infrastructure provisioning. This means that when cloud infrastructure is to be created, it is written using a defined format, and stored in a source control system for logging its history of changes.
 
 ### Benefits
+- Provides a clear and repeatable method of creating, deploying, and maintaining infrastructure
+- Can provide a layer of governance for cloud infrastructure, as it follows a set format
 
 ### Services
+- [CloudFormation](https://aws.amazon.com/cloudformation/) - enables the creation and updates of AWS resources in an orderly and predictable method, using JSON or YAML template files. A single template file can create and update an entire AWS environment, or multiple templates can be used for multiple layers within an environment. CloudFormation also has built-in rollback to the previous template version if an error occurs.
+- []
+
+### Example Partial CloudFormation Template
+- The following CloudFormation template is written in YAML
+- The full template creates a VPC with multiple subnets and availability zones, and launches EC2 instances within it, **all in about 5 minutes**
+  - The link to the full template is [here](https://github.com/AJ2O/aws-short-projects/blob/main/1-vpc-from-scratch/vpc-cloudformation.yaml)
+```
+Resources:
+  # Create VPC
+  VPC:
+    Type: AWS::EC2::VPC
+    Properties:
+      CidrBlock: 10.0.0.0/16
+      InstanceTenancy: default
+  
+  # Create Internet Gateway
+  IGW:
+    Type: AWS::EC2::InternetGateway
+  IGWAttachment:
+    Type: AWS::EC2::VPCGatewayAttachment
+    Properties:
+      InternetGatewayId: !Ref IGW
+      VpcId: !Ref VPC
+  ...
+
+  # Create Subnets in each availability zone for the new VPC
+  PublicSubnetA:
+    Type: AWS::EC2::Subnet
+    Condition: UsePublicSubnetsCondition
+    Properties:
+      VpcId: !Ref VPC
+      AvailabilityZone: !Select
+        - 0
+        - Fn::GetAZs: !Ref AWS::Region
+      CidrBlock: 10.0.0.0/24 
+      MapPublicIpOnLaunch: True
+  ...
+
+  # Launch EC2 Instance into a Public Subnet
+  EC2InstancePublic:
+    Type: AWS::EC2::Instance
+    DependsOn:
+      - RouteTableAssociationPublicA
+      - RouteTableAssociationPublicB
+    Properties:
+      AvailabilityZone: !GetAtt PublicSubnetA.AvailabilityZone
+      SubnetId: !Ref PublicSubnetA
+      InstanceType: t2.micro
+      KeyName: MySSHKeyPair
+      SecurityGroupIds:
+        - !Ref PublicSecurityGroup
+      ImageId: ami-0080e4c5bc078760e
+  ...
+```
+
+### Example CloudFormation Stack
+- In CloudFormation, a running group of AWS resources created from a template is called a **stack**
+- Every stack created using the example template will contain the following group of AWS resources:
+  - A [VPC](https://aws.amazon.com/vpc/) to isolate the network
+  - Public and private subnets spread across multiple availability zones
+  - EC2 instances, and their subnet placement
+  - A load balancer to distribute traffic among the EC2 instances
+  - An [RDS](https://aws.amazon.com/rds/) instance with a failover instance in another availability zone
+  - Security groups to control access to instances
+  
+<img src="Diagrams/InfrastructureAsCode.png" alt="IaC"/>
+- **Note:** this diagram is simplified and doesn't contain every type of resource created
 
 # Automation
 
