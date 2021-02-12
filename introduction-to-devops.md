@@ -20,6 +20,7 @@ This whitepaper highlights how AWS can help an organization achieve the aforemen
 ### Definition
 **Continuous Integration (CI)** is a software development practice where code developers regularly merge their code into a central code repository, which then automatically triggers  builds and executes tests against the changed code.
 
+### CI Architecture Example
 <img src="Diagrams/ContinuousIntegration.png" alt="CI"/>
 
 ### Benefits 
@@ -52,12 +53,22 @@ This whitepaper highlights how AWS can help an organization achieve the aforemen
   - [AWS Fargate Containers](https://aws.amazon.com/fargate)
   - [AWS Lambda Functions](https://aws.amazon.com/lambda/)
   - On-Premises servers
-- [**CodePipeline**](https://aws.amazon.com/codepipeline) - continuous delivery service that enables modelling and visualizing the automated steps to release software. The steps below can be ordered, enumerated, and integrated with each other in granular detail:
+- [**CodePipeline**](https://aws.amazon.com/codepipeline) - CD service that enables modelling and visualizing the automated steps to release software. The steps below can be ordered, enumerated, and integrated with each other in granular detail:
   - **Source Control:** CodeCommit, S3, and popular tools (GitHub, BitBucket, etc...)
   - **Build:** CodeBuild, Jenkins and other third-party tools
   - **Test:** CodeBuild, BlazeMeter, and other third-party tools
   - **Deploy:** CodeDeploy, [CloudFormation](https://aws.amazon.com/cloudformation/), [Elastic Beanstalk](https://aws.amazon.com/elasticbeanstalk/), and many other AWS services
   - **Invoke:** Lambda and [Step Functions](https://aws.amazon.com/step-functions/) can be invoked during and/or between stages
+
+### CD Architecture Example
+- This diagram displays a CD implementation that branches from [the CI diagram example](#ci-architecture-example)
+- There's no one way of designing CD steps, but this example lays a solid foundation:
+  - Source Control: CodeCommit
+  - Build: CodeBuild
+  - Test: CodeBuild
+  - Deploy: CodeDeploy to EC2 instances
+
+<img src="Diagrams/ContinuousDeliveryEC2.png" alt="CD"/>
 
 # Deployment Strategies
 
