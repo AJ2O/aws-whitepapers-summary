@@ -23,9 +23,9 @@ This whitepaper highlights how AWS can help an organization achieve the aforemen
 <img src="Diagrams/ContinuousIntegration.png" alt="CI"/>
 
 ### Benefits 
-- find and address bugs quicker
-- reduce the time needed to validate new software updates
-- improve software quality
+- Find and address bugs quicker
+- Reduce the time needed to validate new software updates
+- Improve software quality
 
 ### Services
 - [**CodeCommit**](https://aws.amazon.com/codecommit/) - secure & scalable source control service that hosts private git repositories
@@ -39,11 +39,25 @@ This whitepaper highlights how AWS can help an organization achieve the aforemen
 
 ### Definition
 
-**Continuous Delivery (CD)** is a softeare development practice
+**Continuous Delivery (CD)** is a software development practice that expands upon CI, by deploying the code changes to a testing and/or production environment after a successful build stage.
 
 ### Benefits
+- Ensures all deployment-ready build artifacts have passed through a standardized validation process
+- A test environment allows for detailed verification of software (beyond unit testing) before deploying it to customers
+  - Examples: UI testing, load testing, integration testing
 
 ### Services
+- [**CodeDeploy**](https://aws.amazon.com/codedeploy) - automated deployment service capable of deploying software to:
+  - [Amazon EC2 Instances](https://aws.amazon.com/ec2)
+  - [AWS Fargate Containers](https://aws.amazon.com/fargate)
+  - [AWS Lambda Functions](https://aws.amazon.com/lambda/)
+  - On-Premises servers
+- [**CodePipeline**](https://aws.amazon.com/codepipeline) - continuous delivery service that enables modelling and visualizing the automated steps to release software. The steps below can be ordered, enumerated, and integrated with each other in granular detail:
+  - **Source Control:** CodeCommit, S3, and popular tools (GitHub, BitBucket, etc...)
+  - **Build:** CodeBuild, Jenkins and other third-party tools
+  - **Test:** CodeBuild, BlazeMeter, and other third-party tools
+  - **Deploy:** CodeDeploy, [CloudFormation](https://aws.amazon.com/cloudformation/), [Elastic Beanstalk](https://aws.amazon.com/elasticbeanstalk/), and many other AWS services
+  - **Invoke:** Lambda and [Step Functions](https://aws.amazon.com/step-functions/) can be invoked during and/or between stages
 
 # Deployment Strategies
 
