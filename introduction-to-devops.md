@@ -9,6 +9,7 @@ This summary is based off of the October 2020 revision of the Introduction to De
 - [Continuous Integration](continuous-integration)
 - [Continuous Delivery](#continuous-delivery)
 - [Infrastructure as Code](#infrastructure-as-code)
+- [Automation](#automation)
 - [Monitoring and Logging](#monitoring-and-logging)
 - [Communication and Collaboration](#communication-and-collaboration)
 - [Security](#security)
@@ -203,20 +204,28 @@ Resources:
 # Communication and Collaboration
 
 ### Principles
-- **Shared Responsibility:** Teams set strong cultural norms around information sharing between them, allowing all parts of an organization to align more closely on goals and projects.
-  - Can be facilitated through chat applications, project-tracking systems, and wikis.
-- **Two-Pizza Teams:** the smaller the team, the better the collaboration. Meaningful conversations hit limits as group sizes increase, according to the [communication rule](http://www.businessinsider.com/jeff-bezos-two-pizza-rule-for-productive-meetings-2013-10).
+- **Shared Responsibility:** Teams set strong cultural norms around information sharing between them, allowing all parts of an organization to align more closely on goals and projects
+  - Can be facilitated through chat applications, project-tracking systems, and wikis
+- **Two-Pizza Teams:** the smaller the team, the better the collaboration 
+  - Meaningful conversations are limited as group size increases, according to the [communication rule](http://www.businessinsider.com/jeff-bezos-two-pizza-rule-for-productive-meetings-2013-10)
 
 # Security
 
-### Definition
+### Principles
+- Security should be a constant consideration in DevOps processes
+- The [**AWS Shared Responsibility Model**](https://aws.amazon.com/compliance/shared-responsibility-model/) can help relieve some of the customer's operational burden to AWS
+  - AWS is responsible for "*Security **of** the Cloud*", such as the physical hardware, networking, and software that comprises the underlying infrastructure of applications
+  - The customer is responsible for "*Security **in** the Cloud*", which is determined by the AWS services used by the customer
+    - In terms of DevOps, this may include server configuration, user access to certain services, and networking traffic protection to application environments
 
-### Benefits
+<img src="https://d1.awsstatic.com/security-center/Shared_Responsibility_Model_V2.59d1eccec334b366627e9295b304202faf7b899b.jpg" alt="Security"/>
 
 ### Services
+- [Identity and Access Management (IAM)](https://aws.amazon.com/iam/) - defines the controls and policies used to manage access to AWS resources. It is used to centrally manage users, groups, service roles and security credentials such as passwords, access keys, and permissions policies that determine which AWS resources can be accessed by whom.
 
 # Conclusion
 
 # References
-- [Whitepaper (Documentation)](https://docs.aws.amazon.com/whitepapers/latest/introduction-devops-aws/welcome.html)
+- [Whitepaper (AWS Documentation)](https://docs.aws.amazon.com/whitepapers/latest/introduction-devops-aws/welcome.html)
 - [What is DevOps? (AWS)](https://aws.amazon.com/devops/what-is-devops/)
+- [Shared Responsibility Model (AWS)](https://aws.amazon.com/compliance/shared-responsibility-model/)
