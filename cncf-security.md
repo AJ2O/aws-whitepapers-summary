@@ -128,7 +128,17 @@ The Runtime phase is comprised of three main areas: [compute](#compute), [storag
   - Rootless services and containers are vital to ensure that if an attacker does break into the environment, they cannot easily access the underlying host or other containers
 
 # Compliance
+- **Regulatory Audits** - Where applicable, every organization should evaluate which regulatory standards apply to them (ex. [PCI-DSS](https://www.pcisecuritystandards.org/pci_security/standards_overview), [HIPAA](https://www.hhs.gov/hipaa/for-professionals/index.html), [FedRAMP](https://www.gsa.gov/technology/government-it-initiatives/fedramp))
+  - The organization should then determine how specific standards apply to their cloud systems, and how to implement those standards
+  - The process of gathering supporting evidence of adherence to standards should be automated, with non-repudiation guarantees wherever possible
 
+# Conclusion
+Core security concepts in cloud architectures can be consistently applied while designing, developing, and deploying new capabilities:
+- **Protection** from unauthorized access
+- **Ephemerality** reduces asset exposure by consistently rebasing from a known good state
+- **Immutability** to preserve the integrity of content and code
+- **Availability** of services, tooling, and content
+- **Auditing** provides a way of ensuring that no abnormal behaviour has occurred and to keep track of authorized changes
 
 # References
 - [Source Whitepaper](https://lists.cncf.io/g/cncf-toc/attachment/5509/0/CNCF_cloud-native-security-whitepaper-Nov2020.pdf)
