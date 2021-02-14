@@ -129,5 +129,6 @@ The Runtime phase is comprised of three main areas: [compute](#compute), [storag
 
 # Compliance
 
+
 # References
 - [Source Whitepaper](https://lists.cncf.io/g/cncf-toc/attachment/5509/0/CNCF_cloud-native-security-whitepaper-Nov2020.pdf)
