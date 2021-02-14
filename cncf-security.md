@@ -13,7 +13,7 @@ Cloud native development can be modelled in the distinct phases that comprise th
 - **Distribute**
   - The process of building code and producing artifacts ready for deployment
 - **Deploy**
-  - The process of transferring artifacts to a runtime environment, and starting the application
+  - The process of transferring artifacts to an environment, and starting the application
 - **Runtime**
   - The environment that contains the running application
     - Ex. Hardware, host, OS, container image runtime
@@ -27,14 +27,17 @@ Cloud native security seeks to ensure the same levels of diligence, integrity, t
 A cloud native application's **lifecycle** refers to the technology, practices, and processes that enable workloads to run within the context of a cloud environment. It is comprised of four continuous phases: Develop, Distribute, Deploy, and Runtime. The phases below describe methods of implementing security at each of these phases.
 
 ## Develop
+- **Security Checks in Development**
+  - Tools to perform the scanning of known vulnerabilities or high risk configurations in  [Infrastructure as Code (IaC)](https://stackify.com/what-is-infrastructure-as-code-how-it-works-best-practices-tutorials/) templates or  application manifests in the IDE or during a Pull Request
+  - Use dedicated development, testing, and production environments to provide isolated environments for systems, applications, and golden VM/container base images
 - **Development of Tests**
-- **Code Review**
+  - Tests built for code should be business-critical, have a high-threat profile, subject to frequent change, or have a historical source of bugs
+  - This can identify high-risk and high-impact code hotspots that provide a high return on investment for developing tests
 
 ## Distribute
-- **Build Pipeline** - [Continuous Integration (CI)](https://aws.amazon.com/devops/continuous-integration) servers should be isolated and restricted to projects of a similar security classification or sensitivity
-- **Image Scanning** - Implement scanning in the CI pipeline for vulnerabilities, potential malware in open source packages or images from public repositories
-- **Static Analysis & Security Testing** - Static analysis of [Infrastructure as Code (IaC)](https://www.ibm.com/cloud/learn/infrastructure-as-code), application manifests, and software code may cover linting, identifying misconfigurations, and vulnerability scanning
-- **Dynamic Analysis** - Scan deployed infrastructure for configuration drift, and validation of the expected network attack surface
+- **Build Pipeline** - [Continuous Integration (CI)](https://aws.amazon.com/devops/continuous-integration) servers should be isolated and restricted to projects of a similar security sensitivity
+- **Image Scanning** - Implement scanning in the CI pipeline for vulnerabilities and potential malware in open source packages or images from public repositories
+- **Dynamic Analysis** - Scan deployed infrastructure for [configuration drift](https://www.continuitysoftware.com/blog/it-resilience/what-is-configuration-drift/) and validation of the expected network attack surface
 - **Signing, Trust, and Integrity** - Signing of image content at build time, and validation of the signed data before use protects that image data from tampering between build and runtime
 - **Encryption** - Ensures that image contents remain confidential for promotion from build time through runtime
 
@@ -48,20 +51,46 @@ A cloud native application's **lifecycle** refers to the technology, practices, 
   - These elements provide a trail of evidence to follow when an investigation takes place and a root cause needs to be established
 
 ## Runtime Environment
-The Runtime phase comprises three critical areas: compute, access, and storage.
+The Runtime phase is comprised of three main areas: [compute](#compute), [storage](#storage), and [access](#access).
 
 ### Compute
-
+- **Containers**
+  - Containers provide virtualization on the OS-level, so using an underlying read-only OS is important, with other services disabled
+  - Improperly configured containers can impact the host kernel security, and thus compromising all other services running on the same host
+- **Orchestration**
+  - Orchestration systems have many components that co-exist, yet can operate independently of each other, and thus present attack vectors that impact the system's overall security:
+    - Malicious access and misuse of the orchestrator's APIs
+    - Interception of control plane or application traffic
+    - Unauthorized changes to any of the system's initial configurations
+  - Orchestrator control plane components (ex. scheduler, API server, controller-manager) should communicate via mutual authentication
+- **Serverless Functions**
+  - Ingress network inspection can be used to detect and remove malicious payloads and commands to functions (ex. SQL injection)
+  - Egress network inspection can be used to detect and if possible, prevent access to functions from [command and control (C&C)](https://www.trendmicro.com/vinfo/us/security/definition/command-and-control-server) servers
+  - Using principle of least privilege, internal processes must only execute functions defined in an explicit allow list
+- **Audit Log Analysis**
+  - Audit logs can be used to identify system compromise, abuse, or misconfiguration
+  - Automation can be used to detect system violations based on preset rules that filter violations based on the organization's policies
+  - Logs should be immediately routed to a location inaccessible using  cluster-level credentials, to prevent attackers from covering their tracks
 
 ### Storage
-
+- **Types of Storage**
+  - *Presented Storage* - Storage directly made available to workloads such as:
+    - Volumes
+    - Block stores
+    - Shared Filesystems
+  - *Access Storage* - Storage accessed via APIs:
+    - Object stores
+    - Key-Value stores
+    - Databases
+    - Caching layers
+  - The interfaces by which workloads can access, store, and consume storage may be protected via access controls, authentication, authorization, encryption at rest, and encryption in transit
 
 ### Access
 - **Identity and Access Management (IAM)**
-  - Applications and workloads should be explicitly authorized to communicate with each other using mutual authentication
+  - Workloads should be explicitly authorized to communicate with each other using mutual authentication
 - **Credential Management**
-  - **Hardware Security Modules (HSMs)** - HSMs should be used to physically protect cryptographic secrets with an encryption key that does not leave the HSM
-  - **Credential Management Cycle** - Secrets, whenever possible, should have a short expiration period, after which they become useless
+  - *Hardware Security Modules (HSMs)* - HSMs should be used to physically protect cryptographic secrets with an encryption key that does not leave the HSM
+  - *Credential Management Cycle* - Secrets, whenever possible, should have a short expiration period, after which they become useless
 - **Availability** - Implement guardrails for DoS and DDoS attacks
 
 # Security Assurance
