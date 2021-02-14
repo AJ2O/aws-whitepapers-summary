@@ -24,19 +24,45 @@ Cloud native security seeks to ensure the same levels of diligence, integrity, t
 # Cloud Native Layers
 
 ## Lifecycle
-A cloud native application's **lifecycle** refers to the technology, practices, and processes that enable workloads to run within the context of a cloud environment. It is comprised of four continuous phases: Develop, Distribute, Deploy, and Runtime.
+A cloud native application's **lifecycle** refers to the technology, practices, and processes that enable workloads to run within the context of a cloud environment. It is comprised of four continuous phases: Develop, Distribute, Deploy, and Runtime. The phases below describe methods of implementing security at each of these phases.
 
 ## Develop
-
+- **Development of Tests**
+- **Code Review**
 
 ## Distribute
-
+- **Build Pipeline** - [Continuous Integration (CI)](https://aws.amazon.com/devops/continuous-integration) servers should be isolated and restricted to projects of a similar security classification or sensitivity
+- **Image Scanning** - Implement scanning in the CI pipeline for vulnerabilities, potential malware in open source packages or images from public repositories
+- **Static Analysis & Security Testing** - Static analysis of [Infrastructure as Code (IaC)](https://www.ibm.com/cloud/learn/infrastructure-as-code), application manifests, and software code may cover linting, identifying misconfigurations, and vulnerability scanning
+- **Dynamic Analysis** - Scan deployed infrastructure for configuration drift, and validation of the expected network attack surface
+- **Signing, Trust, and Integrity** - Signing of image content at build time, and validation of the signed data before use protects that image data from tampering between build and runtime
+- **Encryption** - Ensures that image contents remain confidential for promotion from build time through runtime
 
 ## Deploy
+- **Pre-Flight Deployment Checks** - Verify the existence, applicability, and current state of:
+  - Image signature and integrity
+  - Image runtime policies
+  - Container runtime policies
+  - Host vulnerability and compliance controls
+- **Response & Investigation** - An application should provide logs regarding authentication, authorization, actions and failures
+  - These elements provide a trail of evidence to follow when an investigation takes place and a root cause needs to be established
+
+## Runtime Environment
+The Runtime phase comprises three critical areas: compute, access, and storage.
+
+### Compute
 
 
-## Runtime
+### Storage
 
+
+### Access
+- **Identity and Access Management (IAM)**
+  - Applications and workloads should be explicitly authorized to communicate with each other using mutual authentication
+- **Credential Management**
+  - **Hardware Security Modules (HSMs)** - HSMs should be used to physically protect cryptographic secrets with an encryption key that does not leave the HSM
+  - **Credential Management Cycle** - Secrets, whenever possible, should have a short expiration period, after which they become useless
+- **Availability** - Implement guardrails for DoS and DDoS attacks
 
 # Security Assurance
 
