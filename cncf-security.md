@@ -95,6 +95,38 @@ The Runtime phase is comprised of three main areas: [compute](#compute), [storag
 
 # Security Assurance
 
+## Security vs. Compliance
+- **Security** is a risk management process that seeks to identify and address risks posed to a system
+  - The iterative hardening of systems will reduce or transfer risk depending on an application's or organization's risk profiles and tolerances
+  - Ex. For updating a base image, the following *security* considerations are made:
+    - Which additional ports should be open?
+    - How should we review updated packages used by this image?
+    - What permissions should be made available?
+- **Compliance standards** form requirement definitions by which systems are assessed against
+  - The outcomes of the assessment are either a pass or a fail
+- A compliant system is not guaranteed to be secure, nor a secure system guaranteed to be compliant
+
+## Threat Modelling
+- **End-to-end Architecture** - A clear understanding of the organization's cloud architecture should result in data impact guidance and classifications
+- **Threat Identification** - It is recommended to use a mature, well-used model of threats such as [STRIDE](https://www.microsoft.com/security/blog/2007/09/11/stride-chart/). Common threat examples are listed below:
+  - **S**poofing - a cluster admin by stealing credentials via social engineering
+  - **T**ampering - of an API config file
+  - **R**epudiation - of an attacker's actions because of disabled API auditing
+  - **I**nformation Disclosure - if an attacker compromises a running workload and exfiltrates data
+  - **D**oS - a pod doesn't have applied resource limits, and the node's CPU and memory and fully consumed
+  - **E**levation of Privilege - a pod is running with unrestricted permissions
+
+## Security Stack
+- **Compute & Node Checks** - organizations should leverage tooling that assert hardening and security of compute resources before they are ready to accept workloads
+- **Workload & Host Runtime Security** - there are four key protection surface areas to consider:
+  - Process / Container / System Level Security
+  - Network Security
+  - Data Security
+  - Application Security
+- **Zero Trust Architecture**
+- **Least Privilege** - not only applied to users performing various functions operating the environment, but it also to every level of the workload's architecture
+  - Rootless services and containers are vital to ensure that if an attacker does break into the environment, they cannot easily access the underlying host or other containers
+
 # Compliance
 
 # References
