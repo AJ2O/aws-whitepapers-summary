@@ -113,7 +113,7 @@ The Runtime phase is comprised of three main areas: [compute](#compute), [storag
   - **T**ampering - of an API config file
   - **R**epudiation - of an attacker's actions because of disabled API auditing
   - **I**nformation Disclosure - if an attacker compromises a running workload and exfiltrates data
-  - **D**oS - a pod doesn't have applied resource limits, and the node's CPU and memory and fully consumed
+  - **D**oS - a pod doesn't have applied resource limits, and can fully consume the node's CPU and memory, hindering other pods
   - **E**levation of Privilege - a pod is running with unrestricted permissions
 
 ## Security Stack
