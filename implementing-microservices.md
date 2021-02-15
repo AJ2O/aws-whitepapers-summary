@@ -51,7 +51,20 @@ A typical microservices architecture splits its functionalities by implementing 
 
 # Reducing Operational Complexity
 
-#
+## API Implementation
+- Designing, monitoring, and deploying APIs can be a time-consuming task, especially when taking into consideration the following challenges:
+  - Keeping multiple versions to assure backward compatibility for all clients
+  - Development, test, and production environments
+  - Validating authorization to invoke the API
+  - Transforming requests and responses
+  - Throttling requests to avoid overloading application servers
+  - Caching responses for performance
+- [API Gateway](https://aws.amazon.com/api-gateway/) addresses those challenges, reducing the operational complexity of creating and maintaining APIs 
+
+## Serverless Microservices
+- As mentioned [earlier](#serverless-functions), serverless functions allow for executing application logic without the need to spend time and effort provisioning, managing, and scaling servers
+
+# Distributed Systems Components
 
 # References
 - [Whitepaper](https://d1.awsstatic.com/whitepapers/microservices-on-aws.pdf)
