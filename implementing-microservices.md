@@ -15,6 +15,8 @@
   - [Asynchronous Communication and Lightweight Messaging](#asynchronous-communication-and-lightweight-messaging)
   - [Orchestration and State Management](#orchestration-and-state-management)
   - [Distributed Monitoring](#distributed-monitoring)
+  - [Chattiness](#chattiness)
+  - [Auditing](#auditing)
 - [**References**](#references)
 
 # Overview
@@ -128,7 +130,59 @@ This section explores several techniques for allowing microservices to discover 
 - Step Functions supports orchestration of Lambda functions, applications on [EC2](https://aws.amazon.com/ec2) or ECS, and additional AWS services such as [SageMaker](https://aws.amazon.com/sagemaker/) and [Glue](https://aws.amazon.com/glue/)
 
 ## Distributed Monitoring
-- 
+- [CloudWatch](https://aws.amazon.com/cloudwatch/) can be used to aggregate and visualize metrics, centralize log files, and set alarms for the AWS environment and its running applications and services
+- Most AWS resources centralize their log files by default, with the primary locations being S3 or CloudWatch Logs
+  - CloudWatch Logs Insights can be used to query and visualize logs instantly, allowing for troubleshooting operational problems
+  - [Elasticsearch Service (ES)](https://aws.amazon.com/elasticsearch-service/) can be used for full-text search, structured search, and analytics
+    - [Kibana](https://www.elastic.co/kibana) is a plugin for ES that can be used to provide data visualization
+  - [Athena](https://aws.amazon.com/athena/) can likewise be used to run SQL queries against log files in S3
+- [AWS X-Ray](https://aws.amazon.com/xray/) can be used to trace requests that traverse through multiple microservices, helping to debug and analyze the application's architecture
+  - Example X-Ray Service Map:
+
+    <img src="Diagrams/XRay.png" alt="X-Ray"/>
+
+## Chattiness
+- The communication overhead increases in a microservices architecture because the services have to talk to each other, and high message volumes can cause issues such as latency
+- For **protocols**, it is common to use simple protocols like HTTP
+  - Messages can be encoded in diffrent ways, such as:
+    - Human-readable formats: JSON or YAML
+    - Efficient binary formats: Avro or Protocol Buffers
+- **Caches** are a great way to reduce chattiness of microservices, and multiple caching layers are possible:
+  - ElastiCache can reduce the volume of calls to other services by caching results locally
+  - API Gateway provides a built-in layer of caching responses
+  - DynamoDB DAX provides caching and microsecond latency for DynamoDB tables
+
+## Auditing
+- To help enforce security policies, it is important to audit both resource access as well as activities that lead to system changes
+- Changes must be tracked at the individual service level as well across services running on the wider system
+
+### Audit Trail
+- [CloudTrail](https://aws.amazon.com/cloudtrail/) enables API calls made in the AWS cloud to be logged to either CloudWatch in real-time, or S3 within minutes
+- All user and automated system actions becomes searchable and can be analyzed for unexpected behaviour, policy violations, or debugging
+- Information recorded includes but is not limited to: 
+  - timestamps
+  - invoking user/role/account
+  - service and action called
+  - caller's IP address
+  - request parameters
+
+### Events and Real-Time Actions
+- [EventBridge](https://aws.amazon.com/eventbridge/) can be used to deliver a stream of real-time data events from the user's own applications, third-party SaaS applications, and AWS services
+- Once an event pattern is matched by the rule, the event is routed to the rule's targets that are defined by the user
+- Targets include, but are not limited to:
+  - API Gateway endpoints (ex. invoking an API call to a service)
+  - Kinesis Data Streams
+  - Lambda Functions (ex. taking corrective action)
+  - SNS Topics (ex. sending a notification email)
+  - SQS Queues
+- A full list of EventBridge targets is [listed in the official documentation](https://docs.aws.amazon.com/eventbridge/latest/userguide/eventbridge-targets.html)
+
+### Resource Inventory and Change Management
+- [AWS Config](https://aws.amazon.com/config/) allows an organization to define policies with specific rules to automatically detect, track, and alert users to policy violations
+- Config can be used in combination with other AWS services to automatically take corrective action once a violation occurs, as the example below illustrates:
+
+# Conclusion
+Microservices architecture is a distributed design approach intended to overcome the limitations of traditional monolithic architectures, yet they also come with a unique set of challenges of their own. This whitepaper highlights the managed services provided by AWS that can help teams implement microservices with minimized complexity and architectural burden.
 
 # References
 - [Whitepaper](https://d1.awsstatic.com/whitepapers/microservices-on-aws.pdf)
