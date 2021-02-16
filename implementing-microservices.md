@@ -1,7 +1,7 @@
 # **Implementing Microservices on AWS**
 
 # Sections
-- [**Overview**](#)
+- [**Overview**](#overview)
 - [**Simple Microservices Architecture on AWS**](#simple-microservices-architecture-on-aws)
   - [User Interface](#user-interface-ui)
   - [Microservices](#microservices)
@@ -17,6 +17,7 @@
   - [Distributed Monitoring](#distributed-monitoring)
   - [Chattiness](#chattiness)
   - [Auditing](#auditing)
+- [**Conclusion**](#conclusion)
 - [**References**](#references)
 
 # Overview
@@ -138,7 +139,6 @@ This section explores several techniques for allowing microservices to discover 
   - [Athena](https://aws.amazon.com/athena/) can likewise be used to run SQL queries against log files in S3
 - [AWS X-Ray](https://aws.amazon.com/xray/) can be used to trace requests that traverse through multiple microservices, helping to debug and analyze the application's architecture
   - Example X-Ray Service Map:
-
     <img src="Diagrams/XRay.png" alt="X-Ray"/>
 
 ## Chattiness
@@ -180,9 +180,15 @@ This section explores several techniques for allowing microservices to discover 
 ### Resource Inventory and Change Management
 - [AWS Config](https://aws.amazon.com/config/) allows an organization to define policies with specific rules to automatically detect, track, and alert users to policy violations
 - Config can be used in combination with other AWS services to automatically take corrective action once a violation occurs, as the example below illustrates:
+  - In this application, the organization has decided that API Gateway must only accept HTTPS requests, and set up a Config rule to track it
+  - If a developer changes the API Gateway to allow non-compliant HTTP traffic, the following events will occur: 
+  - the team will be notified of it
+  - the configuration change will be logged to S3
+  - the system will take automatic corrective action to revert API Gateway using Lambda
+    <img src="Diagrams/Config.png" alt="Config"/>
 
 # Conclusion
-Microservices architecture is a distributed design approach intended to overcome the limitations of traditional monolithic architectures, yet they also come with a unique set of challenges of their own. This whitepaper highlights the managed services provided by AWS that can help teams implement microservices with minimized complexity and architectural burden.
+Microservices architecture is a distributed design approach intended to overcome the limitations of traditional monolithic architectures, yet they also come with a unique set of challenges of their own. This whitepaper highlights the managed services provided by AWS that can help teams implement microservices with reduced architectural complexity and operational burden.
 
 # References
 - [Whitepaper](https://d1.awsstatic.com/whitepapers/microservices-on-aws.pdf)
