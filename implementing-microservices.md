@@ -66,6 +66,26 @@ A typical microservices architecture splits its functionalities by implementing 
 
 # Distributed Systems Components
 
+## Service Discovery
+This section explores several techniques for allowing microservices to discover and interact with each other (perform service discovery) on AWS.
+
+### DNS-Based Service Discovery
+- ECS creates and manages a registry of service names using the [Route53](https://aws.amazon.com/route53/) Auto Naming API
+  - Each name is mapped to a set of DNS records so that services can be referred to by name in the code and be resolved at runtime
+- [AWS Cloud Map](https://aws.amazon.com/cloud-map/) is another option to provide a service registry for resources, such as for IPs, URLs, and ARNs
+
+### Service Meshes
+- **Service meshes** are an additional layer for handling inter-service communication, being responsible for monitoring and controlling traffic in complex architectures (hundreds or thousands of microservices)
+- Service meshes don't require developers to make changes to existing application code
+- [AWS App Mesh](https://aws.amazon.com/app-mesh/) is a service mesh that standardizes how microservices communicate, provides end-to-end visibility, and helps to ensure high-availability for applications
+
+### Third-Party Software
+- Distributed, reliable key-value stores such as [Consul](https://www.consul.io/), [etcd](https://github.com/coreos/etcd), or [Eureka](https://github.com/Netflix/eureka) may be used for service discovery
+
+## Distributed Data Management
+
+
+
 # References
 - [Whitepaper](https://d1.awsstatic.com/whitepapers/microservices-on-aws.pdf)
 - [What are Microservices? (AWS)](https://aws.amazon.com/microservices/)
