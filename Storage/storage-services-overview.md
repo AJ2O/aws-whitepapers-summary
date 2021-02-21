@@ -26,9 +26,18 @@
   - [Security](#security-2)
   - [Cost Model](#cost-model-2)
 - [Amazon EBS](#amazon-ebs)
+  - [Usage Patterns](#usage-patterns-3)
+  - [Anti-Patterns](#anti-patterns-3)
+  - [Performance](#performance-3)
+  - [Durability and Availability](#durability-and-availability-3)
+  - [Security](#security-3)
+  - [Cost Model](#cost-model-3)
 - [Amazon EC2 Instance Storage](#amazon-ec2-instance-storage)
+  - [Anti-Patterns](#anti-patterns-4)
 - [AWS Snowball](#aws-snowball)
+  - [Anti-Patterns](#anti-patterns-5)
 - [Amazon CloudFront](#amazon-cloudfront)
+  - [Anti-Patterns](#anti-patterns-6)
 - [Conclusion](#conclusion)
 - [References](#references)
 
@@ -89,11 +98,11 @@ The following are storage needs for which other AWS services are a better choice
   - Helpful for security audits, learning the customer base, and understanding the S3 bill
 
 ## Cost Model
-- Pay only for the storage actually used
 - **3 pricing components:**
   - Storage (per GB/month)
   - Data transfer in or out (per GB/month)
-  - Requests (per thousand requests/month)
+  - Requests (per 1,000 requests/month)
+
 
 # Amazon Glacier
 [Amazon Glacier](https://aws.amazon.com/glacier/) provides low-cost, highly durable, highly secure archive storage in the cloud. Data is stored as archives, the Glacier equivalent to S3 objects, and archives can represent a single file, or several files. Archives are then stored in vaults, the Glacier equivalent to S3 buckets. Data can be seamlessly moved between Glacier and S3 using [lifecycle policies](https://docs.aws.amazon.com/AmazonS3/latest/userguide/lifecycle-transition-general-considerations.html).
@@ -135,11 +144,11 @@ The following are storage needs for which other AWS services are a better choice
   - Once locked, the lock policy cannot be changed, enforcing compliance objectives
 
 ## Cost Model
-- Pay only for what you use
 - **3 pricing components:**
   - Storage (per GB/month)
   - Data transfer out (per GB/month)
-  - Requests (per thousand UPLOAD and RETRIEVAL requests/month)
+  - Requests (per 1,000 UPLOAD and RETRIEVAL requests/month)
+
 
 # Amazon EFS
 [Amazon Elastic File System (EFS)](http://aws.amazon.com/efs/) provides scalable, highly available, and highly durable network file storage for EC2 instances. For EC2 instances to access EFS, there must be an EFS system in the same region. EC2 instances can then access the system through its mount targets in the region's Availability Zones.
@@ -171,9 +180,9 @@ The following are storage needs for which other AWS services are a better choice
   - Applications can attain substantial levels of aggregate throughput and IOPS if they are parallelized across multiple instances
 - **Two Performance Modes for EFS systems:**
   - General
-    - Appropriate for most file systems (less than 7000 file operations/second)
+    - Appropriate for most file systems (less than 7,000 file operations/second)
   - Max I/O:
-    - More than 7000 file operations/second
+    - More than 7,000 file operations/second
     - Optimized for applications where tens, hundreds, or thousands of instances are accessing the EFS system
 - Can burst at high-throughput levels for a short time using a [burst credit system](https://docs.aws.amazon.com/efs/latest/ug/performance.html#bursting)
 
@@ -193,16 +202,92 @@ The following are storage needs for which other AWS services are a better choice
 - Pay only for the amount of storage put into the file system
 - EFS dynamically grows and shrinks, so no payment for provisioning storage in advance is required
 
-# Amazon EBS
 
+# Amazon EBS
+[Amazon EBS](http://aws.amazon.com/ebs/) provides durable block storage volumes for [Amazon EC2](https://aws.amazon.com/ec2/) instances. EBS volumes are network-attached and can persist independently from the running life of a single EC2 instance. Multiple volumes can be attached to a single instance, however, any single volume can only be attached to one instance at a time.
+
+EBS also provides the ability to create [point-in-time snapshots](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/EBSSnapshots.html) of volumes, backed by S3. New EBS volumes can be instantiated from these snapshots, and snapshots can be copied within and across regions.
+
+## Usage Patterns
+EBS is suited for workloads that require relatively **frequently changing data**:
+- Primary storage for a database or file system
+- Applications or operating systems needing direct access to raw block-level storage
+
+## Anti-Patterns
+The following are storage needs for which other AWS services are a better choice than EBS:
+- **Temporary storage**
+  - [EC2 Instance Storage](http://docs.aws.amazon.com/AWSEC2/latest/UserGuide/InstanceStorage.html) provide better performance for needs such as scratch disks, buffers, queues, and caches
+- **Multi-instance storage**
+  - EBS volumes can only be attached to one instance at a time
+  - Use [EFS](http://aws.amazon.com/efs/) instead
+- **Highly durable storage**
+  - For very high durable storage, use [S3](https://aws.amazon.com/s3/) or [EFS](http://aws.amazon.com/efs/) instead
+  - They are designed for high availability and durability, spanning multiple Availability Zones by default
+- **Static data or web content**
+  - [S3](https://aws.amazon.com/s3/) is a more cost-effective and scalable solution for data that doesn't change often
+  - Web content can be delivered directly out of S3 or from mulitiple instances using [EFS](http://aws.amazon.com/efs/)
+
+## Performance
+- EBS provides a range of volume types that are divided into **two major categories**:
+  - **SSD-backed**
+    - Price/performance optimization for random small block workloads
+    - Ex. I/O intensive databases, low-latency interactive apps
+  - **HDD-backed**
+    - Price/performance optimization for large sequential workloads
+    - Ex. data warehouses, log processing, cold data storage
+  - Read more about the specific volume types [here](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/ebs-volume-types.html)
+- EBS is network-attached, so auxiliary network factors can affect the performance of the volume such as:
+  - Other network I/O performed by the attached EC2 instance
+  - Total load on the shared network
+- Performance issues can be mitigated by using [EBS-optimized instances](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/ebs-optimized.html), which provides dedicated throughput between EC2 and EBS
+
+## Durability and Availability
+- EBS volume data is replicated across multiple servers in a single Availability Zone to protect against failure of a single component
+- **Snapshots** increase durability of availability of data stored in the volume:
+  - Durability is increased because the snapshot persists independent of its source volume
+    - Volume can fail, but the snapshot can still be used to re-create it
+  - Availability is increased because snapshots are available across all Availability Zones within a region
+- Volumes are designed with an annual failure rate (AFR) of 0.1% to 0.2%
+  - Ex. For 1,000 EBS volumes over a year, expect unrecoverable failures for 1 or 2 of them
+  - This is 20x more reliable than typical disk drives, which have an AFR around 4%
+
+## Security
+- **Access**
+  - [IAM](https://aws.amazon.com/iam/) enables access controls for EBS volumes, specifying who can access which volumes
+- **Encryption**
+  - EBS encryption enables data-at-rest and data-in-transit security
+  - Once a volume is encrypted, its snapshots will also become encrypted
+
+## Cost Model
+- **3 pricing components:**
+  - Provisioned storage
+    - For General Purpose `(gp2, gp3)`, Throughput Optimized `(st1)`, and Cold `(sc1)` volume types:
+      - per GB/month
+    - For Provisioned IOPS `(io1, io2)` volumes types:
+      - per GB/month +
+      - per provisioned IOPS/month
+  - Snapshot storage (per GB/month)
+  - I/O requests 
 
 # Amazon EC2 Instance Storage
+[Amazon EC2 Instance Storage]() provides temporary block storage volumes for [Amazon EC2](https://aws.amazon.com/ec2/) instances.
+
+## Anti-Patterns
+The following are storage needs for which other AWS services are a better choice than EC2 Instance Storage:
 
 
 # AWS Snowball
+[AWS Snowball]() is a service that allows for transporting large amounts of data to and from the AWS cloud.
+
+## Anti-Patterns
+The following are storage needs for which other AWS services are a better choice than Snowball:
 
 
 # Amazon CloudFront
+[Amazon CloudFront]() provides a global content delivery network (CDN).
+
+## Anti-Patterns
+The following are storage needs for which other AWS services are a better choice than CloudFront:
 
 
 # Conclusion
