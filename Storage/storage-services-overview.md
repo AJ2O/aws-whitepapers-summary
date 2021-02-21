@@ -33,7 +33,12 @@
   - [Security](#security-3)
   - [Cost Model](#cost-model-3)
 - [Amazon EC2 Instance Storage](#amazon-ec2-instance-storage)
+  - [Usage Patterns](#usage-patterns-4)
   - [Anti-Patterns](#anti-patterns-4)
+  - [Performance](#performance-4)
+  - [Durability and Availability](#durability-and-availability-4)
+  - [Security](#security-4)
+  - [Cost Model](#cost-model-4)
 - [AWS Snowball](#aws-snowball)
   - [Anti-Patterns](#anti-patterns-5)
 - [Amazon CloudFront](#amazon-cloudfront)
@@ -270,10 +275,60 @@ The following are storage needs for which other AWS services are a better choice
   - I/O requests 
 
 # Amazon EC2 Instance Storage
-[Amazon EC2 Instance Storage]() provides temporary block storage volumes for [Amazon EC2](https://aws.amazon.com/ec2/) instances.
+[Amazon EC2 Instance Storage](http://docs.aws.amazon.com/AWSEC2/latest/UserGuide/InstanceStorage.html) provides temporary block storage volumes for [Amazon EC2](https://aws.amazon.com/ec2/) instances. Unlike EBS volumes which are network-attached, instance stores are physically attached to the instance. They also cannot be detached and re-attached to other instances. Instance stores persist until one of the following events occur:
+- The instance stops
+- The instance hibernates
+- The instance terminates
+- The underlying disk drive fails
+
+The instance store will still persist if the instance reboots.
+
+## Usage Patterns
+EC2 Instance Storage is ideal for temporary storage for the following needs:
+- **Continually changing information**
+  - Ex. buffers, caches, queues, scratch data
+- **Data replicated across a fleet of servers**
+- **High I/O workloads**
+  - SSD-backed instance stores are suited for high-performance database workloads
+  - Examples: 
+    - NoSQL databases such as [Cassandra](https://cassandra.apache.org/) or [MongoDB](https://www.mongodb.com/)
+    - Clustered databases
+    - [OLTP](https://docs.oracle.com/database/121/VLDBG/GUID-0BC75680-5BD4-43A9-826F-CD8837D30EB2.htm#VLDBG1367) systems such as order entry and financial transaction systems
+- **High storage workloads**
+  - These applications can benefit from high sequential I/O performance across very large datasets
+  - Examples:
+    - [Data warehouses](https://aws.amazon.com/data-warehouse/)
+    - [Hadoop/MapReduce](https://hadoop.apache.org/) storage nodes
+    - Parallel file systems
 
 ## Anti-Patterns
 The following are storage needs for which other AWS services are a better choice than EC2 Instance Storage:
+- **Persistent storage**
+  - For data or files to persist longer than the lifetime of a single EC2 instance, use [EBS](http://aws.amazon.com/ebs/), [EFS](http://aws.amazon.com/efs/) or [S3](http://aws.amazon.com/s3/) instead
+- **Relational database storage**
+  - In most cases, relational databases require storage that persists beyond the lifetime of a single EC2 instance
+  - Use [EBS](http://aws.amazon.com/ebs/) instead
+- **Shared storage**
+  - Instance store volumes are dedicated to a single EC2 instance
+  - Use [EBS](http://aws.amazon.com/ebs/) to detach and attach volumes from EC2 instances
+  - Use [EFS](http://aws.amazon.com/efs/) or [S3](http://aws.amazon.com/s3/) for shared storage among multiple instances simultaneously
+
+## Performance
+- Since the EC2 instance and the instance store are attached physically, the interaction between them is very fast
+- Multiple volumes can be grouped together using a [RAID 0](https://en.wikipedia.org/wiki/Standard_RAID_levels#RAID_0) configuration to increase aggregate IOPS or improve sequential disk throughput
+  - Can achieve higher throughput since the disk bandwidth is not limited by the network
+- SSD-backed instance store volumes can provide tens of thousands, to hundreds of thousands of low-latency, random 4 KB random IOPS
+
+## Durability and Availability
+- Due to their ephemeral nature, instance stores are neither durable nor highly available
+- If data needs to persist, it can be replicated to durable storage such as EBS or S3, but that incurs extra managerial overhead for maintaining a replication procedure
+
+## Security
+- In a similar fashion to EBS volumes, [IAM](https://aws.amazon.com/iam/) can control who can access and manage instance store volumes
+- Data within the volume can be encrypted using custom tools, or third-party tools on the [AWS Marketplace](https://aws.amazon.com/marketplace)
+
+## Cost Model
+- The cost of a local instance store volume is included with the cost of its associated EC2 instance
 
 
 # AWS Snowball
