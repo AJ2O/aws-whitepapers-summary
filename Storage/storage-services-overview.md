@@ -46,7 +46,12 @@
   - [Security](#security-5)
   - [Cost Model](#cost-model-5)
 - [AWS Snowball](#aws-snowball)
+  - [Usage Patterns](#usage-patterns-6)
   - [Anti-Patterns](#anti-patterns-5)
+  - [Performance](#performance-6)
+  - [Durability and Availability](#durability-and-availability-6)
+  - [Security](#security-6)
+  - [Cost Model](#cost-model-6)
 - [Amazon CloudFront](#amazon-cloudfront)
   - [Anti-Patterns](#anti-patterns-6)
 - [Conclusion](#conclusion)
@@ -413,10 +418,49 @@ The following are storage needs for which other AWS services are a better choice
 
 
 # AWS Snowball
-[AWS Snowball]() is a service that allows for transporting large amounts of data to and from the AWS cloud.
+[AWS Snowball]() is a service that allows for transporting large amounts of data to and from the AWS cloud using secure Snowball appliances. The appliances have 80 TB storage, and is entirely self-contained, with a power cord, network connections, a display and a control panel. It's water-resistant, dustproof, and rugged enough to withstand an 8.5-G jolt. 
+
+<p align="center">
+  <img style="content-align: center; width: 400px;" src="../Diagrams/SnowballDevice.png"></img>
+</p>
+
+## Usage Patterns
+- **Transfer TB-scale data**
+  - Cost-effective alternative to making expensive network upgrades
+  - If loading the data over the Internet would take a week or more, use Snowball instead
+- **Cloud migration**
+- **Disaster recovery**
+- **Data center decommission**
 
 ## Anti-Patterns
-The following are storage needs for which other AWS services are a better choice than Snowball:
+- If the data can be transferred over the Internet in less than a week, Snowball will not be the ideal solution
+
+## Performance
+- Snowball appliances include a 10 Gbps network connection to minimize data transfer times
+  - Can transfer 80 TB from the data source to the appliance in 2.5 days (plus shipping time)
+- To increase transfer speed from the source to the appliance, there are many general approaches, such as:
+  - Use a powerful computer workstation
+  - Combine smaller objects
+  - Reduce local network use
+  - Parallelization by using multiple [Snowball Edge Clients](https://aws.amazon.com/snowball/resources/#Snowball_Edge_Client)
+
+## Durability and Availability
+- Dependent upon the target AWS data store
+  - Ex. if transferring to S3 Standard Storage, the data has 11 nines durability and 99.99% availability
+
+## Security
+- **Access**
+  - Integrates with [IAM](https://docs.aws.amazon.com/snowball/latest/developer-guide/snowball-edge-iam.html) to control which users can access the Snowball Management Console and which actions they can perform
+- **Encryption**
+  - Integrates with [KMS](https://aws.amazon.com/kms/) protect the encryption keys used to protect data on each Snowball appliance
+- **Physical**
+  - Secured by using an industry-standard [TPM](https://en.wikipedia.org/wiki/Trusted_Platform_Module) that uses a dedicated processor designed to detect any unauthorized modifications to the hardware, firmware, or software
+
+## Cost Model
+- **3 pricing components:**
+  - Service fee (per job)
+  - Extra day charges (first 10 days of onsite usage are free)
+  - Data transfer out
 
 
 # Amazon CloudFront
