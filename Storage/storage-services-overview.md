@@ -39,6 +39,12 @@
   - [Durability and Availability](#durability-and-availability-4)
   - [Security](#security-4)
   - [Cost Model](#cost-model-4)
+- [AWS Storage Gateway](#aws-storage-gateway)
+  - [Usage Patterns](#usage-patterns-5)
+  - [Performance](#performance-5)
+  - [Durability and Availability](#durability-and-availability-5)
+  - [Security](#security-5)
+  - [Cost Model](#cost-model-5)
 - [AWS Snowball](#aws-snowball)
   - [Anti-Patterns](#anti-patterns-5)
 - [Amazon CloudFront](#amazon-cloudfront)
@@ -196,7 +202,7 @@ The following are storage needs for which other AWS services are a better choice
 
 ## Security
 - **Access (EFS API calls)**
-  - [IAM](https://docs.aws.amazon.com/IAM/latest/UserGuide/access_policies.html) enables access control for administering EFS file systems
+  - [IAM](https://aws.amazon.com/iam/) enables access control for administering EFS file systems
 - **Access (file permissions)**
   - EFS file system objects work in a [Unix-style mode](https://en.wikipedia.org/wiki/File-system_permissions), which defines permissions needed to perform actions on objects
 - **Security groups**
@@ -329,6 +335,81 @@ The following are storage needs for which other AWS services are a better choice
 
 ## Cost Model
 - The cost of a local instance store volume is included with the cost of its associated EC2 instance
+
+
+# AWS Storage Gateway
+[AWS Storage Gateway](http://aws.amazon.com/storagegateway/) provides an on-premises appliance that connects storage between an organization's on-premises IT environment and the AWS cloud. The storage gateway appliance is downloaded as a virtual machine and installed in an on-premises host or EC2. It supports industry-standard storage protocols that work with existing applications. It can be used in several modes:
+
+<html>
+  <style>
+      table, td, th {
+        text-align: center;
+      }
+  </style>
+  <table>
+  <tr>
+    <th style="width: 160px;">Gateway Mode</th>
+    <th style="width: 100px;">Interface</th>
+    <th>Main Function</th>
+  </tr>
+  <tr>
+    <td><a href="https://aws.amazon.com/storagegateway/file/" target="_blank">File Gateway</a></td>
+    <td>NFS, SMB</td>
+    <td>Store and retrieve objects in S3 via NFS or SMB mount</td>
+  </tr>
+  <tr>
+    <td><a href="https://aws.amazon.com/storagegateway/volume/" target="_blank">Volume Gateway (Stored)</a></td>
+    <td>iSCSI</td>
+    <td>Asynchronously backup point-in-time snapshots to S3</td>
+  </tr>
+  <tr>
+    <td><a href="https://aws.amazon.com/storagegateway/volume/" target="_blank">Volume Gateway (Cached)</a></td>
+    <td>iSCSI</td>
+    <td>Primarily store data in S3, but retain a local copy of frequently accessed data subsets for low-latency access</td>
+  </tr>
+  <tr>
+    <td><a href="https://aws.amazon.com/storagegateway/vtl/" target="_blank">Tape Gateway</a></td>
+    <td>iSCSI</td>
+    <td>Archive backup data to Glacier or Deep Archive</td>
+  </tr>
+  </table>
+</html>
+
+## Usage Patterns
+- **Store primary application backups to S3**
+- **Disaster recovery solution**
+- **Mirror data to cloud-based resources**
+
+## Performance
+- The Storage Gateway VM sits between S3 and underlying on-premises storage, so performance depends upon a number of factors:
+  - Network bandwidth between the iSCSI initiator and gateway VM
+  - Storage allocated to the gateway VM
+  - Bandwidth between the gateway VM and S3
+  - Speed and configuration of the underlying disk running the gateway VM
+
+## Durability and Availability
+- Backed by S3 and Glacier, so Storage Gateway achieves the same high levels of durability and availability
+
+## Security
+- **Access**
+  - [IAM](https://aws.amazon.com/iam/) controls which users can execute which [Storage Gateway API calls](http://docs.aws.amazon.com/storagegateway/latest/userguide/AWSStorageGatewayAPI.html)
+- **Encryption**
+  - Encrypts all data in transit by using SSL
+  - Volumes and snapshots stored using volume gateway are encrypted at rest using AES-256
+  - Virtual tape data is encrypted at rest using AES-256
+
+## Cost Model
+- **Pricing components (All):**
+  - Per gateway/month
+  - Data transfer out (per GB/month)
+- **File Gateway:**
+  - File storage is billed as S3 requests
+- **Volume Gateway:**
+  - Snapshot storage (per GB/month)
+  - Volume storage (per GB/month)
+- **Tape Gateway:**
+  - Virtual tape library storage (per GB/month)
+  - Virtual tape retrieval (per GB/month)
 
 
 # AWS Snowball
