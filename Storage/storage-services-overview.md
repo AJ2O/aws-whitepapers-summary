@@ -19,6 +19,7 @@
   - [Security](#security-1)
   - [Cost Model](#cost-model-1)
 - [Amazon EFS](#amazon-efs)
+  - [Usage Patterns](#usage-patterns-2)
 - [Amazon EBS](#amazon-ebs)
 - [Amazon EC2 Instance Storage](#amazon-ec2-instance-storage)
 - [AWS Snowball](#aws-snowball)
@@ -136,6 +137,10 @@ The following are storage needs for which other AWS services are a better choice
   - Requests (per thousand UPLOAD and RETRIEVAL requests/month)
 
 # Amazon EFS
+[Amazon Elastic File System (EFS)](http://aws.amazon.com/efs/) provides scalable, highly available, and highly durable network file storage for EC2 instances. For EC2 instances to access EFS, there must be an EFS system in the same region. EC2 instances can then access the system through its mount targets in the region's Availability Zones.
+
+## Usage Patterns
+
 
 
 # Amazon EBS
