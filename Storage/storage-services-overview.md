@@ -350,36 +350,31 @@ The following are storage needs for which other AWS services are a better choice
 [AWS Storage Gateway](http://aws.amazon.com/storagegateway/) provides an on-premises appliance that connects storage between an organization's on-premises IT environment and the AWS cloud. The storage gateway appliance is downloaded as a virtual machine and installed in an on-premises host or EC2. It supports industry-standard storage protocols that work with existing applications. It can be used in several modes:
 
 <html>
-  <style>
-      table, td, th {
-        text-align: center;
-      }
-  </style>
   <table>
   <tr>
-    <th style="width: 160px;">Gateway Mode</th>
-    <th style="width: 100px;">Interface</th>
+    <th align="center" width="160px">Gateway Mode</th>
+    <th align="center" width="100px">Interface</th>
     <th>Main Function</th>
   </tr>
   <tr>
-    <td><a href="https://aws.amazon.com/storagegateway/file/" target="_blank">File Gateway</a></td>
-    <td>NFS, SMB</td>
-    <td>Store and retrieve objects in S3 via NFS or SMB mount</td>
+    <td align="center"><a href="https://aws.amazon.com/storagegateway/file/" target="_blank">File Gateway</a></td>
+    <td align="center">NFS, SMB</td>
+    <td align="center">Store and retrieve objects in S3 via NFS or SMB mount</td>
   </tr>
   <tr>
-    <td><a href="https://aws.amazon.com/storagegateway/volume/" target="_blank">Volume Gateway (Stored)</a></td>
-    <td>iSCSI</td>
-    <td>Asynchronously backup point-in-time snapshots to S3</td>
+    <td align="center"><a href="https://aws.amazon.com/storagegateway/volume/" target="_blank">Volume Gateway (Stored)</a></td>
+    <td align="center">iSCSI</td>
+    <td align="center">Asynchronously backup point-in-time snapshots to S3</td>
   </tr>
   <tr>
-    <td><a href="https://aws.amazon.com/storagegateway/volume/" target="_blank">Volume Gateway (Cached)</a></td>
-    <td>iSCSI</td>
-    <td>Primarily store data in S3, but retain a local copy of frequently accessed data subsets for low-latency access</td>
+    <td align="center"><a href="https://aws.amazon.com/storagegateway/volume/" target="_blank">Volume Gateway (Cached)</a></td>
+    <td align="center">iSCSI</td>
+    <td align="center">Primarily store data in S3, but retain a local copy of frequently accessed data subsets for low-latency access</td>
   </tr>
   <tr>
-    <td><a href="https://aws.amazon.com/storagegateway/vtl/" target="_blank">Tape Gateway</a></td>
-    <td>iSCSI</td>
-    <td>Archive backup data to Glacier or Deep Archive</td>
+    <td align="center"><a href="https://aws.amazon.com/storagegateway/vtl/" target="_blank">Tape Gateway</a></td>
+    <td align="center">iSCSI</td>
+    <td align="center">Archive backup data to Glacier or Deep Archive</td>
   </tr>
   </table>
 </html>
@@ -425,7 +420,7 @@ The following are storage needs for which other AWS services are a better choice
 [AWS Snowball](https://aws.amazon.com/snowball/) is a service that allows for transporting large amounts of data to and from the AWS cloud using secure Snowball appliances. The appliances have 80 TB storage, and is entirely self-contained, with a power cord, network connections, a display and a control panel. It's water-resistant, dustproof, and rugged enough to withstand an 8.5-G jolt. A snowball device is displayed below.
 
 <p align="center">
-  <img style="content-align: center; width: 400px;" src="../Diagrams/SnowballDevice.png"></img>
+  <img style="content-align: center; width: 400;" src="../Diagrams/SnowballDevice.png"></img>
 </p>
 
 ## Usage Patterns
