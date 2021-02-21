@@ -1,24 +1,37 @@
 # **Implementing Microservices on AWS**
 
 # Sections
-- [**Overview**](#overview)
-- [**Simple Microservices Architecture on AWS**](#simple-microservices-architecture-on-aws)
-  - [User Interface](#user-interface-ui)
+- [**Implementing Microservices on AWS**](#implementing-microservices-on-aws)
+- [Sections](#sections)
+- [Overview](#overview)
+- [Simple Microservices Architecture on AWS](#simple-microservices-architecture-on-aws)
+  - [User Interface](#user-interface)
   - [Microservices](#microservices)
-  - [Data Stores](#data-store)
-- [**Reducing Operational Complexity**](#reducing-operational-complexity)
+    - [Application Programming Interfaces (APIs)](#application-programming-interfaces-apis)
+    - [Containers](#containers)
+    - [Serverless Functions](#serverless-functions)
+  - [Data Stores](#data-stores)
+- [Reducing Operational Complexity](#reducing-operational-complexity)
   - [API Implementation](#api-implementation)
   - [Serverless Microservices](#serverless-microservices)
-- [**Distributed Systems Components**](#distributed-systems-components)
+- [Distributed Systems Components](#distributed-systems-components)
   - [Service Discovery](#service-discovery)
+    - [DNS-Based Service Discovery](#dns-based-service-discovery)
+    - [Service Meshes](#service-meshes)
+    - [Third-Party Software](#third-party-software)
   - [Distributed Data Management](#distributed-data-management)
   - [Asynchronous Communication and Lightweight Messaging](#asynchronous-communication-and-lightweight-messaging)
-  - [Orchestration and State Management](#orchestration-and-state-management)
+    - [REST-based Communication](#rest-based-communication)
+    - [Asynchronous Messaging and Event Passing](#asynchronous-messaging-and-event-passing)
+    - [Orchestration and State Management](#orchestration-and-state-management)
   - [Distributed Monitoring](#distributed-monitoring)
   - [Chattiness](#chattiness)
   - [Auditing](#auditing)
-- [**Conclusion**](#conclusion)
-- [**References**](#references)
+    - [Audit Trail](#audit-trail)
+    - [Events and Real-Time Actions](#events-and-real-time-actions)
+    - [Resource Inventory and Change Management](#resource-inventory-and-change-management)
+- [Conclusion](#conclusion)
+- [References](#references)
 
 # Overview
 - [Source](https://d1.awsstatic.com/whitepapers/microservices-on-aws.pdf)
@@ -35,7 +48,7 @@ A typical microservices architecture splits its functionalities by implementing 
 - Microservices
 - Data Store
 
-<img src="Diagrams/Microservices.png" alt="Microservices"/>
+![Microservices](../Diagrams/Microservices.png)
 
 ## User Interface
 - Modern web applications often use JavaScript frameworks to implement single-page applications that communicate using RESTful APIs
@@ -139,7 +152,7 @@ This section explores several techniques for allowing microservices to discover 
   - [Athena](https://aws.amazon.com/athena/) can likewise be used to run SQL queries against log files in S3
 - [AWS X-Ray](https://aws.amazon.com/xray/) can be used to trace requests that traverse through multiple microservices, helping to debug and analyze the application's architecture
   - Example X-Ray Service Map:
-    <img src="Diagrams/XRay.png" alt="X-Ray"/>
+    ![X-Ray](../Diagrams/XRay.png)
 
 ## Chattiness
 - The communication overhead increases in a microservices architecture because the services have to talk to each other, and high message volumes can cause issues such as latency
@@ -185,7 +198,7 @@ This section explores several techniques for allowing microservices to discover 
   - the team will be notified of it
   - the configuration change will be logged to S3
   - the system will take automatic corrective action to revert API Gateway using Lambda
-    <img src="Diagrams/Config.png" alt="Config"/>
+    ![Config](../Diagrams/Config.png)
 
 # Conclusion
 Microservices architecture is a distributed design approach intended to overcome the limitations of traditional monolithic architectures, yet they also come with a unique set of challenges of their own. This whitepaper highlights the managed services provided by AWS that can help teams implement microservices with reduced architectural complexity and operational burden.

@@ -22,7 +22,7 @@ This whitepaper highlights how AWS can help an organization achieve the aforemen
 **Continuous Integration (CI)** is a software development practice where code developers regularly merge their code into a central code repository, which then automatically triggers  builds and executes tests against the changed code.
 
 ### CI Architecture Example
-<img src="Diagrams/ContinuousIntegration.png" alt="CI"/>
+![ContinuousIntegration](../Diagrams/ContinuousIntegration.png)
 
 ### Benefits 
 - Find and address bugs quicker
@@ -41,6 +41,16 @@ This whitepaper highlights how AWS can help an organization achieve the aforemen
 ### Definition
 **Continuous Delivery (CD)** is a software development practice that expands upon CI, by deploying the code changes to a testing and/or production environment after a successful build stage.
 
+### CD Architecture Example
+- This diagram displays a CD implementation that branches from [the CI diagram example](#ci-architecture-example)
+- There's no single way of designing CD steps, but this example lays a solid foundation:
+  - Source Control: **CodeCommit** repository
+  - Build: Build with **CodeBuild**
+  - Test: Run tests in **CodeBuild**
+  - Deploy: **CodeDeploy** to production EC2 instances
+
+![ContinuousDelivery](../Diagrams/ContinuousDeliveryEC2.png)
+
 ### Benefits
 - Ensures all deployment-ready build artifacts have passed through a standardized validation process
 - A test environment allows for detailed verification of software (beyond unit testing) before deploying it to customers
@@ -58,16 +68,6 @@ This whitepaper highlights how AWS can help an organization achieve the aforemen
   - **Test:** CodeBuild, BlazeMeter, and other third-party tools
   - **Deploy:** CodeDeploy, [CloudFormation](https://aws.amazon.com/cloudformation/), [Elastic Beanstalk](https://aws.amazon.com/elasticbeanstalk/), and many other AWS services
   - **Invoke:** Lambda and [Step Functions](https://aws.amazon.com/step-functions/) can be invoked during and/or between stages
-
-### CD Architecture Example
-- This diagram displays a CD implementation that branches from [the CI diagram example](#ci-architecture-example)
-- There's no one way of designing CD steps, but this example lays a solid foundation:
-  - Source Control: CodeCommit
-  - Build: CodeBuild
-  - Test: CodeBuild
-  - Deploy: CodeDeploy to EC2 instances
-
-<img src="Diagrams/ContinuousDeliveryEC2.png" alt="CD"/>
 
 # Infrastructure as Code
 
@@ -150,8 +150,8 @@ Resources:
   - A load balancer to distribute traffic among the EC2 instances
   - An [RDS](https://aws.amazon.com/rds/) instance with a failover instance in another availability zone
   - Security groups to control access to instances
-  
-<img src="Diagrams/InfrastructureAsCode.png" alt="IaC"/>
+
+![InfrastructureAsCode](../Diagrams/InfrastructureAsCode.png)
 
 - **Note:** this diagram is simplified and doesn't contain every type of resource created
 
@@ -181,10 +181,10 @@ Resources:
 - CloudWatch Logs is a service that can aggregate logs across AWS services so that they can be centrally monitored
   - CloudWatch Logs Insights enables interactive querying and visualization of log data, supporting various log formats
 
-### CloudWatch Logs and Metrics Aggregation Diagram
-- Below is just one possible AWS architecture, and CloudWatch automatically collects data from each service and resource
+### CloudWatch Logs and Metrics Aggregation
+- CloudWatch can collect data from a wide variety of AWS services and resources, and place them in one central viewing location
 
-<img src="Diagrams/MonitoringAndLogging.png" alt="Monitoring"/>
+![Monitoring](../Diagrams/MonitoringAndLogging.png)
 
 ### Amazon EventBridge
 - Provides a near real-time stream of system events that describe changes to AWS resources
@@ -217,7 +217,7 @@ Resources:
   - The customer is responsible for "*Security **in** the Cloud*", which is determined by the AWS services used by the customer
     - In terms of DevOps, this may include server configuration, user access to certain services, and networking traffic protection to application environments
 
-<img src="https://d1.awsstatic.com/security-center/Shared_Responsibility_Model_V2.59d1eccec334b366627e9295b304202faf7b899b.jpg" alt="Security"/>
+![SharedResponsibilityModel](https://d1.awsstatic.com/security-center/Shared_Responsibility_Model_V2.59d1eccec334b366627e9295b304202faf7b899b.jpg)
 
 ### Services
 - [Identity and Access Management (IAM)](https://aws.amazon.com/iam/) - defines the controls and policies used to manage access to AWS resources. It is used to centrally manage users, groups, service roles and security credentials such as passwords, access keys, and permissions policies that determine which AWS resources can be accessed by whom.
