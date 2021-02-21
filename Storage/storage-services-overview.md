@@ -53,8 +53,12 @@
   - [Security](#security-6)
   - [Cost Model](#cost-model-6)
 - [Amazon CloudFront](#amazon-cloudfront)
+  - [Usage Patterns](#usage-patterns-7)
   - [Anti-Patterns](#anti-patterns-6)
-- [Conclusion](#conclusion)
+  - [Performance](#performance-7)
+  - [Durability and Availability](#durability-and-availability-7)
+  - [Security](#security-7)
+  - [Cost Model](#cost-model-7)
 - [References](#references)
 
 # Overview
@@ -418,7 +422,7 @@ The following are storage needs for which other AWS services are a better choice
 
 
 # AWS Snowball
-[AWS Snowball]() is a service that allows for transporting large amounts of data to and from the AWS cloud using secure Snowball appliances. The appliances have 80 TB storage, and is entirely self-contained, with a power cord, network connections, a display and a control panel. It's water-resistant, dustproof, and rugged enough to withstand an 8.5-G jolt. 
+[AWS Snowball](https://aws.amazon.com/snowball/) is a service that allows for transporting large amounts of data to and from the AWS cloud using secure Snowball appliances. The appliances have 80 TB storage, and is entirely self-contained, with a power cord, network connections, a display and a control panel. It's water-resistant, dustproof, and rugged enough to withstand an 8.5-G jolt. A snowball device is displayed below.
 
 <p align="center">
   <img style="content-align: center; width: 400px;" src="../Diagrams/SnowballDevice.png"></img>
@@ -464,13 +468,39 @@ The following are storage needs for which other AWS services are a better choice
 
 
 # Amazon CloudFront
-[Amazon CloudFront]() provides a global content delivery network (CDN).
+[Amazon CloudFront](http://aws.amazon.com/cloudfront/pricing/) provides a global [content delivery network (CDN)](https://www.cloudflare.com/en-gb/learning/cdn/what-is-a-cdn/), speeding up the distribution of a website's dynamic, static, and streaming content by making it available via AWS' [global edge network](https://aws.amazon.com/cloudfront/features/#Global_Edge_Network). CloudFront is optimized to work with other web services, such as S3, EC2, [Elastic Load Balancing](https://aws.amazon.com/elasticloadbalancing/), and [Route53](https://aws.amazon.com/route53/).
+
+## Usage Patterns
+- **Distribute frequently accessed static content**
+  - Ex. popular website images, videos, software downloads
+- **Deliver dynamic web applications over HTTP**
 
 ## Anti-Patterns
-The following are storage needs for which other AWS services are a better choice than CloudFront:
+- **Serve infrequently accessed data**
+  - More cost-effective to serve directly from the origin server, whether it be S3, EC2, etc.
+- **Frequently changing data**
+  - Objects are cached at an edge location for a specified time, and to remove an object from the cache (to allow an updated version), one can [invalidate the cache](http://docs.aws.amazon.com/AmazonCloudFront/latest/DeveloperGuide/Invalidation.html), but it costs a price to do so
 
+## Performance
+- CloudFront is designed for low-latency and high-bandwidth delivery of content
+- Requests are routed to nearest edge location, dramatically reducing the number of networks that users' requests must traverse, and improving performance
 
-# Conclusion
+## Durability and Availability
+- CDNs are edge caches, so CloudFront is not durable
+  - The origin server provides the durable file storage needed
+- Requests are carried over network paths monitored and optimized by Amazon for both availability and performance
+
+## Security
+- **Access**
+  - Integrates with IAM to control which CloudFront actions that users can perform
+- **Monitoring**
+  - CloudFront can be configured to create [access logs](https://docs.aws.amazon.com/AmazonCloudFront/latest/DeveloperGuide/AccessLogs.html) that contain details about every request CloudFront receives 
+  - CloudFront also integrates with [CloudWatch metrics](https://docs.aws.amazon.com/AmazonCloudFront/latest/DeveloperGuide/monitoring-using-cloudwatch.html) for metrics collection
+
+## Cost Model
+- **2 pricing components:**
+  - Regional data transfer out (per GB/month)
+  - Requests (per 10,000/month)
 
 # References
 - [Whitepaper](https://d1.awsstatic.com/whitepapers/Storage/AWS%20Storage%20Services%20Whitepaper-v9.pdf)
