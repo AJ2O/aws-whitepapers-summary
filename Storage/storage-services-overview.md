@@ -17,6 +17,7 @@
   - [Performance](#performance-1)
   - [Durability and Availability](#durability-and-availability-1)
   - [Security](#security-1)
+  - [Cost Model](#cost-model-1)
 - [Amazon EFS](#amazon-efs)
 - [Amazon EBS](#amazon-ebs)
 - [Amazon EC2 Instance Storage](#amazon-ec2-instance-storage)
@@ -126,6 +127,13 @@ The following are storage needs for which other AWS services are a better choice
   - Compliance controls such as WORM ("write once read many") can be used in the lock policy to prevent the vault from further modification
   - Time-based data retention may also be specified in lock policies
   - Once locked, the lock policy cannot be changed, enforcing compliance objectives
+
+## Cost Model
+- Pay only for what you use
+- **3 pricing components:**
+  - Storage (per GB/month)
+  - Data transfer out (per GB/month)
+  - Requests (per thousand UPLOAD and RETRIEVAL requests/month)
 
 # Amazon EFS
 
