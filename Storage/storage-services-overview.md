@@ -12,6 +12,11 @@
   - [Security](#security)
   - [Cost Model](#cost-model)
 - [Amazon Glacier](#amazon-glacier)
+  - [Usage Patterns](#usage-patterns-1)
+  - [Anti-Patterns](#anti-patterns-1)
+  - [Performance](#performance-1)
+  - [Durability and Availability](#durability-and-availability-1)
+  - [Security](#security-1)
 - [Amazon EFS](#amazon-efs)
 - [Amazon EBS](#amazon-ebs)
 - [Amazon EC2 Instance Storage](#amazon-ec2-instance-storage)
@@ -67,7 +72,7 @@ The following are storage needs for which other AWS services are a better choice
 
 ## Security
 - **Access**
-  - Fine-grained access by AWS accounts and users can be granted or denied at the object and/or bucket level using [access policies](https://docs.aws.amazon.com/AmazonS3/latest/userguide/access-policy-alternatives-guidelines.html)
+  - Fine-grained access by AWS accounts and users can be granted or denied at the object and/or bucket level using [IAM policies](https://docs.aws.amazon.com/IAM/latest/UserGuide/access_policies.html) and [access policies](https://docs.aws.amazon.com/AmazonS3/latest/userguide/access-policy-alternatives-guidelines.html)
 - **Encryption**
   - S3 supports encryption at rest, either using AWS managed keys, or custom keys
   - S3 data can be protected in transit using SSL or client-side encryption
@@ -84,7 +89,43 @@ The following are storage needs for which other AWS services are a better choice
   - Requests (per thousand requests/month)
 
 # Amazon Glacier
+[Amazon Glacier](https://aws.amazon.com/glacier/) provides low-cost, highly durable, highly secure archive storage in the cloud. Data is stored as archives, the Glacier equivalent to S3 objects, and archives can represent a single file, or several files. Archives are then stored in vaults, the Glacier equivalent to S3 buckets. Data can be seamlessly moved between Glacier and S3 using [lifecycle policies](https://docs.aws.amazon.com/AmazonS3/latest/userguide/lifecycle-transition-general-considerations.html).
 
+## Usage Patterns
+Common uses of Glacier include:
+- **Archiving data**
+  - Ex. Offsite enterprise information, media assets, research and scientific data
+- **Digital preservation**
+- **Magnetic tape replacement**
+
+## Anti-Patterns
+The following are storage needs for which other AWS services are a better choice than Glacier:
+- **Rapidly changing data**
+  - Many other AWS services provide lower read/write latencies for rapidly changing data
+  - Use [RDS](https://aws.amazon.com/rds/), [DynamoDB](https://aws.amazon.com/dynamodb/), [EBS](https://aws.amazon.com/ebs/), [EC2](https://aws.amazon.com/ec2/) or [EFS](http://aws.amazon.com/efs/) instead
+- **Immediate data access**
+  - Data stored in Glacier is not immediately available
+  - Retrieval jobs typically take 3-5 hours to complete
+  - Use [S3](https://aws.amazon.com/s3/) instead
+
+## Performance
+- Glacier is purposed for storing data that is infrequently accessed and long-lived
+  - Retrieval jobs typically complete in 3-5 hours
+- Similar to S3, multi-part uploads can be used to improve the upload experience
+
+## Durability and Availability
+- Similar to S3, including 11 nines durability for an archive
+
+## Security
+- **Access**
+  - Specified with [IAM](https://docs.aws.amazon.com/IAM/latest/UserGuide/access_policies.html) policies
+- **Encryption**
+  - Uses AES-256 to encrypt data at rest
+- [**Vault Lock**](https://docs.aws.amazon.com/amazonglacier/latest/dev/vault-lock.html)
+  - Glacier allows for locking vaults for long-term record retention using vault lock policies
+  - Compliance controls such as WORM ("write once read many") can be used in the lock policy to prevent the vault from further modification
+  - Time-based data retention may also be specified in lock policies
+  - Once locked, the lock policy cannot be changed, enforcing compliance objectives
 
 # Amazon EFS
 
