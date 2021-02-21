@@ -20,6 +20,11 @@
   - [Cost Model](#cost-model-1)
 - [Amazon EFS](#amazon-efs)
   - [Usage Patterns](#usage-patterns-2)
+  - [Anti-Patterns](#anti-patterns-2)
+  - [Performance](#performance-2)
+  - [Durability and Availability](#durability-and-availability-2)
+  - [Security](#security-2)
+  - [Cost Model](#cost-model-2)
 - [Amazon EBS](#amazon-ebs)
 - [Amazon EC2 Instance Storage](#amazon-ec2-instance-storage)
 - [AWS Snowball](#aws-snowball)
@@ -123,8 +128,8 @@ The following are storage needs for which other AWS services are a better choice
   - Specified with [IAM](https://docs.aws.amazon.com/IAM/latest/UserGuide/access_policies.html) policies
 - **Encryption**
   - Uses AES-256 to encrypt data at rest
-- [**Vault Lock**](https://docs.aws.amazon.com/amazonglacier/latest/dev/vault-lock.html)
-  - Glacier allows for locking vaults for long-term record retention using vault lock policies
+- **Vault Lock**
+  - Glacier allows for locking vaults for long-term record retention using [vault lock policies](https://docs.aws.amazon.com/amazonglacier/latest/dev/vault-lock.html)
   - Compliance controls such as WORM ("write once read many") can be used in the lock policy to prevent the vault from further modification
   - Time-based data retention may also be specified in lock policies
   - Once locked, the lock policy cannot be changed, enforcing compliance objectives
@@ -140,8 +145,53 @@ The following are storage needs for which other AWS services are a better choice
 [Amazon Elastic File System (EFS)](http://aws.amazon.com/efs/) provides scalable, highly available, and highly durable network file storage for EC2 instances. For EC2 instances to access EFS, there must be an EFS system in the same region. EC2 instances can then access the system through its mount targets in the region's Availability Zones.
 
 ## Usage Patterns
+EFS should be used for workloads involving parallelized or multi-threaded applications, such as:
+- **Big data and analytics**
+  - Provides the scale and performance required for big data applications, with high throughput and low-latency file operations
+- **Media processing workflows**
+  - Video editing, broadcast processess, sound design, and other media workflows depend on shared storage to manipulate files
+- **Content management and web serving**
+  - Durability and high throughput allows for storing and serving information for applications such as websites, online publications, and archives
+- **Home directories**
+  - Many users need to access and share common datasets concurrently
+  - Permissions for users and groups can be set at the file and directory level
 
+## Anti-Patterns
+The following are storage needs for which other AWS services are a better choice than EFS:
+- **Archival data**
+  - Encrypted archival storage with a long recovery time objective (RTO) can be more cost-effectively stored with [Glacier](https://aws.amazon.com/glacier/)
+- **Relational database storage**
+  - In most cases, relational databases require storage that is mounted, accessed, and locked by a single node
+  - Use [RDS](https://aws.amazon.com/rds/), [EBS](https://aws.amazon.com/ebs/), or [EC2](https://aws.amazon.com/ec2/) instead
+- **Temporary storage**
+  - Scratch disks, buffering, queueing, and caching needs are more cost-effectively served with [EC2 instance stores](http://docs.aws.amazon.com/AWSEC2/latest/UserGuide/InstanceStorage.html)
 
+## Performance
+- EFS is distributed among an unconstrained number of servers, and an grow to PB-scale, allowing massive parallel access
+  - Applications can attain substantial levels of aggregate throughput and IOPS if they are parallelized across multiple instances
+- **Two Performance Modes for EFS systems:**
+  - General
+    - Appropriate for most file systems (less than 7000 file operations/second)
+  - Max I/O:
+    - More than 7000 file operations/second
+    - Optimized for applications where tens, hundreds, or thousands of instances are accessing the EFS system
+- Can burst at high-throughput levels for a short time using a [burst credit system](https://docs.aws.amazon.com/efs/latest/ug/performance.html#bursting)
+
+## Durability and Availability
+- Designed to be as highly durable and available as S3
+
+## Security
+- **Access (EFS API calls)**
+  - [IAM](https://docs.aws.amazon.com/IAM/latest/UserGuide/access_policies.html) enables access control for administering EFS file systems
+- **Access (file permissions)**
+  - EFS file system objects work in a [Unix-style mode](https://en.wikipedia.org/wiki/File-system_permissions), which defines permissions needed to perform actions on objects
+- **Security groups**
+  - [Security groups](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/ec2-security-groups.html) establish network connectivity between EC2 instances and EFS file systems
+  - They act as firewalls and enforce rules that define traffic flow between the instances and EFS
+
+## Cost Model
+- Pay only for the amount of storage put into the file system
+- EFS dynamically grows and shrinks, so no payment for provisioning storage in advance is required
 
 # Amazon EBS
 
