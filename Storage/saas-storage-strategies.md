@@ -14,6 +14,15 @@
 - [Security Considerations](#security-considerations)
 - [Management and Monitoring](#management-and-monitoring)
 - [Multitenancy on DynamoDB](#multitenancy-on-dynamodb)
+  - [Silo Model](#silo-model)
+    - [Advantages](#advantages)
+    - [Disadvantages](#disadvantages)
+  - [Bridge Model](#bridge-model)
+  - [Pool Model](#pool-model)
+    - [Considerations](#considerations)
+    - [Solving the Problem](#solving-the-problem)
+      - [Example: Table1](#example-table1)
+    - [Managing Shard Distribution](#managing-shard-distribution)
 - [Multitenancy on RDS](#multitenancy-on-rds)
 - [Multitenancy on Redshift](#multitenancy-on-redshift)
 - [References](#references)
@@ -44,11 +53,6 @@ Some AWS services will map directly to these models, and others require a bit of
 If the 3 models were placed on a spectrum, Silo and Pool would be on opposite ends of the spectrum, with Bridge being a hybrid of the two. The qualities listed as strengths for a silo would be considered weakenesses for a pool, and vice versa. Some of the respective pros and cons of each end of the spectrum are listed below:
 
 <html>
-  <style>
-    th {
-      text-align: center;
-    }
-  </style>
   <table>
     <tr>
       <th></th>
@@ -131,6 +135,130 @@ If the 3 models were placed on a spectrum, Silo and Pool would be on opposite en
 # Multitenancy on DynamoDB
 DynamoDB has slightly less mapping between any of the storage models, and there are additional factors to consider. This section will illustrate how the models can be achieved on DynamoDB, along with potential challenges.
 
+## Silo Model
+![DynamoDBSilo](../Diagrams/DynamoDBSilo.png)
+
+- Every DynamoDB table (or group of tables) will have to be associated with a specific tenant
+  - Table names must be unique, so they can be prepended with the tenant's name
+- Access to tables is goverened by IAM policies and roles, and there is a unique set for each tenant, limiting access only to their own tables
+  - Provisioning process will need to automate the creation of policies, and roles to access the tenant's set of tables
+
+### Advantages
+- CloudWatch metrics can be captured at the table-level, simplifying the aggregation of metrics on a per-tenant basis
+- Table read and write capacity can be applied at the table-level, allowing granular control of database limits on a per-tenant basis
+
+### Disadvantages
+- Operational views of a tenant require the naming context to retrieve metrics and data from their tables
+- Each interaction with a DynamoDB table requires inserting the tenant context to map the request to the appropriate tenant table
+
+## Bridge Model
+- Works similar to the silo model, but some isolation constraints may be relaxed
+
+## Pool Model
+
+### Considerations
+- Requires consideration of how DynamoDB manages data before starting pool implementation:
+  - Data in SaaS environments is not typically uniform
+    - It's very common to have a handful of tenants that consume the largest portion of the data footprint
+  - If tenants are simply mapped to a partition key, there will be partition "hot spots", which greatly undermines how DynamoDB partitions the table data
+  - Some mechanism will be needed to better control the distribution of tenant data, and not rely on a single tenant identifier
+
+### Solving the Problem
+- To solve this issue, a secondary data sharding model should be created to associate each tenant with multiple partition keys
+- This can be done by introducing a separate "tenant lookup table", such as below:
+
+<html>
+  <table>
+    <tr>
+      <th align="center">Partition Key</th>
+      <th align="center" colspan="2">Attributes</th>
+    </tr>
+    <tr>
+      <td>
+        <b>TenantID</b><br>
+        TenantA</td>
+      <td>
+        <b>Table1</b><br>
+        {<br>
+          ShardCount: 3,<br>
+          ShardSize: [3, 5, 3]<br>
+          ShardIds: ["60", "52", "88"]<br>
+        }
+      </td>
+      <td>
+        <b>Table2</b><br>
+        {<br>
+          ShardCount: 2,<br>
+          ShardSize: [5, 3, 6, 9]<br>
+          ShardIds: ["111", "67", "23", "90"]<br>
+        }
+      </td>
+    </tr>
+    <tr>
+      <td>
+        <b>TenantID</b><br>
+        TenantB</td>
+      <td>
+        <b>Table1</b><br>
+        {<br>
+          ShardCount: 4,<br>
+          ShardSize: [6, 4, 7, 3]<br>
+          ShardIds: ["12", "32", "120", "200"]<br>
+        }
+      </td>
+      <td>
+        <b>Table2</b><br>
+        {<br>
+          ShardCount: 3,<br>
+          ShardSize: [2, 4, 2]<br>
+          ShardIds: ["42", "165", "80"]<br>
+        }
+      </td>
+    </tr>
+  </table>
+</html>
+
+- For each tenant, there is a sharding profile for each table containing these sub-attributes:
+  - **ShardCount:** The number of shards associated with the table (for the tenant)
+  - **ShardSize:** The current size of each shard
+  - **ShardIds:** List of partition keys mapped to a tenant (for a table)
+- This method can control how much data is distributed for each table
+- Tenants with large data footprints will simply be given more shards
+- Regular tables will now be formatted with the **ShardID** as the primary key, such as below:
+
+#### Example: Table1
+<html>
+  <table>
+    <tr>
+      <th align="center">Partition Key</th>
+      <th align="center">Attributes</th>
+    </tr>
+    <tr>
+      <td><b>ShardID</b><br>52</td>
+      <td>...</td>
+    </tr>
+    <tr>
+      <td><b>ShardID</b><br>12</td>
+      <td>...</td>
+    </tr>
+    <tr>
+      <td><b>ShardID</b><br>120</td>
+      <td>...</td>
+    </tr>
+    <tr>
+      <td>...</td>
+      <td>...</td>
+    </tr>
+  </table>
+</html>
+
+### Managing Shard Distribution
+- Questions to consider:
+  - How to detect when a tenant needs more shards?
+  - Which metrics and criteria should be used to automate this process?
+- There is no single approach that universally answers these questions for each situation
+  - The key takeaway is to be aware of how DynamoDB partitions data before moving in data blindly
+  - Missing this consideration will likely undermine the performance and cost profile of the SaaS solution
 
 # Multitenancy on RDS
 
