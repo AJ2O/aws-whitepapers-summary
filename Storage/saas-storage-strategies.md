@@ -29,6 +29,13 @@
     - [Disadvantages](#disadvantages-1)
   - [Pool Model](#pool-model-1)
 - [Multitenancy on Redshift](#multitenancy-on-redshift)
+  - [Silo Model](#silo-model-2)
+    - [Advantages](#advantages-1)
+    - [Disadvantages](#disadvantages-2)
+  - [Bridge Model](#bridge-model-2)
+  - [Pool Model](#pool-model-2)
+    - [Concurrency Issues](#concurrency-issues)
+- [Conclusion](#conclusion)
 - [References](#references)
 
 
@@ -293,7 +300,52 @@ RDS has a more natural mapping to each of the 3 models, and the realization of m
   - RDS is not like DynamoDB, which allows tenants to use different schemas within the same table
 
 # Multitenancy on Redshift
+Redshift introduces new twists to factor into multitenant considerations, and places some limits on cluster creation:
+- 60 databases per cluster
+- 256 schemas per database
+- 500 concurrent connections per database
+- 50 concurrent queries
+- Access to a cluster enables access to all databases within the cluster
 
+Depending on the the number of expected tenants, these limits may have little or huge influence into the multitenant strategy.
+
+## Silo Model
+![RedshiftSilo](../Diagrams/RedshiftSilo.png)
+
+- Achieving silo isolation requires provisioning separate clusters for each tenant
+- Restrictions can be defined by a combination of IAM policies and database privileges
+
+### Advantages
+- A tuned experience for each tenant:
+  - A specified number and type of compute nodes on a per-cluster/tenant basis
+  - Clusters can be tailored to handle the load profile of each tenant, potentially optimizing costs
+
+### Disadvantages
+- The tenant's cluster must be provisioned as part of the onboarding process
+- Automating this process and absorbing the extra management overhead adds a layer of complexity
+
+## Bridge Model
+- **No natural mapping** from Redshift to the bridge model
+  - Can't use separate database schemas, as there is a limit of 256 schemas per-database
+- Security is also a concern
+  - Access to a Redshift cluster enables access to all databases within that cluster
+- The best answer is to use the silo model for any tenant that requires isolation
+
+## Pool Model
+![RedshiftPool](../Diagrams/RedshiftPool.png)
+
+- Building a Redshift pool model is similar to other AWS services discussed in this paper:
+  - Store data from all tenants in a single cluster with shared databases and tables
+  - Data is partitioned by the introduction of a column representing the tenant identifier
+
+### Concurrency Issues
+- This approach gives most of the benefits seen with other pool models, but the limits on concurrency may be a concern
+  - In many multitenant SaaS environments, the number of concurrent connections can easily exceed the Redshift limit of 500
+- Client-based result caching can be used to limit actual Redshift connections
+- Monitor and tune the environment to prevent any one tenant from degrading the experience of others
+
+# Conclusion
+Beyond the mechanics of achieving multitenancy, it is important to consider how the profile of each AWS storage solution fits with a SaaS application's functionality. It is also important to consider how tenants will access the data, and how the data structure may need to evolve to meet the demands of tenants. These considerations in addition to the multitenancy mechanics can help guide SaaS providers to select the optimal set of multitenant storage strategies.
 
 # References
 - [Whitepaper](https://d1.awsstatic.com/whitepapers/Multi_Tenant_SaaS_Storage_Strategies.pdf)
