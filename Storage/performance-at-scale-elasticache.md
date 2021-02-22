@@ -120,14 +120,16 @@ When launching a cluster in a region, its availability zones must be specified. 
 - In total, we have:
   - Minumum cache memory required = `Item Size x Number of items`<br>
   `= 1,150 * 10,000,000`<br>
-  `= 115,000,000,000 bytes`<br>
+  `= 11,500,000,000 bytes`<br>
   `= 11.5 GB`
 
 ## Security Groups and VPC
 - Like other AWS services, ElastiCache supports [security groups](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/ec2-security-groups.html) which define rules that limit access to compute instances based on IP addresses and ports
 - It is a best practice to launch ElastiCache clusters into private subnets with no public connectivity for best security
-- Only allow connectivity from the application tier, and the diagram below shows a simplified architecture diagram to achieve this feature
+- Only allow connectivity from the application tier, only the applications need  connectivity to ElastiCache
+- The diagram below shows a simplified architecture diagram to achieve these practices
 
+![MemcachedVPC](../Diagrams/ElastiCacheMemcachedVPC.png)
 
 
 # Caching Design Patterns
