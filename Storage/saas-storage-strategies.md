@@ -24,6 +24,10 @@
       - [Example: Table1](#example-table1)
     - [Managing Shard Distribution](#managing-shard-distribution)
 - [Multitenancy on RDS](#multitenancy-on-rds)
+  - [Silo Model](#silo-model-1)
+  - [Bridge Model](#bridge-model-1)
+    - [Disadvantages](#disadvantages-1)
+  - [Pool Model](#pool-model-1)
 - [Multitenancy on Redshift](#multitenancy-on-redshift)
 - [References](#references)
 
@@ -261,7 +265,32 @@ DynamoDB has slightly less mapping between any of the storage models, and there 
   - Missing this consideration will likely undermine the performance and cost profile of the SaaS solution
 
 # Multitenancy on RDS
+RDS has a more natural mapping to each of the 3 models, and the realization of multitenancy is relatively straightforward.
 
+## Silo Model
+![RDSSilo](../Diagrams/RDSSilo.png)
+
+- A basic silo implementation would be to allocate a separate database per tenant
+- Each database's read replicas and failover instances would also be tied to the tenant
+
+## Bridge Model
+![RDSBridge](../Diagrams/RDSBridge.png)
+
+- Create separate tables for each tenant within a shared database instance
+- The introduces the need for provisioning and to map tables to tenants at runtime
+- Another implementation would be to use a unique database for each tenant (within the same database instance), and each database has its own set of tables
+
+### Disadvantages
+- Some RDS containers limit the number of databases/schemas that can be created within an instance
+  - Ex. SQL Server only allows 30 databases
+
+## Pool Model
+![RDSPool](../Diagrams/RDSPool.png)
+
+- Relies on traditional relational indexing schemes to partition tenant data
+  - Tables are indexed with a unique tenant identifier to manage each tenant's data
+- All tenants must use the same schema version
+  - RDS is not like DynamoDB, which allows tenants to use different schemas within the same table
 
 # Multitenancy on Redshift
 
