@@ -41,6 +41,9 @@
   - [Chat and Messaging](#chat-and-messaging)
   - [Client Libraries and Consistent Hashing](#client-libraries-and-consistent-hashing)
 - [Monitoring and Tuning](#monitoring-and-tuning)
+  - [Monitoring Cache Efficiency](#monitoring-cache-efficiency)
+  - [Watching for Hot Spots](#watching-for-hot-spots)
+  - [Redis Backup and Restore](#redis-backup-and-restore)
 - [Cluster Scaling and Auto Discovery](#cluster-scaling-and-auto-discovery)
 - [References](#references)
 
@@ -381,6 +384,44 @@ Reading messages...
 - Redis can only scale up to larger node sizes so that its data structures can still function properly
 
 # Monitoring and Tuning
+
+## Monitoring Cache Efficiency
+To recognize which metrics to monitor to understand the health and performance of ElastiCache clusters, the ElastiCache User Guide contains a list of them for each engine:
+- [Memcached metrics to monitor](https://docs.aws.amazon.com/AmazonElastiCache/latest/mem-ug/CacheMetrics.WhichShouldIMonitor.html)
+- [Redis metrics to monitor](https://docs.aws.amazon.com/AmazonElastiCache/latest/red-ug/CacheMetrics.WhichShouldIMonitor.html)
+
+The most important metric to watch is CPU usage. A consistently high CPU usage implies that a node is overworked, either by too many concurrent requests, or by performing dataset operations (in the case of Redis).
+
+In addition to CPU, here are some other metrics for monitoring cache memory utilization:
+- **BytesUsedForCacheItems**
+  - This value is the actual amount of cache memory being used
+- **Evictions**
+  - When memory starts to fill up, the unused cache keys will be evicted (deleted) to free up space
+  - A large number of evictions indicates that the cache is running out of space
+- **CacheMisses**
+  - The number of times a key was requested, but not found in the cache
+  - A large amount of CacheMisses combined with a large amount of Evictions indicates that the cache is thrashing due to lack of memory
+- **SwapUsage**
+  - This metric should stay at 0; there should be no swaps being performed
+- **CurConnections**
+  - Represents the number of clients connected to the engine
+  - An increasing number of CurrConnections may indicate a problem with how the application manages connections
+
+A well-tuned cache node will show the number of cache bytes used to be almost equal to the [maxmemory](https://docs.aws.amazon.com/AmazonElastiCache/latest/red-ug/ParameterGroups.Redis.html#ParameterGroups.Redis.NodeSpecific) parameter in Redis, or the [max_cache_memory](https://docs.aws.amazon.com/AmazonElastiCache/latest/mem-ug/ParameterGroups.Memcached.html#ParameterGroups.Memcached.NodeSpecific) parameter in Memcached. In steady state, cache hits should increase faster than cache misses, and there should be a low number of evictions.
+
+## Watching for Hot Spots
+**Hot spots** are nodes in the cache that receive higher load than other nodes. Uneven CPU usage among cache nodes likely indicates a hot spot. They are caused by **hot keys** which are used more frequently than other keys, usually occurring in apps of significant scale. 
+
+In general, consistent hashing should distribute cache keys fairly evenly across nodes, but hot spots can still occur. A few hot keys may not create significant hot spots, but in extreme cases, a single hot key may overwhelm an entire cache node. There are two solutions for this:
+- **1.** Create a mapping table to remap very hot keys to a separate set of cache nodes
+  - There is still the challenge of scaling these new nodes, but at least the hot cache keys won't compromise the other keys
+- **2.** Add a secondary layer of cache nodes in front of the main cache nodes
+  - This can act as a buffer, but introduces additional latency
+
+## Redis Backup and Restore
+When [Redis Backup and Restore](https://docs.aws.amazon.com/AmazonElastiCache/latest/red-ug/backups.html) is enabled, ElastiCache can automatically take snapshots of the Redis cluster and save them to S3. Redis forks a background secondary process to write the backup data, so the memory that should be allocated to the node should be more than what the application's dataset actually consumes.
+
+In a production environment, Redis backups should always be enabled and retained for a minimum of 7 days. Retaining backups provides a safety net in case an application bug corrupts the cache data.
 
 
 # Cluster Scaling and Auto Discovery
