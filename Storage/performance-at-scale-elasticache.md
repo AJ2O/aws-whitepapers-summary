@@ -32,10 +32,14 @@
     - [Solution](#solution)
 - [ElastiCache for Redis](#elasticache-for-redis)
   - [Architecture with ElastiCache for Redis](#architecture-with-elasticache-for-redis)
-    - [Replica Data](#replica-data)
+    - [Managing Replica Data](#managing-replica-data)
   - [Multi-AZ with Auto-Failover](#multi-az-with-auto-failover)
   - [Sharding with Redis](#sharding-with-redis)
 - [Advanced Datasets with Redis](#advanced-datasets-with-redis)
+  - [Game Leaderboards](#game-leaderboards)
+  - [Recommendation Engines](#recommendation-engines)
+  - [Chat and Messaging](#chat-and-messaging)
+  - [Client Libraries and Consistent Hashing](#client-libraries-and-consistent-hashing)
 - [Monitoring and Tuning](#monitoring-and-tuning)
 - [Cluster Scaling and Auto Discovery](#cluster-scaling-and-auto-discovery)
 - [References](#references)
@@ -263,7 +267,7 @@ ElastiCache clusters for Redis only contain a single primary node, and may have 
 - The primary node asynchronously updates its replicas when written to
 - Each application server reads from the replica in it's own Availability Zone, for maximum performance
 
-### Replica Data
+### Managing Replica Data
 - Since replication is asynchronous, the replica data may be slightly out of date
 - To decide whether data should be read from a replica, here are some questions to consider:
   - **Is the value being used only for display purposes?**
@@ -291,7 +295,90 @@ This is the most advanced configuration of Redis possible, and may be overkill f
 
 
 # Advanced Datasets with Redis
+This section examines use cases for which ElastiCache for Redis can support.
 
+## Game Leaderboards
+- Re-sorting and re-assigning numeric positions to users on a leaderboard is computationally expensive
+- Sorted sets can be useful in this case, because they simultaneously guarantee both the uniqueness and ordering of elements
+- In a Redis sorted set, when an element is added, it is reranked in real-time and assigned a numeric position
+- Redis sorted set commands all begin with "Z", such as [ZADD](https://redis.io/commands/zadd) 
+- Below is a complete game leaderboard example:
+```
+> ZADD "topscores" 100 "Alice"
+> ZADD "topscores" 77 "Bob"
+> ZADD "topscores" 124 "Carl"
+> ZADD "topscores" 30 "Dave"
+
+> ZREVRANGE "topscores" 0 -1
+1) "Carl"
+2) "Alice"
+3) "Bob"
+4) "Dave"
+
+> ZREVRANK "topscores" "Bob"
+2
+
+> ZADD "topscores" 99 "Fred"
+(integer) 1
+
+> ZREVRANGE "topscores" 0 -1
+1) "Carl"
+2) "Alice"
+3) "Fred"
+4) "Bob"
+5) "Dave"
+
+> ZREVRANK "topscores" "Bob"
+3
+```
+
+## Recommendation Engines
+- Calculating recommendations for users based on other items they've liked requires very fast access to a large dataset
+- Redis data structures are a great fit for this data:
+  - Counters can be used to increment or decrement the likes or dislikes for a given item
+    - [INCR](https://redis.io/commands/incr) and [DECR](https://redis.io/commands/decr) are common counter commands
+  - Redis hashes can maintain everyone who has liked or disliked a given item
+    - [HSET](https://redis.io/commands/hset) and related hash commands are used here
+- Below is an example that stores recommendation data for movies:
+```
+> INCR "movie:1222:likes"
+> HSET "movie:1222:ratings" "Alice" 1
+
+> INCR "movie:1222:dislikes"
+> HSET "movie:1222:ratings" "Bob" -1
+
+> HGETALL "movie:1222:ratings"
+1) "Alice"
+2) "1"
+3) "Bob"
+4) "-1"
+```
+
+## Chat and Messaging
+- Redis provides pub/sub capabilities suited to in-app messaging, web chat windows, online game invites, and real-time comment streams
+- [PUBLISH](https://redis.io/commands/publish), [SUBSCRIBE](https://redis.io/commands/subscribe) and related commands are used here:
+
+```
+> SUBSCRIBE "channel:main"
+Reading messages...
+
+> PUBLISH "channel:main" "Greetings!"
+
+> Reading messages...
+1) "message"
+2) "channel:main"
+3) "Greetings!"
+
+> UNSUBSCRIBE "channel:main"
+```
+- Unlike other Redis data structures, pub/sub messaging doesn't get persisted to disk
+
+## Client Libraries and Consistent Hashing
+- Like Memcached, most popular client Redis libraries will work with ElastiCache for Redis
+- Unlike Memcached, it is uncommon for Redis libraries to support [consistent hashing](#consistent-hashing-sharding)
+  - Redis' advanced datasets simply cannot be sharded horizontally across multiple Redis nodes
+- In general, Redis does not easily scale horizontally
+- Redis can only scale up to larger node sizes so that its data structures can still function properly
 
 # Monitoring and Tuning
 
