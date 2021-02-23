@@ -45,6 +45,9 @@
   - [Watching for Hot Spots](#watching-for-hot-spots)
   - [Redis Backup and Restore](#redis-backup-and-restore)
 - [Cluster Scaling and Auto Discovery](#cluster-scaling-and-auto-discovery)
+  - [Auto Scaling Cluster Nodes](#auto-scaling-cluster-nodes)
+  - [Auto Discovery of Memcached Nodes](#auto-discovery-of-memcached-nodes)
+- [Conclusion](#conclusion)
 - [References](#references)
 
 
@@ -426,6 +429,20 @@ In a production environment, Redis backups should always be enabled and retained
 
 # Cluster Scaling and Auto Discovery
 
+## Auto Scaling Cluster Nodes
+- ElastiCache currently does not support auto scaling of nodes in a cluster
+- The number of cache nodes can be manually changed using the AWS console or AWS API
+- As [mentioned earlier](#consistent-hashing-sharding), be aware that changing the number of cluster nodes can result in remapping cache keys and impacting performance
+
+## Auto Discovery of Memcached Nodes
+- As [mentioned earlier](#client-libraries), there are client libraries for Java, .NET, and PHP to support auto discovery of new ElastiCache Memcached nodes
+- There are open-source libraries [dalli-elasticache](https://github.com/ktheory/dalli-elasticache) and [django-elasticache](https://github.com/gusdan/django-elasticache) for Ruby and Python respectively to provide auto discovery support
+- Other languages will need auto discovery custom implemented, and the overall mechanism is found in the [How Auto Discovery Works](https://docs.aws.amazon.com/AmazonElastiCache/latest/mem-ug/AutoDiscovery.HowAutoDiscoveryWorks.html) topic in the ElastiCache user guide
+
+# Conclusion
+Proper use of in-memory caching can result in an application that performs better and costs less at scale. ElastiCache allows for the easy deployment, managment, and monitoring of Memcached or Redis clusters, and the strategies in this whitepaper can increase the performance and resiliency of applications that use them.
 
 # References
 - [Whitepaper](https://d0.awsstatic.com/whitepapers/performance-at-scale-with-amazon-elasticache.pdf)
+- [Amazon ElastiCache for Memcached User Guide](https://docs.aws.amazon.com/AmazonElastiCache/latest/mem-ug/WhatIs.html)
+- [Amazon ElastiCache for Redis User Guide](https://docs.aws.amazon.com/AmazonElastiCache/latest/red-ug/WhatIs.html)
