@@ -31,6 +31,10 @@
     - [Causes](#causes)
     - [Solution](#solution)
 - [ElastiCache for Redis](#elasticache-for-redis)
+  - [Architecture with ElastiCache for Redis](#architecture-with-elasticache-for-redis)
+    - [Replica Data](#replica-data)
+  - [Multi-AZ with Auto-Failover](#multi-az-with-auto-failover)
+  - [Sharding with Redis](#sharding-with-redis)
 - [Advanced Datasets with Redis](#advanced-datasets-with-redis)
 - [Monitoring and Tuning](#monitoring-and-tuning)
 - [Cluster Scaling and Auto Discovery](#cluster-scaling-and-auto-discovery)
@@ -104,7 +108,7 @@ It may be tempting to look at Redis as a more evolved Memcached due to its advan
 # ElastiCache for Memcached
 
 ## Architecture
-ElastiCache Memcached clusters sit in a separate tier alongside a database in an application architecture. ElastiCache does not directly communicate with the database, nor have any particular knowledge of the database. As requests come into the application, the application is responsible for communicating between the caching and database tiers. As more nodes are added to the cache cluster, the cache keys are distributed among them, resulting in linear scaling of the cache pool in relation to the number of its nodes.
+ElastiCache for Memcached clusters sit in a separate tier alongside a database in an application architecture. ElastiCache does not directly communicate with the database, nor have any particular knowledge of the database. As requests come into the application, the application is responsible for communicating between the caching and database tiers. As more nodes are added to the cache cluster, the cache keys are distributed among them, resulting in linear scaling of the cache pool in relation to the number of its nodes.
 
 ![MemcachedArchitecture](../Diagrams/ElastiCacheMemcachedArchitecture.png)
 
@@ -244,6 +248,46 @@ These questions can be used as a guideline to apply caching in an application:
 
 
 # ElastiCache for Redis
+Redis makes use of familiar concepts such as clusters and nodes, but has a few important differences compared to Memcached:
+- Redis data structures cannot be horizontally sharded, so Redis clusters can only contain a single primary node
+- Redis supports replication for both availability (failover) and to separate reads from writes (similar to RDS Read Replicas)
+- Redis supports persistence, including backup and recovery
+
+Other differences were highlighted [earlier in this summary](#memcached-vs-redis). Since Redis supports persistence, it's possible to use it as a primary data store. In practice however, long-term database solutions such as [RDS](https://aws.amazon.com/rds/) or [DynamoDB](https://aws.amazon.com/dynamodb) are a better fit for this purpose.
+
+## Architecture with ElastiCache for Redis
+ElastiCache clusters for Redis only contain a single primary node, and may have up to five read replicas that the primary nodes asynchronously writes to. An example architecture involving Redis is displayed below.
+
+![RedisArchitecture](../Diagrams/ElastiCacheRedisArchitecture.png)
+- The primary node is only used for writes, while the replicas offload the read traffic
+- The primary node asynchronously updates its replicas when written to
+- Each application server reads from the replica in it's own Availability Zone, for maximum performance
+
+### Replica Data
+- Since replication is asynchronous, the replica data may be slightly out of date
+- To decide whether data should be read from a replica, here are some questions to consider:
+  - **Is the value being used only for display purposes?**
+    - If so, being slightly out of date is likely not a concern
+  - **Is the value going to be displayed on a screen where the user just edited it?**
+    - May look like an application bug to the user
+  - **Is the value being used for application logic?**
+    - If so, using an old value can be risky
+  - **Are multiple processes using the value simulataneously?**
+    - If so, the value must be kept up-to-date, and must be read from the primary node
+
+## Multi-AZ with Auto-Failover
+During planned maintenance or an unlikely node or Availability zone failure, ElastiCache can automatically detect the failure of the primary node, select a replica, and promote it to become the new primary node. The DNS name of the new primary will be set to the same endpoint as the old primary, so no application change will be needed.
+
+Depending on how in-sync the replica was with the previous primary, this process can take several minutes, and ElastiCache will prevent writes to the cluster until it is complete.
+
+## Sharding with Redis
+Redis has two categories of data structures:
+- **1.** Simple keys and counters
+- **2.** Advanced datasets such as lists, sets, and hashes
+
+Only data of the first group can be horizontally sharded. This is done by using multiple Redis clusters, in a similar manner as using multiple Memcached nodes. Each Redis cluster would be responsible for part of the sharded dataset. Each cluster would also have its own set of replicas that could be spanned across Availability Zones. 
+
+This is the most advanced configuration of Redis possible, and may be overkill for most applications, but allows for the potential to scale in the future if needed.
 
 
 # Advanced Datasets with Redis
