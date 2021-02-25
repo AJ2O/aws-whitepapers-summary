@@ -106,6 +106,11 @@ VPN CloudHub is used for secure, VPN connections between different on-premises s
 Each gateway uses unique BGP ASNs, and they advertise their BGP prefixes over their VPN connections to allow each site to send and receive data from other sites. This option can be combined with Direct Connect and other VPN options (such as multiple gateways per site for redundancy).
 
 ## Software VPN
+This option allows the customer to fully manage both sides of VPC connectivity by creating a VPN connection between the on-premises network and a software VPN appliance running in the customer's VPC network. The image below shows this architecture.
+
+![SoftwareVPN](../Diagrams/SoftwareVPN.png)
+
+There are AWS partners, the AWS Marketplace, and open source communities that have produced software VPN appliances that run on EC2. Note that along with this choice comes the most responsibility of all the options, including configuring, patching, and upgrading the EC2 instance. There is also a single point of failure for the network design, which is the EC2 instance.
 
 ## Transit VPC
 
