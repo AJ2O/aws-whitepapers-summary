@@ -99,6 +99,11 @@ This option is the combination of the former two options, wherein Direct Connect
 ![DirectConnectVPN](../Diagrams/DirectConnectVPN.png)
 
 ## AWS VPN CloudHub
+VPN CloudHub is used for secure, VPN connections between different on-premises sites in a hub-and-spoke model. It leverages a virtual private gateway with multiple customer gateways, with at least one gateway per site. The diagram below displays a CloudHub architecture.
+
+![VPNCloudHub](../Diagrams/VPNCloudHub.png)
+
+Each gateway uses unique BGP ASNs, and they advertise their BGP prefixes over their VPN connections to allow each site to send and receive data from other sites. This option can be combined with Direct Connect and other VPN options (such as multiple gateways per site for redundancy).
 
 ## Software VPN
 
