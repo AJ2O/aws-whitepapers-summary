@@ -93,9 +93,10 @@ A Direct Connect Gateway can be used to enable an on-premises network to connect
 
 ![DirectConnectGateway](../Diagrams/DirectConnectGateway.png)
 
-
-
 ## AWS Direct Connect + VPN
+This option is the combination of the former two options, wherein Direct Connect dedicated connections can be encrypted end-to-end from the on-premises network to AWS.
+
+![DirectConnectVPN](../Diagrams/DirectConnectVPN.png)
 
 ## AWS VPN CloudHub
 
