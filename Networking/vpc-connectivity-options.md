@@ -22,6 +22,7 @@
   - [AWS Managed VPN](#aws-managed-vpn-1)
   - [AWS Direct Connect](#aws-direct-connect-1)
   - [AWS PrivateLink (VPC Endpoints)](#aws-privatelink-vpc-endpoints)
+    - [How It Works](#how-it-works-2)
 - [Internal User-to-Amazon VPC Connectivity Options](#internal-user-to-amazon-vpc-connectivity-options)
 - [Conclusion](#conclusion)
 - [References](#references)
@@ -55,7 +56,7 @@ Below is a comparison chart summarizing each option, including their advantages 
             <td>Latency and availability depends on Internet conditions</td>
         </tr>
         <tr>
-            <td align="center"><b>Direct Connect</td>
+            <td align="center"><b>AWS Direct Connect</td>
             <td>Dedicated, private connection to AWS</td>
             <td>Consistent network experience of up to 10 Gbps</td>
             <td>Complicated, lengthy process to set up</td>
@@ -67,7 +68,7 @@ Below is a comparison chart summarizing each option, including their advantages 
             <td>Same as above + VPN setup complexity</td>
         </tr>
         <tr>
-            <td align="center"><b>VPN CloudHub</td>
+            <td align="center"><b>AWS VPN CloudHub</td>
             <td>Connect remote networks in hub-and-spoke model</td>
             <td>Same as AWS Managed VPN</td>
             <td>Same as AWS Managed VPN</td>
@@ -182,46 +183,43 @@ Below is a comparison chart summarizing each option, including their advantages 
             <th align="center" width="240">Disadvantages</th>
         </tr>
         <tr>
-            <td align="center"><b>AWS Managed VPN</td>
-            <td>AWS Managed IPsec VPN connection over the Internet</td>
-            <td>Easy to set up; Reuse existing VPN equipment<br><br>
-            Multi-site redundancy and failover (AWS side)</td>
-            <td>Latency and availability depends on Internet conditions</td>
-        </tr>
-        <tr>
-            <td align="center"><b>Direct Connect</td>
-            <td>Dedicated, private connection to AWS</td>
-            <td>Consistent network experience of up to 10 Gbps</td>
-            <td>Complicated, lengthy process to set up</td>
-        </tr>
-        <tr>
-            <td align="center"><b>Direct Connect + VPN</td>
-            <td>Dedicated, private, IPSec VPN connection to AWS</td>
-            <td>Same as above + secure IPsec VPN connection</td>
-            <td>Same as above + VPN setup complexity</td>
-        </tr>
-        <tr>
-            <td align="center"><b>VPN CloudHub</td>
-            <td>Connect remote networks in hub-and-spoke model</td>
-            <td>Same as AWS Managed VPN</td>
-            <td>Same as AWS Managed VPN</td>
+            <td align="center"><b>VPC Peering</td>
+            <td>AWS-provided connectivity between two VPCs</td>
+            <td>Leverages AWS networking infrastructure<br><br>
+            Easy to set up; No reliance on VPN configuration or separate pieces of hardware</td>
+            <td>Does not support transitive peering</td>
         </tr>
         <tr>
             <td align="center"><b>Software VPN</td>
-            <td>Software appliance-based VPN connection over the Internet</td>
-            <td>Customer has full control of managing both sides of the VPN connection<br><br>
-            Wide selection of VPN vendors, products, and protocols</td>
-            <td>Customer has full responsibility of managing VPN connection:<br>
-            - Implement high availability<br>
-            - Appliance setup and configuration<br>
-            - EC2 instance patches and security</td>
+            <td>Software appliance-based VPN connections between VPCs</td>
+            <td>Same as it's Network-to-VPC variant<br><br>
+            Leverages AWS networking equipment in-region and Internet pipes between regions</td>
+            <td>Same as in it's Network-to-VPC variant</td>
         </tr>
         <tr>
-            <td align="center"><b>Transit VPC</td>
-            <td>Software appliance-based VPN connection with hub VPC</td>
-            <td>Same as above<br><br>
-            Simplified network management of multiple VPCs and remote networks</td>
+            <td align="center"><b>Software-to-AWS Managed VPN</td>
             <td>Same as above</td>
+            <td>Same as above + AWS managed endpoint benefits</td>
+            <td>Same as above</td>
+        </tr>
+        <tr>
+            <td align="center"><b>AWS Managed VPN</td>
+            <td>VPC-to-VPC routing using the customer's equipment over the Internet</td>
+            <td>Same as it's Network-to-VPC variant</td>
+            <td>Same as it's Network-to-VPC variant</td>
+        </tr>
+        <tr>
+            <td align="center"><b>AWS Direct Connect</td>
+            <td>VPC-to-VPC routing using the customer's equipment over a dedicated connection to AWS</td>
+            <td>Same as it's Network-to-VPC variant</td>
+            <td>Same as it's Network-to-VPC variant</td>
+        </tr>
+        <tr>
+            <td align="center"><b>AWS PrivateLink</td>
+            <td>AWS-provided connectivity between VPCs using interface endpoints</td>
+            <td>Leverages AWS networking infrastructure<br><br>
+            No single point of failure</td>
+            <td>Endpoint services are only available in the region where they are created</td>
         </tr>
     </table>
 </html>
@@ -260,8 +258,31 @@ A customer can divide their physical Direct Connect connection into multiple log
 This approach is recommended for customers already using Direct Connect, as they can reuse their existing connection to achieve reduced network costs, increased bandwidth throughput, and a consistent network experience across all of their VPCs.
 
 ## AWS PrivateLink (VPC Endpoints)
-An interface VPC endpoint enables connection to services powered by AWS PrivateLink. These include AWS services, hosted services by other AWS accounts and AWS Marketplace partner services, which are all connected to via private IP addresses.
+An interface VPC endpoint enables connection to services powered by AWS PrivateLink. These include AWS services, hosted services by other AWS accounts, and AWS Marketplace partner services. All of the traffic through PrivateLink is kept within the AWS network. The diagram below shows an AWS account consuming services provided by another AWS account using a VPC endpoint.
 
+![PrivateLink](../Diagrams/PrivateLink.png)
+
+### How It Works
+**1. VPC Endpoint**
+- This is the entry point into the consumer's VPC that enables private connectivity to a service.
+
+**2. Endpoint Services**
+- The applications and services in the provider's VPC
+- Other AWS principals create a VPC endpoint to connect to the service, but only within the same region
+
+**3. Endpoint Interface**
+- An endpoint network interface is created in the subnets where applications where applications want to connect to endpoint services
+- The interface is given a private IP address from the subnet's IP address range
+- Can be associated with security groups to control traffic flow to the interfaces
+
+**4. Network Load Balancer**
+- The load balancer receives requests from consumers and routes them to endpoint services
+
+This approach is recommended when a customer wants to securely connect to and use services offered by another VPC. Also, interface endpoints can be accessed from the customer's on-premises network via Direct Connect.
+
+
+- A list of all AWS services that integrate with PrivateLink is provided in the [*AWS PrivateLink Documentation*](https://docs.aws.amazon.com/vpc/latest/privatelink/integrated-services-vpce-list.html)
+- Note that endpoint services are only available to consumer VPCs if they are in the same region
 
 # Internal User-to-Amazon VPC Connectivity Options
 
