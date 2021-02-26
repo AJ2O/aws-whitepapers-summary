@@ -16,6 +16,7 @@
   - [Transit VPC](#transit-vpc)
 - [Amazon VPC-to-Amazon VPC Connectivity Options](#amazon-vpc-to-amazon-vpc-connectivity-options)
   - [Option Comparison](#option-comparison-1)
+  - [VPC Peering](#vpc-peering)
 - [Internal User-to-Amazon VPC Connectivity Options](#internal-user-to-amazon-vpc-connectivity-options)
 - [Conclusion](#conclusion)
 - [References](#references)
@@ -26,12 +27,13 @@
 
 This summary is based off of the January 2018 revision of the **Amazon Virtual Private Cloud Connectivity Options** whitepaper. This whitepaper describes network connectivity options for [Amazon Virtual Private Cloud (VPC)](https://aws.amazon.com/vpc/) available on AWS. These options include integrating remote customer networks with VPCs and joining multiple VPCs into a connected virtual network.
 
+An important theme to remember for all of the options mentioned in this whitepaper is that for either remote-to-remote, remote-to-VPC, or VPC-to-VPC connections, they should not have overlapping IP ranges. Some of the options will outright fail if the two networks being connected have overlapping IP ranges.
+
 # Network-to-Amazon VPC Connectivity Options
 These options are useful for integrating AWS resources with existing on-premises services, applications and servers. It also allows internal users to interact and connect with the AWS-hosted resources just like any other on-premises resource.
 
-Below is a comparison chart summarizing each option, including their advantages and disadvantages. Each option is explained in greater detail in subsequent sections.
-
 ## Option Comparison
+Below is a comparison chart summarizing each option, including their advantages and disadvantages. Each option is explained in greater detail in subsequent sections.
 <html>
     <table>
         <tr>
@@ -162,20 +164,65 @@ A transit VPC is a global network transit center on AWS, allowing the customer t
 This option greatly simplifies network management and minimizes the number of connections required to connect multiple VPCs and remote networks.
 
 # Amazon VPC-to-Amazon VPC Connectivity Options
-
-Below is a comparison table summarizing each option, including their advantages and disadvantages. Each option is explained in greater detail in subsequent sections.
+These options are for integrating multiple VPCs into a larger network. This is useful for connecting AWS resources between VPCs or consolidating a global network of VPCs. These can be combined with the [Network-to-Amazon VPC Connectivity Options](#network-to-amazon-vpc-connectivity-options) to integrate remote networks with multiple VPCs.
 
 ## Option Comparison
+Below is a comparison chart summarizing each option, including their advantages and disadvantages. Each option is explained in greater detail in subsequent sections.
 <html>
     <table>
         <tr>
-            <th align="center" width="160">Option</th>
-            <th align="center" width="160">Use Case</th>
-            <th align="center" width="300">Advantages</th>
-            <th align="center" width="300">Disadvantages</th>
+            <th align="center" width="40">Option</th>
+            <th align="center" width="80">Description</th>
+            <th align="center" width="240">Advantages</th>
+            <th align="center" width="240">Disadvantages</th>
+        </tr>
+        <tr>
+            <td align="center"><b>AWS Managed VPN</td>
+            <td>AWS Managed IPsec VPN connection over the Internet</td>
+            <td>Easy to set up; Reuse existing VPN equipment<br><br>
+            Multi-site redundancy and failover (AWS side)</td>
+            <td>Latency and availability depends on Internet conditions</td>
+        </tr>
+        <tr>
+            <td align="center"><b>Direct Connect</td>
+            <td>Dedicated, private connection to AWS</td>
+            <td>Consistent network experience of up to 10 Gbps</td>
+            <td>Complicated, lengthy process to set up</td>
+        </tr>
+        <tr>
+            <td align="center"><b>Direct Connect + VPN</td>
+            <td>Dedicated, private, IPSec VPN connection to AWS</td>
+            <td>Same as above + secure IPsec VPN connection</td>
+            <td>Same as above + VPN setup complexity</td>
+        </tr>
+        <tr>
+            <td align="center"><b>VPN CloudHub</td>
+            <td>Connect remote networks in hub-and-spoke model</td>
+            <td>Same as AWS Managed VPN</td>
+            <td>Same as AWS Managed VPN</td>
+        </tr>
+        <tr>
+            <td align="center"><b>Software VPN</td>
+            <td>Software appliance-based VPN connection over the Internet</td>
+            <td>Customer has full control of managing both sides of the VPN connection<br><br>
+            Wide selection of VPN vendors, products, and protocols</td>
+            <td>Customer has full responsibility of managing VPN connection:<br>
+            - Implement high availability<br>
+            - Appliance setup and configuration<br>
+            - EC2 instance patches and security</td>
+        </tr>
+        <tr>
+            <td align="center"><b>Transit VPC</td>
+            <td>Software appliance-based VPN connection with hub VPC</td>
+            <td>Same as above<br><br>
+            Simplified network management of multiple VPCs and remote networks</td>
+            <td>Same as above</td>
         </tr>
     </table>
 </html>
+
+## VPC Peering
+
 
 # Internal User-to-Amazon VPC Connectivity Options
 
