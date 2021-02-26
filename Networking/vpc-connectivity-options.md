@@ -23,7 +23,6 @@
   - [AWS Direct Connect](#aws-direct-connect-1)
   - [AWS PrivateLink (VPC Endpoints)](#aws-privatelink-vpc-endpoints)
     - [How It Works](#how-it-works-2)
-- [Internal User-to-Amazon VPC Connectivity Options](#internal-user-to-amazon-vpc-connectivity-options)
 - [Conclusion](#conclusion)
 - [References](#references)
 
@@ -280,13 +279,11 @@ An interface VPC endpoint enables connection to services powered by AWS PrivateL
 
 This approach is recommended when a customer wants to securely connect to and use services offered by another VPC. Also, interface endpoints can be accessed from the customer's on-premises network via Direct Connect.
 
-
 - A list of all AWS services that integrate with PrivateLink is provided in the [*AWS PrivateLink Documentation*](https://docs.aws.amazon.com/vpc/latest/privatelink/integrated-services-vpce-list.html)
 - Note that endpoint services are only available to consumer VPCs if they are in the same region
 
-# Internal User-to-Amazon VPC Connectivity Options
-
 # Conclusion
+There are a wide variety of ways to extend on-premises networks into AWS, join multiple VPC networks, or integrate both into a larger hybrid network. The options provided in this whitepaper should help any individual or organization to determine the most appropriate method to run their business regardless of of it's physical location.
 
 # References
 - [Whitepaper](https://d1.awsstatic.com/whitepapers/aws-amazon-vpc-connectivity-options.pdf)
