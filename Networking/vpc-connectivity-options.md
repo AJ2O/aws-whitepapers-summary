@@ -35,10 +35,52 @@ Below is a comparison chart summarizing each option, including their advantages 
 <html>
     <table>
         <tr>
-            <th align="center" width="160">Option</th>
-            <th align="center" width="160">Use Case</th>
-            <th align="center" width="300">Advantages</th>
-            <th align="center" width="300">Disadvantages</th>
+            <th align="center" width="40">Option</th>
+            <th align="center" width="80">Description</th>
+            <th align="center" width="240">Advantages</th>
+            <th align="center" width="240">Disadvantages</th>
+        </tr>
+        <tr>
+            <td align="center"><b>AWS Managed VPN</td>
+            <td>AWS Managed IPsec VPN connection over the Internet</td>
+            <td>Easy to set up; Reuse existing VPN equipment<br><br>
+            Multi-site redundancy and failover (AWS side)</td>
+            <td>Latency and availability depends on Internet conditions</td>
+        </tr>
+        <tr>
+            <td align="center"><b>Direct Connect</td>
+            <td>Dedicated, private connection to AWS</td>
+            <td>Consistent network experience of up to 10 Gbps</td>
+            <td>Complicated, lengthy process to set up</td>
+        </tr>
+        <tr>
+            <td align="center"><b>Direct Connect + VPN</td>
+            <td>Dedicated, private, IPSec VPN connection to AWS</td>
+            <td>Same as above + secure IPsec VPN connection</td>
+            <td>Same as above + VPN setup complexity</td>
+        </tr>
+        <tr>
+            <td align="center"><b>VPN CloudHub</td>
+            <td>Connect remote networks in hub-and-spoke model</td>
+            <td>Same as AWS Managed VPN</td>
+            <td>Same as AWS Managed VPN</td>
+        </tr>
+        <tr>
+            <td align="center"><b>Software VPN</td>
+            <td>Software appliance-based VPN connection over the Internet</td>
+            <td>Customer has full control of managing both sides of the VPN connection<br><br>
+            Wide selection of VPN vendors, products, and protocols</td>
+            <td>Customer has full responsibility of managing VPN connection:<br>
+            - Implement high availability<br>
+            - Appliance setup and configuration<br>
+            - EC2 instance patches and security</td>
+        </tr>
+        <tr>
+            <td align="center"><b>Transit VPC</td>
+            <td>Software appliance-based VPN connection with hub VPC</td>
+            <td>Same as above<br><br>
+            Simplified network management of multiple VPCs and remote networks</td>
+            <td>Same as above</td>
         </tr>
     </table>
 </html>
@@ -113,6 +155,11 @@ This option allows the customer to fully manage both sides of VPC connectivity b
 There are AWS partners, the AWS Marketplace, and open source communities that have produced software VPN appliances that run on EC2. Note that along with this choice comes the most responsibility of all the options, including configuring, patching, and upgrading the EC2 instance. There is also a single point of failure for the network design, which is the EC2 instance.
 
 ## Transit VPC
+A transit VPC is a global network transit center on AWS, allowing the customer to connect multiple, geographically disperse VPCs and remote networks together. It builds off of the [Software VPN](#software-vpn)  The image below shows an example of this architecture.
+
+![TransitVPC](../Diagrams/TransitVPC.png)
+
+This option greatly simplifies network management and minimizes the number of connections required to connect multiple VPCs and remote networks.
 
 # Amazon VPC-to-Amazon VPC Connectivity Options
 
