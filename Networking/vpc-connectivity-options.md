@@ -21,6 +21,7 @@
   - [Software-to-AWS Managed VPN](#software-to-aws-managed-vpn)
   - [AWS Managed VPN](#aws-managed-vpn-1)
   - [AWS Direct Connect](#aws-direct-connect-1)
+  - [AWS PrivateLink (VPC Endpoints)](#aws-privatelink-vpc-endpoints)
 - [Internal User-to-Amazon VPC Connectivity Options](#internal-user-to-amazon-vpc-connectivity-options)
 - [Conclusion](#conclusion)
 - [References](#references)
@@ -249,9 +250,18 @@ It's possible to take advantage of multiple VPN connections to route traffic bet
 
 ![AWSVPN2](../Diagrams/AWSVPN2.png)
 
-This approach is suboptimal as traffic between VPCs must traverse the Internet, but the customer gets to claim the benefits of the AWS Managed VPN on both sides, and they get flexibility in managing routing for their remote networks.
+This approach may be suboptimal as traffic between VPCs must traverse the Internet, but the customer gets the availability of the AWS Managed VPN on both sides, and they get flexibility in managing routing for their remote networks.
 
 ## AWS Direct Connect
+A customer can divide their physical Direct Connect connection into multiple logical connections, one for each VPC. These logical connections can then be used for routing between VPCs, as shown in the diagram below.
+
+![DirectConnect2](../Diagrams/DirectConnect2.png)
+
+This approach is recommended for customers already using Direct Connect, as they can reuse their existing connection to achieve reduced network costs, increased bandwidth throughput, and a consistent network experience across all of their VPCs.
+
+## AWS PrivateLink (VPC Endpoints)
+An interface VPC endpoint enables connection to services powered by AWS PrivateLink. These include AWS services, hosted services by other AWS accounts and AWS Marketplace partner services, which are all connected to via private IP addresses.
+
 
 # Internal User-to-Amazon VPC Connectivity Options
 
