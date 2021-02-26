@@ -18,6 +18,9 @@
   - [Option Comparison](#option-comparison-1)
   - [VPC Peering](#vpc-peering)
   - [Software VPN](#software-vpn-1)
+  - [Software-to-AWS Managed VPN](#software-to-aws-managed-vpn)
+  - [AWS Managed VPN](#aws-managed-vpn-1)
+  - [AWS Direct Connect](#aws-direct-connect-1)
 - [Internal User-to-Amazon VPC Connectivity Options](#internal-user-to-amazon-vpc-connectivity-options)
 - [Conclusion](#conclusion)
 - [References](#references)
@@ -230,6 +233,25 @@ A VPC Peering connection is between two VPCs and routes between each other as if
 AWS uses its existing VPC infrastructure to create connections, meaning it doesn't introduce any new points of failure. Also, routing tables, security groups, and network access control lists can all be leveraged to control which subnets are able to utilize the peering connection.
 
 ## Software VPN
+Similar to its [network-to-VPC counterpart mentioned earlier](#software-vpn), the customer can fully manage the VPN endpoints between VPCs using a software appliance. The only new addition is an Internet Gateway attached to each VPC to facilitate communication between them.
+
+![SoftwareVPN2](../Diagrams/SoftwareVPN2.png)
+
+## Software-to-AWS Managed VPN
+This option is recommended when a customer wants to connect VPCs across multiple regions and take advantage of the benefits of the AWS managed VPN endpoint. These include multi-data center redundancy and failover into the virtual private gateway side of the connection.
+
+![SoftwareVPN_AWSVPN](../Diagrams/SoftwareVPN_AWSVPN.png)
+
+Note that while the virtual private gateway side is highly available, there is still a single point of failure on the software appliance.
+
+## AWS Managed VPN
+It's possible to take advantage of multiple VPN connections to route traffic between multiple VPCs, as the diagram below displays.
+
+![AWSVPN2](../Diagrams/AWSVPN2.png)
+
+This approach is suboptimal as traffic between VPCs must traverse the Internet, but the customer gets to claim the benefits of the AWS Managed VPN on both sides, and they get flexibility in managing routing for their remote networks.
+
+## AWS Direct Connect
 
 # Internal User-to-Amazon VPC Connectivity Options
 
