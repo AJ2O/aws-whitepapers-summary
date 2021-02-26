@@ -17,6 +17,7 @@
 - [Amazon VPC-to-Amazon VPC Connectivity Options](#amazon-vpc-to-amazon-vpc-connectivity-options)
   - [Option Comparison](#option-comparison-1)
   - [VPC Peering](#vpc-peering)
+  - [Software VPN](#software-vpn-1)
 - [Internal User-to-Amazon VPC Connectivity Options](#internal-user-to-amazon-vpc-connectivity-options)
 - [Conclusion](#conclusion)
 - [References](#references)
@@ -222,7 +223,13 @@ Below is a comparison chart summarizing each option, including their advantages 
 </html>
 
 ## VPC Peering
+A VPC Peering connection is between two VPCs and routes between each other as if they were in the same network. It is AWS' recommended method to connect VPCs.
 
+![VPCPeering](../Diagrams/VPCPeering.png)
+
+AWS uses its existing VPC infrastructure to create connections, meaning it doesn't introduce any new points of failure. Also, routing tables, security groups, and network access control lists can all be leveraged to control which subnets are able to utilize the peering connection.
+
+## Software VPN
 
 # Internal User-to-Amazon VPC Connectivity Options
 
