@@ -21,6 +21,9 @@
       - [Physical Topology](#physical-topology)
       - [BGP Logical Topology](#bgp-logical-topology)
     - [Non-Colocation Architecture](#non-colocation-architecture)
+      - [Physical Topology](#physical-topology-1)
+      - [BGP Logical Topology](#bgp-logical-topology-1)
+- [MPLS Architecture Scenarios](#mpls-architecture-scenarios)
 - [References](#references)
 
 
@@ -39,7 +42,7 @@ Before progressing, it's necessary to be familiar with the networking concepts a
 
 
 # Introduction
-Many service providers offer a managed MPLS solution that is either Layer 3 or Layer 2-based (according to OSI model), and the solution provides a logical extension of a customer's network. In this whitepaper, MPLS refers to the service provider's managed MPLS/[WAN](https://www.cloudflare.com/en-gb/learning/network-layer/what-is-a-wan/) solution. While AWS does not natively integrate with MPLS as a protocol, AWS provides mechanims by which to connect an existing MPLS/WAN solution via [AWS Direct Connect](https://aws.amazon.com/directconnect/) and VPN.
+Many service providers offer a managed MPLS solution that is either Layer 3 or Layer 2-based (according to OSI model), and the solution provides a logical extension of a customer's network. In this whitepaper, MPLS refers to the service provider's managed MPLS/[WAN](https://www.cloudflare.com/en-gb/learning/network-layer/what-is-a-wan/) solution. While AWS does not natively integrate with MPLS as a protocol, AWS provides mechanisms by which to connect an existing MPLS/WAN solution via [AWS Direct Connect](https://aws.amazon.com/directconnect/) and VPN.
 
 # Overview of AWS Networking Services and Core Technologies
 This section briefly describes the key AWS services and technologies discussed in this whitepaper.
@@ -104,9 +107,13 @@ To determine the set of preferred paths, the VGW using the BGP best path selecti
 To learn more about the BGP Best Path Selection Algorithm in general, [read this Cisco guide on the topic](https://www.cisco.com/c/en/us/support/docs/ip/border-gateway-protocol-bgp/13753-25.html#anc2).
 
 # Colocation with AWS Direct Connect
-Colocation with Direct Connect means placing the CGW in the same physical facility as the Direct Connect location to enable a local cross connect between the CGW and AWS devices. Eastablishing network connectivity in this manner provides many benefits, such as:
+Colocation with Direct Connect means placing the CGW in the same physical facility as the Direct Connect location to enable a local cross connect between the CGW and AWS devices. The customer would need to order two circuits:
+- One from between their MPLS provider and the Direct Connect colocation facility, and connect it to the customer's router
+- One from from between the CE/CGW to AWS
+
+Establishing network connectivity in this manner provides many benefits, such as:
 - Satisfy compliance for traffic/data segregation and isolation
-- Flexible traffic engineering granularity
+- Traffic engineering granularity
 - Simplified integration of IT platforms in mergers or acquisitions
 
 ## Architecture Scenarios
@@ -121,6 +128,21 @@ In this scenario, the CGW is in the same physical facility as the Direct Connect
 ![MPLSColocationBGP](../Diagrams/MPLSColocationBGP.png)
 
 ### Non-Colocation Architecture
+There are two possible scenarios for a non-colocation architecture:
+
+**1.** The customer's MPLS provider already has facility access to a Direct Connect location, allowing their PE to be used as a CGW.
+
+**2.** The customer's MPLS provider does not have facility access and needs to connect with a [Direct Connect partner](https://aws.amazon.com/directconnect/partners/) to extend a circuit from their PE to the AWS environment.
+
+When the circuit between the PE and the AWS is provisioned, the customer can directly BGP peer with the MPLS provider's PE instead of a colocated device. The PE acts as the CGW in this case, as the diagrams below illustrate.
+
+#### Physical Topology 
+![MPLSNonColocation](../Diagrams/MPLSNonColocation.png)
+
+#### BGP Logical Topology
+![MPLSNonColocationBGP](../Diagrams/MPLSNonColocationBGP.png)
+
+# MPLS Architecture Scenarios
 
 
 # References
