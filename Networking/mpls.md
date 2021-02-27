@@ -16,6 +16,11 @@
   - [Autonomous Systems](#autonomous-systems)
     - [AWS Path Selection Algorithm](#aws-path-selection-algorithm)
 - [Colocation with AWS Direct Connect](#colocation-with-aws-direct-connect)
+  - [Architecture Scenarios](#architecture-scenarios)
+    - [Colocation Architecture](#colocation-architecture)
+      - [Physical Topology](#physical-topology)
+      - [BGP Logical Topology](#bgp-logical-topology)
+    - [Non-Colocation Architecture](#non-colocation-architecture)
 - [References](#references)
 
 
@@ -99,6 +104,23 @@ To determine the set of preferred paths, the VGW using the BGP best path selecti
 To learn more about the BGP Best Path Selection Algorithm in general, [read this Cisco guide on the topic](https://www.cisco.com/c/en/us/support/docs/ip/border-gateway-protocol-bgp/13753-25.html#anc2).
 
 # Colocation with AWS Direct Connect
+Colocation with Direct Connect means placing the CGW in the same physical facility as the Direct Connect location to enable a local cross connect between the CGW and AWS devices. Eastablishing network connectivity in this manner provides many benefits, such as:
+- Satisfy compliance for traffic/data segregation and isolation
+- Flexible traffic engineering granularity
+- Simplified integration of IT platforms in mergers or acquisitions
+
+## Architecture Scenarios
+
+### Colocation Architecture
+In this scenario, the CGW is in the same physical facility as the Direct Connect location. The diagrams below display the physical and logical topologies of this setup.
+
+#### Physical Topology
+![MPLSColocation](../Diagrams/MPLSColocation.png)
+
+#### BGP Logical Topology
+![MPLSColocationBGP](../Diagrams/MPLSColocationBGP.png)
+
+### Non-Colocation Architecture
 
 
 # References
