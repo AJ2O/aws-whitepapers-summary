@@ -12,6 +12,11 @@
   - [Identity Account Structure](#identity-account-structure)
   - [Logging Account Structure](#logging-account-structure)
   - [Publishing Account Structure](#publishing-account-structure)
+- [Hybrid Security Account Structures](#hybrid-security-account-structures)
+  - [Information Security Account](#information-security-account)
+  - [Central IT Account](#central-it-account)
+    - [User Directory](#user-directory)
+    - [Centrally Manage IAM Identities & Shared Resources](#centrally-manage-iam-identities--shared-resources)
 - [References](#references)
 
 # Overview
@@ -73,6 +78,29 @@ The following security account structures are based on common approaches for cre
 ![Publishing](../Diagrams/MultiAccountSecurity_Publishing.png)
 - Useful for organizations what want to centrally managed preapproved server images and CloudFormation templates across a company ([the 4th question mentioned above](#when-to-create-a-security-account-structure))
 - This approaches leverages cross-account resource sharing to use a central repository account for resources such as approved AMIs and Service Catalog portfolios, and then shares them with other accounts in the organization
+
+# Hybrid Security Account Structures
+AWS recommends taking an iterative approach to determining the appropriate security account structure, because most customers rarely require every available option immediately. Usually, multiple hierarchies are more desirable than a single one since there may be different account concerns (such as billing, compliance monitoring, or shared IT services). The following examples illustrate a few ways to combine the aforementioned structures for Information Security or central IT purposes.
+
+## Information Security Account
+![InfoSec](../Diagrams/MultiAccountSecurity_InfoSec.png)
+- This approach combines the [identity](#identity-account-structure) and [logging](#logging-account-structure) security structures for the purposes of Information Security
+- The users in the InfoSec account can perform their necessary roles in the other accounts (such as enforcing compliance), and they can monitor activity across AWS accounts ([the 3rd question above](#when-to-create-a-security-account-structure))
+
+## Central IT Account
+Central IT accounts can have various responsibilities depending on the company. These are just two examples.
+
+### User Directory
+![Directory](../Diagrams/MultiAccountSecurity_Directory.png)
+- This example uses the Central IT account to host a user directory with [AWS Directory Service for Microsoft Active Directory](https://aws.amazon.com/directoryservice/)
+- For user access to EC2 instances and other resources such as Amazon WorkSpaces, the other accounts are federated with Directory Service ([the 1st question above](#when-to-create-a-security-account-structure))
+
+### Centrally Manage IAM Identities & Shared Resources
+![CentralIT](../Diagrams/MultiAccountSecurity_CentralIT.png)
+- This approach combines the [identity](#identity-account-structure) and [publishing](#logging-account-structure) security structures to centrally manage users and approved AWS resources in a parent account
+  - Users are associated with roles in the child accounts
+  - AWS resources such as approved/verified AMIs and catalog portfolios can be published to child accounts
+
 
 # References
 - [Whitepaper](https://d1.awsstatic.com/aws-answers/AWS_Multi_Account_Security_Strategy.pdf)
