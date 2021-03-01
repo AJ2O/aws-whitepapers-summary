@@ -19,6 +19,10 @@
   - [Infrastructure Layer Defense](#infrastructure-layer-defense)
     - [Services Used](#services-used)
     - [Amazon EC2 with Auto Scaling](#amazon-ec2-with-auto-scaling)
+    - [Elastic Load Balancing](#elastic-load-balancing)
+    - [Leverage AWS Edge Locations for Scale](#leverage-aws-edge-locations-for-scale)
+      - [Amazon CloudFront](#amazon-cloudfront)
+      - [Amazon Route53](#amazon-route53)
 - [Attack Surface Reduction](#attack-surface-reduction)
 - [Operational Techniques](#operational-techniques)
 - [Conclusion](#conclusion)
@@ -42,7 +46,7 @@ A **Denial of Service (DoS)** attack is a deliberate attempt to make an applicat
 DDoS attacks are most common at the layers 3, 4, 6, and 7 of the [OSI Model](https://www.cloudflare.com/en-gb/learning/ddos/glossary/open-systems-interconnection-model-osi/), and the chart below displays examples of attacks in each layer. These attack types will be discussed in detail in the following sections.
 
 <html>
-<table>
+<table align="center">
   <tr>
     <th align="center">Layer</th>
     <th align="center">Data Unit</th>
@@ -132,7 +136,7 @@ This reference architecture includes several AWS services that can help improve 
 ![DDoSResilientArchitecture](../Diagrams/DDoSResilientArchitecture.png)
 
 <html>
-<table>
+<table align="center">
   <tr>
     <th align="center">Best Practice</th>
     <th align="center">AWS Service</th>
@@ -166,7 +170,7 @@ This reference architecture includes several AWS services that can help improve 
 - **Amazon CloudFront**
 - **Amazon Route53**
 - [**Auto Scaling Groups**](#amazon-ec2-with-auto-scaling)
-- **Elastic Load Balancing**
+- [**Elastic Load Balancing**](#elastic-load-balancing)
 - **VPC Design**
 
 **Key considerations:**
@@ -175,8 +179,31 @@ This reference architecture includes several AWS services that can help improve 
 - Some instance types can enable [**enhanced networking**](https://aws.amazon.com/ec2/features/#enhanced-networking) to handle higher packets per second (PPS) and lower latencies
 
 ### Amazon EC2 with Auto Scaling
+A method to mitigate both infrastructure and application layer attacks is to scale to absorb attacks. Web applications on EC2 instances can be set behind a load balancer and automatically scale to meet suddent traffic spikes. Scaling events can be triggered by alarms on thresholds defined in [Amazon CloudWatch](https://aws.amazon.com/cloudwatch/). The metrics used for the thresholds can be CPU, RAM, Network I/O, or even custom metrics.
 
+### Elastic Load Balancing
+Using an [elastic load balancer](https://aws.amazon.com/elasticloadbalancing/) can distribute network traffic among multiple backend instances, which can help with DDoS resiliency. There are three types of ELBs to consider, depending on the application:
+- **For web applications**, the [Application Load Balancer (ALB)](https://aws.amazon.com/elasticloadbalancing/application-load-balancer/) can be used to route traffic based on its content and accept only well-formed web requests
+  - Many common DDoS attacks such as SYN floods or UDP reflection attacks will be blocked by this feature
+- **For TCP-based applications**, the [Network Load Balancer (NLB)](https://aws.amazon.com/elasticloadbalancing/network-load-balancer/) can route traffic at ultra-low latency, and it can be associated with an [Elastic IP Address (EIP)](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/elastic-ip-addresses-eip.html)
+  - EIPs can be protected by AWS Shield Advanced, and by association the NLB will fall under its protection too
 
+### Leverage AWS Edge Locations for Scale
+AWS [Edge Locations](https://aws.amazon.com/cloudfront/features/#Global_Edge_Network) provide an additional layer of network infrastructure that provides the applications with access to highly-scaled, diverse Internet connections. Benefits of this include:
+- Optimized latency and throughput to users
+- Isolation of faults while minimizing impact on the app's availability
+- Increased ability to absorb DDoS attacks
+
+Edge locations and their benefits are automatically provided to any web application that uses [Amazon CloudFront](https://aws.amazon.com/cloudfront/) and [Amazon Route53](https://aws.amazon.com/route53/).
+ 
+#### Amazon CloudFront
+CloudFront is a CDN service for delivering websites and their components, including static, dynamic, and streaming content. It only accepts well-formed connections, preventing  many common DDoS attacks such as SYN floods and UDP reflection attacks from reaching the origin server. DDoS attacks are also isolated close to the source, preventing traffic from affecting other locations.
+
+#### Amazon Route53
+Route53 is a highly available and scalable DNS service that can be used to direct traffic to applications. It uses techniques such as *shuffle sharding* and *anycast striping* to help users access an application even if the DNS service is targeted by a DDoS attack:
+- With *shuffle sharding*, each of the user's name servers for a domain corresponds to a unique set of edge locations
+  - If one name server is unavailable, users can retry and receive a response from another name at a different edge location
+- With *anycast striping*, each DNS request is served by the most optimal location, spreading the network load and providing a faster response for users
 
 # Attack Surface Reduction
 
