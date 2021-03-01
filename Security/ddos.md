@@ -15,6 +15,10 @@
     - [Cache-Bursting Attack](#cache-bursting-attack)
     - [Other Attacks](#other-attacks)
 - [Mitigation Techniques](#mitigation-techniques)
+  - [DDoS-Resilient Reference Architecture](#ddos-resilient-reference-architecture)
+  - [Infrastructure Layer Defense](#infrastructure-layer-defense)
+    - [Services Used](#services-used)
+    - [Amazon EC2 with Auto Scaling](#amazon-ec2-with-auto-scaling)
 - [Attack Surface Reduction](#attack-surface-reduction)
 - [Operational Techniques](#operational-techniques)
 - [Conclusion](#conclusion)
@@ -113,6 +117,66 @@ TLS is computationally expensive, so if an app is delivered over TLS, an attacke
 Brute force and credential stuffing attacks attempt to gain unauthorized access to areas of an application. Scraper bots attempt to steal content or record competitive information such as pricing. While these and other attacks are not strictly DDoS attacks, their automated nature makes them similar, and can be mitigated with some of the same practices outlined in this document.
 
 # Mitigation Techniques
+Some forms of DDoS mitigation are included automatically with AWS services. Further resiliency can be improved by using specific services and implementing additional best practices.
+
+All AWS customers benefit from the automatic protections of [AWS Shield](https://aws.amazon.com/shield/) Standard for free, and protects against many common infrastructure layer attacks. AWS Shield Advanced provides additional DDoS mitigation and response capabilities at an additional charge. Some of these benefits include: 
+- 24x7 access to the AWS DDoS Response Team (DRT) for assistance in mitigating DDoS attacks
+- Cost protection to request a limited refund of scaling-related costs that can result from a DDoS attack
+- Free access to [AWS WAF](https://aws.amazon.com/waf/) for the mitigation of application layer DDoS attacks when used with [Amazon CloudFront](https://aws.amazon.com/cloudfront/) or [Application Load Balancers (ALB)](https://aws.amazon.com/elasticloadbalancing/application-load-balancer/)
+- Automatic baselining of web traffic attributes when used with AWS WAF
+- Free access to [AWS Firewall Manager](https://aws.amazon.com/firewall-manager/) for automated policy enforcement
+
+## DDoS-Resilient Reference Architecture
+This reference architecture includes several AWS services that can help improve an application's resiliency against DDoS attacks. Each service's purpose in mitigation will be explained in later sections of this document. The architecture referenced in this document is shown in the diagram below.
+
+![DDoSResilientArchitecture](../Diagrams/DDoSResilientArchitecture.png)
+
+<html>
+<table>
+  <tr>
+    <th align="center">Best Practice</th>
+    <th align="center">AWS Service</th>
+  </tr>
+  <tr>
+    <th align="center">Minimize Attack Surface</th>
+    <td align="center">AWS WAF, VPC Design</td>
+  </tr>
+  <tr>
+    <th align="center">Scale to Absorb</th>
+    <td align="center">Amazon CloudFront, Auto Scaling Groups</td>
+  </tr>
+  <tr>
+    <th align="center">Safeguard Exposed Resources</th>
+    <td align="center">AWS Shield, AWS WAF</td>
+  </tr>
+  <tr>
+    <th align="center">Learn Normal Behaviour</th>
+    <td align="center">Amazon CloudWatch, AWS GuardDuty</td>
+  </tr>
+  <tr>
+    <th align="center">Have A Plan</th>
+    <td align="center">The Customer</td>
+  </tr>
+</table>
+</html>
+
+## Infrastructure Layer Defense
+
+### Services Used
+- **Amazon CloudFront**
+- **Amazon Route53**
+- [**Auto Scaling Groups**](#amazon-ec2-with-auto-scaling)
+- **Elastic Load Balancing**
+- **VPC Design**
+
+**Key considerations:**
+- Ensure that enough transit capacity and diversity is available, yet also protect resources such as EC2 instances from attack traffic
+- Some instance types can easily handle large volumes of traffic by using network interfaces of up to 25 Gbps
+- Some instance types can enable [**enhanced networking**](https://aws.amazon.com/ec2/features/#enhanced-networking) to handle higher packets per second (PPS) and lower latencies
+
+### Amazon EC2 with Auto Scaling
+
+
 
 # Attack Surface Reduction
 
