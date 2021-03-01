@@ -21,9 +21,17 @@
     - [Amazon EC2 with Auto Scaling](#amazon-ec2-with-auto-scaling)
     - [Elastic Load Balancing](#elastic-load-balancing)
     - [Leverage AWS Edge Locations for Scale](#leverage-aws-edge-locations-for-scale)
-      - [Amazon CloudFront](#amazon-cloudfront)
-      - [Amazon Route53](#amazon-route53)
+      - [Web Application Delivery at the Edge (Amazon CloudFront)](#web-application-delivery-at-the-edge-amazon-cloudfront)
+      - [Domain Name Resolution at the Edge (Amazon Route53)](#domain-name-resolution-at-the-edge-amazon-route53)
+  - [Application Layer Defense](#application-layer-defense)
+    - [Services Used](#services-used-1)
+    - [Detect and Filter Malicious Web Requests (AWS WAF + Amazon CloudFront)](#detect-and-filter-malicious-web-requests-aws-waf--amazon-cloudfront)
 - [Attack Surface Reduction](#attack-surface-reduction)
+  - [Obfuscating AWS Resources](#obfuscating-aws-resources)
+    - [Services Used](#services-used-2)
+      - [VPC Design (NACLs and Security Groups)](#vpc-design-nacls-and-security-groups)
+      - [Protecting the Origin (Amazon CloudFront + Security Groups)](#protecting-the-origin-amazon-cloudfront--security-groups)
+      - [Protecting API Endpoints (Amazon API Gateway)](#protecting-api-endpoints-amazon-api-gateway)
 - [Operational Techniques](#operational-techniques)
 - [Conclusion](#conclusion)
 - [References](#references)
@@ -167,11 +175,10 @@ This reference architecture includes several AWS services that can help improve 
 ## Infrastructure Layer Defense
 
 ### Services Used
-- **Amazon CloudFront**
-- **Amazon Route53**
 - [**Auto Scaling Groups**](#amazon-ec2-with-auto-scaling)
 - [**Elastic Load Balancing**](#elastic-load-balancing)
-- **VPC Design**
+- [**Amazon CloudFront**](#web-application-delivery-at-the-edge-amazon-cloudfront)
+- [**Amazon Route53**](#domain-name-resolution-at-the-edge-amazon-route53)
 
 **Key considerations:**
 - Ensure that enough transit capacity and diversity is available, yet also protect resources such as EC2 instances from attack traffic
@@ -196,16 +203,57 @@ AWS [Edge Locations](https://aws.amazon.com/cloudfront/features/#Global_Edge_Net
 
 Edge locations and their benefits are automatically provided to any web application that uses [Amazon CloudFront](https://aws.amazon.com/cloudfront/) and [Amazon Route53](https://aws.amazon.com/route53/).
  
-#### Amazon CloudFront
+#### Web Application Delivery at the Edge (Amazon CloudFront)
 CloudFront is a CDN service for delivering websites and their components, including static, dynamic, and streaming content. It only accepts well-formed connections, preventing  many common DDoS attacks such as SYN floods and UDP reflection attacks from reaching the origin server. DDoS attacks are also isolated close to the source, preventing traffic from affecting other locations.
 
-#### Amazon Route53
+#### Domain Name Resolution at the Edge (Amazon Route53)
 Route53 is a highly available and scalable DNS service that can be used to direct traffic to applications. It uses techniques such as *shuffle sharding* and *anycast striping* to help users access an application even if the DNS service is targeted by a DDoS attack:
 - With *shuffle sharding*, each of the user's name servers for a domain corresponds to a unique set of edge locations
   - If one name server is unavailable, users can retry and receive a response from another name at a different edge location
 - With *anycast striping*, each DNS request is served by the most optimal location, spreading the network load and providing a faster response for users
 
+## Application Layer Defense
+Defense at the application layer requires implementing an architecture to detect, scale to absorb, and block malicious requests that may appear to the application as genuine.
+
+### Services Used
+- [**AWS WAF + Amazon CloudFront**](#detect-and-filter-malicious-web-requests-aws-waf--amazon-cloudfront)
+
+### Detect and Filter Malicious Web Requests (AWS WAF + Amazon CloudFront)
+CloudFront allows for caching static content at edge locations, reducing the traffic load to the origin server. It also automatically closes connections from slow reading or slow writing attacks, such as a [Slowloris Attack](https://www.cloudflare.com/en-gb/learning/ddos/ddos-attack-tools/slowloris/).
+
+AWS WAF allows the customer to create web access control lists (Web ACLs) that can be applied to CloudFront distributions or ALBs. Web ACLs consist of rules that can be configured to match a combination of request attributes, such as the URI, query string, HTTP method, country of origin, IP address, and more. Once a rule is matched by a request, there are 3 possible outcomes for the result:
+- The request is rejected
+- The request is allowed
+- The request is counted as a rule match
+
+In addition, by using WAF's rate-based rules, requests from attackers can be automatically blocked when they exceed a defined threshold. This is useful for mitigating [HTTP Flood Attacks](#http-flood-attack) disguised as regular web traffic.
+
+To help identify malicious requests and create the corresponding rules, a customer can review their server logs or use WAF's logging and Sampled Requests features. There are also Managed Rules for WAF offered by sellers in the AWS Marketplace that will block widely-known malicious IP addresses.
+
 # Attack Surface Reduction
+**Attack Surface Reduction** refers to limiting the opportunities and locations for an attacker to target an application. An example of this would be to not place application servers in a public subnet, but rather instead in a private subnet behind a public load balancer, such as in the [reference architecture](#ddos-resilient-reference-architecture). Resources that aren't exposed to the Internet are more difficult to attack, limiting the options by which an attacker can launch a DDoS attack against an application.
+
+## Obfuscating AWS Resources
+### Services Used
+- [**Amazon VPC**](#vpc-design-nacls-and-security-groups)
+- [**Amazon CloudFront**](#protecting-the-origin-amazon-cloudfront)
+- **Amazon API Gateway**
+
+#### VPC Design (NACLs and Security Groups)
+EC2 instances are associated with security groups, which implicitly deny all traffic unless a rule is created to allow certain traffic. A rule specifies the port(s), protocol, and source (IP ranges, other security groups, etc.) that are permissible to the associated instances.
+- Going back to the reference architecture, we can have two security groups:
+  - One for the ALB, only allowing TCP on ports 80 and 443 traffic from the Internet
+  - One for the instances, only allowing TCP on port 80 from the ALB's security group
+- This ensures that Internet traffic cannot communicate directly with the application, reducing the attack surface
+
+Network Access Control Lists (NACLs) allow for specifying both allow and deny rules at the subnet level. This is useful to deny traffic from bad actors with known IP addresses or ranges.
+- Going back to the reference architecture, if the application only expects TCP traffic, we can deny all UDP traffic to our subnets, or vice versa
+
+#### Protecting the Origin (Amazon CloudFront + Security Groups)
+If the CloudFront distribution's origin server is inside of a VPC, the application's security groups should be updated to only allow CloudFront traffic. This ensures that attackers cannot bypass CloudFront and WAF to access the application.
+
+#### Protecting API Endpoints (Amazon API Gateway)
+[Amazon API Gateway](https://aws.amazon.com/api-gateway/) can be used as an entryway to applications running on EC2, Lambda, or elsewhere, as opposed to directly accessing the API on the aforementioned platforms. Using API Gateway in this manner obfuscates the application's components, making it harder for those resources to be targeted by a DDoS attack. API Gateway also has built-in rate limiting, and this can protect backend applications from excess traffic.
 
 # Operational Techniques
 
