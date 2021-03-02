@@ -240,7 +240,7 @@ To help identify malicious requests and create the corresponding rules, a custom
 ### Services Used
 - [**Amazon VPC**](#vpc-design-nacls-and-security-groups)
 - [**Amazon CloudFront**](#protecting-the-origin-amazon-cloudfront)
-- **Amazon API Gateway**
+- [**Amazon API Gateway**](#protecting-api-endpoints-amazon-api-gateway)
 
 #### VPC Design (NACLs and Security Groups)
 EC2 instances are associated with security groups, which implicitly deny all traffic unless a rule is created to allow certain traffic. A rule specifies the port(s), protocol, and source (IP ranges, other security groups, etc.) that are permissible to the associated instances.
