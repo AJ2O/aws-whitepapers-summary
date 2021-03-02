@@ -33,7 +33,10 @@
       - [Protecting the Origin (Amazon CloudFront + Security Groups)](#protecting-the-origin-amazon-cloudfront--security-groups)
       - [Protecting API Endpoints (Amazon API Gateway)](#protecting-api-endpoints-amazon-api-gateway)
 - [Operational Techniques](#operational-techniques)
-- [Conclusion](#conclusion)
+  - [Visibility](#visibility)
+  - [Support](#support)
+    - [AWS Support Plans](#aws-support-plans)
+    - [DDoS Response Team (DRT)](#ddos-response-team-drt)
 - [References](#references)
 
 # Overview
@@ -256,8 +259,42 @@ If the CloudFront distribution's origin server is inside of a VPC, the applicati
 [Amazon API Gateway](https://aws.amazon.com/api-gateway/) can be used as an entryway to applications running on EC2, Lambda, or elsewhere, as opposed to directly accessing the API on the aforementioned platforms. Using API Gateway in this manner obfuscates the application's components, making it harder for those resources to be targeted by a DDoS attack. API Gateway also has built-in rate limiting, and this can protect backend applications from excess traffic.
 
 # Operational Techniques
+This section discusses best practices for gaining visibility into abnormal behaviour, alerting and automation, and engaging AWS for additional support.
 
-# Conclusion
+## Visibility
+When one of an app's key operational metrics significantly deviates from its expected value, it may be indicative of an attacker attempting to target its availability. When a user learns the normal behaviour of their app, they can promptly take action when an anomaly is detected.
+
+With [Amazon CloudWatch](https://aws.amazon.com/cloudwatch/), the user can monitor applications on AWS, collect metrics and log files, set alarms, and automatically respond to changes to AWS resources.
+
+With AWS Shield Advanced, there's access to a number of CloudWatch metrics that can indicate when an application is being targeted. These can be alerted on to notify the user when a DDoS attack is in progress, so they can take necessary measures. Some metrics include:
+- *DDoSDetected*
+- *DDoSAttackPacketsPerSecond*
+- *DDoSAttackRequestsPerSecond*
+
+An application-layer attack can elevate many CloudWatch metrics, many of which are not listed here:
+- *CPUUtilization* for Amazon EC2
+- *NetworkIn* for Amazon EC2
+- *BlockedRequests* for AWS WAF
+- *CountedRequests* for AWS WAF
+- *Requests* for CloudFront
+- *TotalErrorRate* for CloudFront
+- *ActiveConnectionCount* for ALB
+- *RequestCount* for ALB 
+- *TargetResponseTime* for ALB
+- *ProcessedBytes* for NLB
+
+Another tool to gain visibility into network traffic are [VPC Flow Logs](https://docs.aws.amazon.com/vpc/latest/userguide/flow-logs.html), which captures information about the IP traffic going to and from VPCs, subnets, and network interfaces. Data logged includes IP addresses, ports, protocols, and the number of packets and bytes transferred, which can all be useful in discovering malicious traffic.
+
+## Support
+
+### AWS Support Plans
+- A *Business-level* plan provides the customer with 24x7 access to support engineers to assist with DDoS attack issues
+- An *Enterprise-level* plan provides the ability to open critical cases and receive the fastest response
+
+### DDoS Response Team (DRT)
+- Only available with AWS Shield Advanced
+- DRT does not have access to the customer's AWS account, but they can be authorized to access AWS WAF, AWS Shield, and related API operations
+- They will only access the account or make changes during an escalated event, and all changes must be subject to the customer's consent
 
 # References
 - [Whitepaper](https://d1.awsstatic.com/whitepapers/Security/DDoS_White_Paper.pdf)
