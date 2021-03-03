@@ -8,39 +8,11 @@
 - [Mapping the Journey to the Cloud](#mapping-the-journey-to-the-cloud)
 - [AWS CAF Perspectives: Additional Detail](#aws-caf-perspectives-additional-detail)
   - [Business Perspective: Value Realization](#business-perspective-value-realization)
-    - [CAF Capabilities](#caf-capabilities)
-      - [IT Finance](#it-finance)
-      - [IT Strategy](#it-strategy)
-      - [Benefits Realization](#benefits-realization)
-      - [Business Risk Management](#business-risk-management)
   - [People Perspective: Roles and Readiness](#people-perspective-roles-and-readiness)
-    - [CAF Capabilities](#caf-capabilities-1)
-      - [Resource Management](#resource-management)
-      - [Incentive Management](#incentive-management)
-      - [Career Management](#career-management)
-      - [Training Management](#training-management)
-      - [Organizational Change Management](#organizational-change-management)
   - [Governance Perspective: Prioritization and Control](#governance-perspective-prioritization-and-control)
-    - [CAF Capabilities](#caf-capabilities-2)
-      - [Portfolio Management](#portfolio-management)
-      - [Program and Project Management](#program-and-project-management)
-      - [Business Performance Measurement](#business-performance-measurement)
-      - [License Management](#license-management)
   - [Platform Perspective: Applications and Infrastructure](#platform-perspective-applications-and-infrastructure)
-    - [CAF Capabilities](#caf-capabilities-3)
-      - [Compute Provisioning](#compute-provisioning)
-      - [Network Provisioning](#network-provisioning)
-      - [Storage Provisioning](#storage-provisioning)
-      - [Database Provisioning](#database-provisioning)
-      - [Systems and Solution Architecture](#systems-and-solution-architecture)
-      - [Application Development](#application-development)
   - [Security Perspective: Risk and Compliance](#security-perspective-risk-and-compliance)
-    - [CAF Capabilities](#caf-capabilities-4)
-      - [Identity and Access Management](#identity-and-access-management)
-      - [Detective Control](#detective-control)
-      - [Infrastructure Security](#infrastructure-security)
-      - [Data Protection](#data-protection)
-      - [Incident Response](#incident-response)
+  - [Operations Perspective: Manage and Scale](#operations-perspective-manage-and-scale)
 - [References](#references)
 
 # Overview
@@ -52,11 +24,11 @@ This summary is based off of the February 2017 revision of the **An Overview of 
 Cloud adoption doesn't only entail technological changes, but also changes throughout all organizational units in the company. The CAF provides guidance that supports each unit so that each business area understands how to update skills, adapt existing processes, and use new processes that take full advantage of cloud computing services. CAF organizes guidance into **six Perspectives**, which are shown below:
 
 - [**Business**](#business-perspective-value-realization)
-- **People**
-- **Governance**<br><br>
-- **Platform**
-- **Security**
-- **Operations**
+- [**People**](#people-perspective-roles-and-readiness)
+- [**Governance**](#governance-perspective-prioritization-and-control)<br><br>
+- [**Platform**](#platform-perspective-applications-and-infrastructure)
+- [**Security**](#security-perspective-risk-and-compliance)
+- [**Operations**](#operations-perspective-manage-and-scale)
 
 In general, the Business, People, and Governance Perspectives focus on **business capabilities**, and the Platform, Security, and Operations Perspectives focus on **technical capabilities**. A brief description of each Perspective is below, with detailed descriptions in later sections.
 
@@ -235,6 +207,40 @@ Addresses the organization's capability for **maintaining visibility and control
 
 #### Incident Response
 Focuses on the organization's capability to **respond, manage, reduce harm, and restore operations** after a security incident.
+
+## Operations Perspective: Manage and Scale
+The **Operations Perspective** describes the focus areas used to enable, run, use, operate, and recover IT workloads to the level that is agreed upon with business stakeholders.
+
+### CAF Capabilities
+
+- [Service Monitoring](#service-monitoring)
+- [Application Performance Monitoring](#application-performance-monitoring)
+- [Resource Inventory Management](#resource-inventory-management)
+- [Release Management / Change Management](#release-management--change-management)
+- [Reporting and Analytics](#reporting-and-analytics)
+- [Business Continuity / Disaster Recovery (BC/DR)](#business-continuity--disaster-recovery-bcdr)
+- [IT Service Catalog](#it-service-catalog)
+
+#### Service Monitoring
+Addresses the organization's capability to **detect and respond to issues** with the health IT services and enterprise applications. With cloud adoption, detection and response can be highly automated, resulting in greater service uptime.
+
+#### Application Performance Monitoring
+Addresses the organization's capability to **ensure application performance meets its defined requirements.**
+
+#### Resource Inventory Management
+Addresses the organization's capability to **organize its assets** in a way that provides the **best, most cost-efficient service.** Cloud adoption removes the need to manage hardware assets and the hardware lifecyle, and instead leverages on-demand techniques that optimize license usage.
+
+#### Release Management / Change Management
+Encompasses the organization's capability to **manage, plan, and schedule changes to the IT environment.** Cloud adoption provides the opportunity to leverage CI/CD techniques to rapidly manage releases and roll-backs.
+
+#### Reporting and Analytics
+Addresses the organization's capability to **ensure compliance with its reporting policies** and to **ensure ongoing analysis and reporting of performance against key KPIs** such as service-level agreements (SLAs) and operational-level agreements (OLAs).
+
+#### Business Continuity / Disaster Recovery (BC/DR)
+Addresses the organization's capability to **operate in the event of a significant failure of IT services**, and to **recover from those failures within the time parameters** defined by the organization.
+
+#### IT Service Catalog
+The organization's capability to **select, maintain, advertise, and deliver an SLA or set of IT services.** It is closely coupled with [Portfolio Management](#portfolio-management) in order to ensure that technical services are aligned to business goals and needs.
 
 # References
 - [Whitepaper](https://d1.awsstatic.com/whitepapers/aws_cloud_adoption_framework.pdf)
