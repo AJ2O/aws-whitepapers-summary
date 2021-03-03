@@ -27,6 +27,9 @@
   - [Assessing Migration Readiness](#assessing-migration-readiness)
   - [Application Discovery](#application-discovery)
   - [Application Portfolio Analysis](#application-portfolio-analysis)
+  - [Migration Planning](#migration-planning)
+  - [Technical Planning](#technical-planning)
+- [Migrating](#migrating)
 - [References](#references)
 
 # Overview
@@ -278,5 +281,21 @@ The result of the analysis is a broad categorization of resources aligned by com
   - 30% require re-factoring
   - 10% can be retired
 
+## Migration Planning
+The primary objective of the **migration plan** is to lead the overall migration effort. Recommended migration plan activities include:
+- Review of project management methods, tools, and capabilities to assess any gaps
+- Define project management methods and tools to be used during the migration
+- Develop a project plan, risk/mitigation log, and roles and responsibilities matrix to manage the risks that occur during the project and identify ownership for each resource involved
+- Identify key resources and leads for each of the migration work streams defined in this section
+- Outline resources, timelines, and cost to migrate the targeted envrionment to AWS
+
+## Technical Planning
+**Technical planning** involves building an initial backlog of prioritized applications by using the [application portfolio analyis](#application-portfolio-analysis) data. A small team can lead this process, often from the enterprise architecture team. They analyze and gather information about the current architecture for each application, then develop the future architecture and capture the workload details to execute a streamlined migration. Iteration helps migrations continue as the detailed plan evolves with new learnings.
+
+# Migrating
+
+
+
 # References
 - [Whitepaper](https://d1.awsstatic.com/whitepapers/Migration/aws-migration-whitepaper.pdf)
+- [AWS Cloud Adoption Framework (AWS CAF)](./caf.md)
