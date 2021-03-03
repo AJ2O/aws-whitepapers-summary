@@ -26,6 +26,15 @@
       - [Program and Project Management](#program-and-project-management)
       - [Business Performance Measurement](#business-performance-measurement)
       - [License Management](#license-management)
+  - [Platform Perspective: Applications and Infrastructure](#platform-perspective-applications-and-infrastructure)
+    - [CAF Capabilities](#caf-capabilities-3)
+      - [Compute Provisioning](#compute-provisioning)
+      - [Network Provisioning](#network-provisioning)
+      - [Storage Provisioning](#storage-provisioning)
+      - [Database Provisioning](#database-provisioning)
+      - [Systems and Solution Architecture](#systems-and-solution-architecture)
+      - [Application Development](#application-development)
+  - [Security Perspective: Risk and Compliance](#security-perspective-risk-and-compliance)
 - [References](#references)
 
 # Overview
@@ -163,10 +172,39 @@ Addresses the organization's capability to **manage one or several related proje
 Addresses the organization's capability to **measure and optimize processes in support of its goals.** Cloud services offer the potential for rapid experimentation with new means of process automation and optimization. New processes to define cloud-centric KPIs is necessary to leverage this potential.
 
 #### License Management
-Defines the organization's capability to **procure, distribute, and manage the licenses needed for IT systems, services, and software.** The cloud
+Defines the organization's capability to **procure, distribute, and manage the licenses needed for IT systems, services, and software.** The cloud consumption model requires that teams develop new skills for procurement and license management and new processes for evaluating license needs.
 
+## Platform Perspective: Applications and Infrastructure
+The **Platform Perspective** focuses on describing the structure and design of all types of cloud architectures.
 
+### CAF Capabilities
 
+- [Compute Provisioning](#compute-provisioning)
+- [Network Provisioning](#network-provisioning)
+- [Storage Provisioning](#storage-provisioning)
+- [Database Provisioning](#database-provisioning)
+- [Systems and Solution Architecture](#systems-and-solution-architecture)
+- [Application Development](#application-development)
+
+#### Compute Provisioning
+Encompasses the organization's capability to **provide the processing and memory** in support of enterprise applications. The processes and skills to provision cloud services are different than those needed to provision physical hardware and manage data center facilities.
+
+#### Network Provisioning
+Addresses the organization's capability to **provide computing networkins** to support enterprise applications.
+
+#### Storage Provisioning
+Focuses on the organization's capability to **provide storage** in support of enterprise applications.
+
+#### Database Provisioning
+Addresses the organization's capability to **provide databases and database management systems** in support of enterprise applications.
+
+#### Systems and Solution Architecture
+Encompasses the organization's capability to **define and describe the design of the system and to create architecture standards** for an organization.
+
+#### Application Development
+Defines the organization's capability to **customize or develop applications** to support its business goals. New skills and processes for [Continuous Integration and Continuous Deployment (CI/CD)](../DevOps/practicing-cicd.md) are a critical part of designing applications that take advantage of cloud services and the agility promised by cloud computing.
+
+## Security Perspective: Risk and Compliance
 
 # References
 - [Whitepaper](https://d1.awsstatic.com/whitepapers/aws_cloud_adoption_framework.pdf)
