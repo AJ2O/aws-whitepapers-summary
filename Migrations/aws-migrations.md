@@ -23,6 +23,10 @@
   - [Which Migration Strategy is Right for Me?](#which-migration-strategy-is-right-for-me)
 - [Building a Business Case for Migration](#building-a-business-case-for-migration)
   - [Drafting the Business Case](#drafting-the-business-case)
+- [Migration Readiness and Planning](#migration-readiness-and-planning)
+  - [Assessing Migration Readiness](#assessing-migration-readiness)
+  - [Application Discovery](#application-discovery)
+  - [Application Portfolio Analysis](#application-portfolio-analysis)
 - [References](#references)
 
 # Overview
@@ -228,7 +232,51 @@ A migration business case has four categories, **Run Cost Analysis**, **Cost of 
 <html>
 
 ## Drafting the Business Case
+The migration business case will go through several phases of evolution:
+- **Directional** - estimate the number of servers and the rough order of magnitude (ROM) assumptions around server utilization
+  - Allows for assigning budgets and resources
+- **Refined** - refine the scope of the case when additional data is gained about the scope of the migration and workloads
+- **Detailed** - engage in a deep discovery of the on-premises environment and server utilization
+  - It is recommended to use automated tools for this purpose, discussed more in the [Application Discovery section](#application-discovery)
 
+The [AWS Pricing Calculator](https://calculator.aws/#/) can be helpful for the directional and refined phases.
+
+# Migration Readiness and Planning
+**Migration and Readiness Planning (MRP)** is a method that consists of tools, processes, and best practices to prepare an enterprise for cloud migration, and aligns with the CAF.
+
+## Assessing Migration Readiness
+The CAF is a framework to be used for analyzing an organization's IT environment. This framework helps determine cloud migration readiness, as it addresses preparation across several key areas. Some items to consider for readiness are shown below:
+- Have you clearly defined the scope and the business case for migration?
+- Have you evaluated the envrionment and applications in scope through the lenses of the CAF?
+- Have your operations and employee skills been reviewed and updated to accomodate the change?
+
+## Application Discovery
+**Application discovery** is the process of understanding the on-premises IT environment, determining what physical and virtual servers exist, and what applications are running on those servers. Manually performing discovery can take weeks or months to perform, so it's recommended to use automated discovery tools.
+
+Items to consider:
+- Using an automated discovery tool, such as [AWS Application Discovery Service](https://aws.amazon.com/application-discovery/)
+  - There are third-party discovery tools in the AWS Marketplace as well
+- The IT environment will change over time, so there must be a plan to keep data current by continuously running the discovery tool
+- It may be useful to do an initial application discovery during business case development to accurately reflect the scope
+
+## Application Portfolio Analysis
+**Application portfolio analysis** takes the application discovery data and then begins grouping applications based on patterns in the portfolio. It identifies:
+- Order of migration
+- Appropriate [migration strategy](#migration-strategies) to use for migrating a given pattern
+
+The result of the analysis is a broad categorization of resources aligned by common traits. Special cases may also be identified that need special handling.
+
+**Examples:**
+- Grouping of applications and servers by business unit: 
+  - 30% marketing
+  - 20% HR
+  - 40% internal productivity
+  - 10% infrastructure management
+- Grouping based on the 6 R's:
+  - 30% of the portfolio could use a re-host
+  - 30% require re-platforming
+  - 30% require re-factoring
+  - 10% can be retired
 
 # References
 - [Whitepaper](https://d1.awsstatic.com/whitepapers/Migration/aws-migration-whitepaper.pdf)
