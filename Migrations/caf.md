@@ -20,6 +20,12 @@
       - [Career Management](#career-management)
       - [Training Management](#training-management)
       - [Organizational Change Management](#organizational-change-management)
+  - [Governance Perspective: Prioritization and Control](#governance-perspective-prioritization-and-control)
+    - [CAF Capabilities](#caf-capabilities-2)
+      - [Portfolio Management](#portfolio-management)
+      - [Program and Project Management](#program-and-project-management)
+      - [Business Performance Measurement](#business-performance-measurement)
+      - [License Management](#license-management)
 - [References](#references)
 
 # Overview
@@ -103,10 +109,10 @@ The **Business Perspective** is focused on ensuring that IT is aligned with busi
 Addresses the organization's capability to **plan, allocate, and manage the budget for IT expenses** given changes introduced with the cloud services consumption model.
 
 #### IT Strategy
-Focuses on the organization's capability to **leverage IT as a business enabler**. In many organizations, IT has devolved into simply ensuring collaboration and line-of-business applications stay healthy and operational. IT teams may need new skills to gather business requirements and new processes to solve business challenges.
+Focuses on the organization's capability to **leverage IT as a business enabler.** In many organizations, IT has devolved into simply ensuring collaboration and line-of-business applications stay healthy and operational. IT teams may need new skills to gather business requirements and new processes to solve business challenges.
 
 #### Benefits Realization
-Encompasses the organization's capability to **measure the benefits received from its IT investments**. For many organizations, this represents Total Cost of Ownership (TCO) or Return on Investment (ROI) coupled with budget management.
+Encompasses the organization's capability to **measure the benefits received from its IT investments.** For many organizations, this represents Total Cost of Ownership (TCO) or Return on Investment (ROI) coupled with budget management.
 
 #### Business Risk Management
 Focuses on the organization's capability to **understand the business impact of preventable, strategic, and external risks** to the organization. For many, these risks stem from the impact of financial and technology constraints on agility. Many of these constraints are alleviated or eliminated with a move to the cloud.
@@ -123,7 +129,7 @@ The **People Perspective** covers organizational staff capability and change man
 - [Organizational Change Management](#organizational-change-management)
 
 #### Resource Management
-Addresses the organization's capability to **project personnel needs** and to **attract and hire the talent necessary to support the organization's goals**. Cloud adoption requires that staffing teams need to acquire new skills necessary to understand cloud technologies, and they may need to update processes for forecasting future staffing requirements.
+Addresses the organization's capability to **project personnel needs** and to **attract and hire the talent necessary to support the organization's goals.** Cloud adoption requires that staffing teams need to acquire new skills necessary to understand cloud technologies, and they may need to update processes for forecasting future staffing requirements.
 
 #### Incentive Management
 Addresses the organization's capability to **ensure that its workers receive competitive compensation and benefits** for the value they bring to it. With the shift to cloud, some IT roles move from being commoditized to being highly specialized with high market demand.
@@ -132,10 +138,34 @@ Addresses the organization's capability to **ensure that its workers receive com
 Focuses on the organization's capability to **ensure the personal fulfillment** of its employees, their career opportunities, and their financial security.
 
 #### Training Management
-Addresses the organization's capability to **ensure employees have the knowledge and skills** to perform their roles and comply with organizational policies and requirements.
+Addresses the organization's capability to **ensure employees have the knowledge and skills to perform their roles and comply** with organizational policies and requirements.
 
 #### Organizational Change Management
 Focuses on the organization's capability to **manage the effects and impacts of business, structural, and cultural change** introduced with cloud adoption. Clear communication is critical to ease change and reduce uncertainty that may be present for staff when introducing new ways of working.
+
+## Governance Perspective: Prioritization and Control
+The **Governance Perspective** focuses on the skills and processes needed to align IT strategy and goals with the organization's business strategy and goals, to ensure maximized business value of its IT investment, and minimized business risks.
+
+### CAF Capabilities
+
+- [Portfolio Management](#portfolio-management)
+- [Program and Project Management](#program-and-project-management)
+- [Business Performance Measurement](#business-performance-measurement)
+- [License Management](#license-management)
+
+#### Portfolio Management
+Focuses on the organization's capability to **manage and prioritize IT investments, programs, and projects in alignment with its business goals.** It is an important mechanism to determine cloud-eligibility for workloads and serves as a focal point for lifecycle management of both applications and services.
+
+#### Program and Project Management
+Addresses the organization's capability to **manage one or several related projects** to improve organizational performance and complete the projects **on time and on budget.**
+
+#### Business Performance Measurement
+Addresses the organization's capability to **measure and optimize processes in support of its goals.** Cloud services offer the potential for rapid experimentation with new means of process automation and optimization. New processes to define cloud-centric KPIs is necessary to leverage this potential.
+
+#### License Management
+Defines the organization's capability to **procure, distribute, and manage the licenses needed for IT systems, services, and software.** The cloud
+
+
 
 
 # References
