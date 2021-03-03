@@ -22,6 +22,7 @@
     - [6. Retain ("Re-visit")](#6-retain-re-visit)
   - [Which Migration Strategy is Right for Me?](#which-migration-strategy-is-right-for-me)
 - [Building a Business Case for Migration](#building-a-business-case-for-migration)
+  - [Drafting the Business Case](#drafting-the-business-case)
 - [References](#references)
 
 # Overview
@@ -173,6 +174,61 @@ The strategies chosen should address the following questions:
 Understanding the organization's application portfolio is an important step for determining the migration strategy and subsequent migration plan and business case. The answers to the questions don't need to be elaborate, but addressing them helps align the organization and test its operational norms.
 
 # Building a Business Case for Migration
+A clear and compelling migration business case provides the organization's leadership with a data-driven rationale to support the initiative.
+
+A migration business case has four categories, **Run Cost Analysis**, **Cost of Change**, **Labor Productivity**, and **Business Value.** The table below outlines each category:
+
+<html>
+<table align="center">
+    <tr>
+        <th width="160">Category</th>
+        <th width="400">Inputs for Consideration</th>
+    </tr>
+    <tr>
+        <th>Run Cost Analysis</th>
+        <td>
+            <ul>
+            <li>Total Cost of Ownership (TCO) comparison of run costs on AWS migration vs. current model</li>
+            <li>Impact of AWS purchasing options and discounts</li>
+            </ul>
+        </td>
+    </tr>
+    <tr>
+        <th>Cost of Change</th>
+        <td>
+            <ul>
+            <li>Migration planning/consulting costs</li>
+            <li>Change management</li>
+            <li>Application migration cost estimate, parallel environments cost</li>
+            </ul>
+        </td>
+    </tr>
+    <tr>
+        <th>Labor Productivity</th>
+        <td>
+            <ul>
+            <li>Estimate of reduction of hours spent on legacy operational activities (requisitioning, racking, patching, etc.)</li>
+            <li>Productivity gains from automation</li>
+            <li>Developer productivity</li>
+            </ul>
+        </td>
+    </tr>
+    <tr>
+        <th>Business Value</th>
+        <td>
+            <ul>
+            <li>Agility (faster time-to-market (TTM), elasticity, global expansion, etc.)</li>
+            <li>Cost avoidance (server refresh, maintenance contracts, etc.)</li>
+            <li>Risk mitigation (resilience for DR scenarios, etc.)</li>
+            <li>Decommissioned asset reductions</li>
+            </ul>
+        </td>
+    </tr>
+</table>
+<html>
+
+## Drafting the Business Case
+
 
 # References
 - [Whitepaper](https://d1.awsstatic.com/whitepapers/Migration/aws-migration-whitepaper.pdf)
