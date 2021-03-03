@@ -13,6 +13,13 @@
       - [IT Strategy](#it-strategy)
       - [Benefits Realization](#benefits-realization)
       - [Business Risk Management](#business-risk-management)
+  - [People Perspective: Roles and Readiness](#people-perspective-roles-and-readiness)
+    - [CAF Capabilities](#caf-capabilities-1)
+      - [Resource Management](#resource-management)
+      - [Incentive Management](#incentive-management)
+      - [Career Management](#career-management)
+      - [Training Management](#training-management)
+      - [Organizational Change Management](#organizational-change-management)
 - [References](#references)
 
 # Overview
@@ -102,7 +109,34 @@ Focuses on the organization's capability to **leverage IT as a business enabler*
 Encompasses the organization's capability to **measure the benefits received from its IT investments**. For many organizations, this represents Total Cost of Ownership (TCO) or Return on Investment (ROI) coupled with budget management.
 
 #### Business Risk Management
-Focuses on the organization's capability to **understand the business impact of preventable, strategic, and external risks** to the organization. For many, these risks stem from the impact of financial and technology constraints on agility.
+Focuses on the organization's capability to **understand the business impact of preventable, strategic, and external risks** to the organization. For many, these risks stem from the impact of financial and technology constraints on agility. Many of these constraints are alleviated or eliminated with a move to the cloud.
+
+## People Perspective: Roles and Readiness
+The **People Perspective** covers organizational staff capability and change management functions required for efficient cloud adoption.
+
+### CAF Capabilities
+
+- [Resource Management](#resource-management)
+- [Incentive Management](#incentive-management)
+- [Career Management](#career-management)
+- [Training Management](#training-management)
+- [Organizational Change Management](#organizational-change-management)
+
+#### Resource Management
+Addresses the organization's capability to **project personnel needs** and to **attract and hire the talent necessary to support the organization's goals**. Cloud adoption requires that staffing teams need to acquire new skills necessary to understand cloud technologies, and they may need to update processes for forecasting future staffing requirements.
+
+#### Incentive Management
+Addresses the organization's capability to **ensure that its workers receive competitive compensation and benefits** for the value they bring to it. With the shift to cloud, some IT roles move from being commoditized to being highly specialized with high market demand.
+
+#### Career Management
+Focuses on the organization's capability to **ensure the personal fulfillment** of its employees, their career opportunities, and their financial security.
+
+#### Training Management
+Addresses the organization's capability to **ensure employees have the knowledge and skills** to perform their roles and comply with organizational policies and requirements.
+
+#### Organizational Change Management
+Focuses on the organization's capability to **manage the effects and impacts of business, structural, and cultural change** introduced with cloud adoption. Clear communication is critical to ease change and reduce uncertainty that may be present for staff when introducing new ways of working.
+
 
 # References
 - [Whitepaper](https://d1.awsstatic.com/whitepapers/aws_cloud_adoption_framework.pdf)
