@@ -6,6 +6,13 @@
 - [Overview](#overview)
 - [Introduction](#introduction)
 - [Mapping the Journey to the Cloud](#mapping-the-journey-to-the-cloud)
+- [AWS CAF Perspectives: Additional Detail](#aws-caf-perspectives-additional-detail)
+  - [Business Perspective: Value Realization](#business-perspective-value-realization)
+    - [CAF Capabilities](#caf-capabilities)
+      - [IT Finance](#it-finance)
+      - [IT Strategy](#it-strategy)
+      - [Benefits Realization](#benefits-realization)
+      - [Business Risk Management](#business-risk-management)
 - [References](#references)
 
 # Overview
@@ -16,7 +23,7 @@ This summary is based off of the February 2017 revision of the **An Overview of 
 # Introduction
 Cloud adoption doesn't only entail technological changes, but also changes throughout all organizational units in the company. The CAF provides guidance that supports each unit so that each business area understands how to update skills, adapt existing processes, and use new processes that take full advantage of cloud computing services. CAF organizes guidance into **six Perspectives**, which are shown below:
 
-- **Business**
+- [**Business**](#business-perspective-value-realization)
 - **People**
 - **Governance**<br><br>
 - **Platform**
@@ -69,6 +76,33 @@ In general, the Business, People, and Governance Perspectives focus on **busines
 <html>
 
 # Mapping the Journey to the Cloud
+Engaging stakeholders with their relevant CAF Perspective helps inform an organization's journey to the cloud. Identifying the capability gaps in terms of the CAF, defining necessary work streams, and identifying interpendencies between streams enables the organization to optimize collaboration on AWS. Work streams are iterative and change over time, and sometimes it is best for work streams to be integrated with one another (such as [DevOps](../DevOps/introduction-to-devops.md) for example). 
+
+As work streams are implemented, the organization can leverage the different CAF Perspectives to understand how to communicate work stream interdependencies between stakeholders. The CAF structure can help ensure that the strategies and plans across the organization are complete and aligned to business goals and outcomes.
+
+# AWS CAF Perspectives: Additional Detail
+
+## Business Perspective: Value Realization
+The **Business Perspective** is focused on ensuring that IT is aligned with business needs and that IT investments can be traced to demonstrable business results.
+
+### CAF Capabilities
+
+- [IT Finance](#it-finance)
+- [IT Strategy](#it-strategy)
+- [Benefits Realization](#benefits-realization)
+- [Business Risk Management](#business-risk-management)
+
+#### IT Finance
+Addresses the organization's capability to **plan, allocate, and manage the budget for IT expenses** given changes introduced with the cloud services consumption model.
+
+#### IT Strategy
+Focuses on the organization's capability to **leverage IT as a business enabler**. In many organizations, IT has devolved into simply ensuring collaboration and line-of-business applications stay healthy and operational. IT teams may need new skills to gather business requirements and new processes to solve business challenges.
+
+#### Benefits Realization
+Encompasses the organization's capability to **measure the benefits received from its IT investments**. For many organizations, this represents Total Cost of Ownership (TCO) or Return on Investment (ROI) coupled with budget management.
+
+#### Business Risk Management
+Focuses on the organization's capability to **understand the business impact of preventable, strategic, and external risks** to the organization. For many, these risks stem from the impact of financial and technology constraints on agility.
 
 # References
 - [Whitepaper](https://d1.awsstatic.com/whitepapers/aws_cloud_adoption_framework.pdf)
