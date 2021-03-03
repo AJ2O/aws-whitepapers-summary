@@ -35,6 +35,12 @@
       - [Systems and Solution Architecture](#systems-and-solution-architecture)
       - [Application Development](#application-development)
   - [Security Perspective: Risk and Compliance](#security-perspective-risk-and-compliance)
+    - [CAF Capabilities](#caf-capabilities-4)
+      - [Identity and Access Management](#identity-and-access-management)
+      - [Detective Control](#detective-control)
+      - [Infrastructure Security](#infrastructure-security)
+      - [Data Protection](#data-protection)
+      - [Incident Response](#incident-response)
 - [References](#references)
 
 # Overview
@@ -205,6 +211,30 @@ Encompasses the organization's capability to **define and describe the design of
 Defines the organization's capability to **customize or develop applications** to support its business goals. New skills and processes for [Continuous Integration and Continuous Deployment (CI/CD)](../DevOps/practicing-cicd.md) are a critical part of designing applications that take advantage of cloud services and the agility promised by cloud computing.
 
 ## Security Perspective: Risk and Compliance
+The **Security Perspective** helps an organization to structure the selection and implementation of security controls that meet its needs.
+
+### CAF Capabilities
+
+- [Identity and Access Management](#identity-and-access-management)
+- [Detective Control](#detective-control)
+- [Infrastructure Security](#infrastructure-security)
+- [Data Protection](#data-protection)
+- [Incident Response](#incident-response)
+
+#### Identity and Access Management
+This capability enables an organization to **create multiple access control mechanisms and manage the permissions for each** within the organization's AWS account.
+
+#### Detective Control
+AWS provides the capability for **native logging** as well as services that can be leveraged to **provide greater visibility to near real time** for occurrences in the AWS environment.
+
+#### Infrastructure Security
+This capability provides the opportunity for the organization to **shape its AWS security controls in an agile fashion;** automating the ability to build, deploy, and operate its security infrastructure.
+
+#### Data Protection
+Addresses the organization's capability for **maintaining visibility and control over data**, and **how it is accessed and used** in the organization.
+
+#### Incident Response
+Focuses on the organization's capability to **respond, manage, reduce harm, and restore operations** after a security incident.
 
 # References
 - [Whitepaper](https://d1.awsstatic.com/whitepapers/aws_cloud_adoption_framework.pdf)
