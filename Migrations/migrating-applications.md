@@ -10,6 +10,8 @@
     - [AWS Schema Conversion Tool (AWS SCT)](#aws-schema-conversion-tool-aws-sct)
     - [AWS Database Migration Service (AWS DMS)](#aws-database-migration-service-aws-dms)
   - [Step 1: Migration Assessment](#step-1-migration-assessment)
+  - [Step 2: Schema Conversion](#step-2-schema-conversion)
+  - [Step 3: Embedded SQL and Application Code Conversion](#step-3-embedded-sql-and-application-code-conversion)
 - [References](#references)
 
 # Overview
@@ -20,40 +22,40 @@ This summary is based off of the February 2017 revision of the **Migrating Appli
 # Migrating Data-Centric Applications to AWS
 
 ## Migration Steps
-The steps for a database migration, regardless of database engine, are listed below in order. These will be explained in detail in their own sections. Associated with each step is the average percentage of time spent in each step for a typical application:
+The steps for a database migration, regardless of database engine, are listed below in order. Each of the steps will be explained further in their own sections. Associated with each step is the average percentage of time spent in each step for a typical application:
 
 <html>
-<table align="center">
+<table>
     <tr>
-        <th>Step</th>
+        <th align="left">Migration Step</th>
         <th>Percentage of Overall Effort</th>
     </tr>
     <tr>
-        <th>1. Migration Assessment</th>
+        <th align="left">1. Migration Assessment</th>
         <td>2%</td>
     </tr>
     <tr>
-        <th>2. Schema Conversion</th>
+        <th align="left">2. Schema Conversion</th>
         <td>30%</td>
     </tr>
     <tr>
-        <th>3. Embedded SQL and Application Code Conversion</th>
+        <th align="left">3. Embedded SQL & Application Code Conversion</th>
         <td>15%</td>
     </tr>
     <tr>
-        <th>4. Data Migration</th>
+        <th align="left">4. Data Migration</th>
         <td>5%</td>
     </tr>
     <tr>
-        <th>5. Testing</th>
+        <th align="left">5. Testing</th>
         <td>45%</td>
     </tr>
     <tr>
-        <th>6. Data Replication</th>
+        <th align="left">6. Data Replication</th>
         <td>3%</td>
     </tr>
     <tr>
-        <th>7. Go Live</th>
+        <th align="left">7. Go Live</th>
         <td>5%</td>
     </tr>
 </table>
@@ -73,6 +75,36 @@ DMS is a service data migration to and from AWS database targets. DMS can be use
 This document will focus on the replication needed for data migrations, reducing the time and effort during the Data Migration and Data Replication Setp steps.
 
 ## Step 1: Migration Assessment
+During **Migration Assessment**, a team of system architects does the following:
+- review the architecture of the existing application
+- produce an assessment report that includes a network diagram with all the application layers
+- identify the application and database components that are not automatically migrated
+- estimate the effort for manual conversion work
+
+The SCT's [database migration assessment report](https://docs.aws.amazon.com/SchemaConversionTool/latest/userguide/CHAP_AssessmentReport.html) tool can be used to summarize all of the schema conversion tasks, and details the action items (and their complexity) for schema that can't be converted to the target database engine. It can also provide recommendations for the best target engine, other AWS services can fill in for missing features, and unique RDS features that can save customer licensing and other costs.
+
+Using the detailed report provided by the SCT, system architects can provide a much more precise estimate for the efforts required to complete migration of the database schema code.
+
+## Step 2: Schema Conversion
+The **Schema Conversion** step consists of translating the data definition language (DDL) for tables, partitions, and other database storage objects from the source database to the target database. In the SCT, this is a two-step process:
+1. Convert the schema.
+2. Apply the schema to the target database.
+
+The SCT automatically creates DDL scripts for as many database objects on the target platform as possible. For the remaining objects, the conversion action items describe why the object cannot be converted automatically and the manual steps required to convert the object to the target platform.
+
+The SCT also allows for the user to create custom schema tranformations and mapping rules to use during the conversion that are applied to the target platform. Some of the current transformations include:
+- Rename
+- Add prefix
+- Add suffix
+- Remove prefix
+- Remove suffix
+- Convert uppercase
+- Convert lowercase
+- Change data type (columns only)
+
+## Step 3: Embedded SQL and Application Code Conversion
 
 # References
 - [Whitepaper](https://d1.awsstatic.com/whitepapers/Migration/migrating-applications-to-aws.pdf)
+- [AWS Schema Conversion Tool User Guide](https://docs.aws.amazon.com/SchemaConversionTool/latest/userguide/CHAP_Welcome.html)
+
