@@ -30,6 +30,19 @@
   - [Migration Planning](#migration-planning)
   - [Technical Planning](#technical-planning)
 - [Migrating](#migrating)
+  - [First Migrations - Build Experience](#first-migrations---build-experience)
+  - [Migration Execution](#migration-execution)
+  - [Application Migration Process](#application-migration-process)
+    - [Discover](#discover)
+    - [Design](#design)
+    - [Build](#build)
+    - [Integrate](#integrate)
+    - [Validate](#validate)
+    - [Cutover](#cutover)
+  - [Team Models](#team-models)
+    - [Core Cloud Teams](#core-cloud-teams)
+    - [Migration Factory Teams](#migration-factory-teams)
+- [Conclusion](#conclusion)
 - [References](#references)
 
 # Overview
@@ -293,8 +306,84 @@ The primary objective of the **migration plan** is to lead the overall migration
 **Technical planning** involves building an initial backlog of prioritized applications by using the [application portfolio analyis](#application-portfolio-analysis) data. A small team can lead this process, often from the enterprise architecture team. They analyze and gather information about the current architecture for each application, then develop the future architecture and capture the workload details to execute a streamlined migration. Iteration helps migrations continue as the detailed plan evolves with new learnings.
 
 # Migrating
+## First Migrations - Build Experience
+It is important to develop migration skills and experience early to help an organization's teams make informed choices about their workload patterns. AWS recommends migrating three to five applications that are representative of common migration patterns in the portfolio. This will determine the process for moving that pattern in the mass migration to follow.
 
+## Migration Execution
+After gaining experience, the organization can scale teams to support the initial wave of migrations. The core teams expand to form migration sprint teams that operate in parallel. This is useful for re-hosting and re-platforming patterns that can use automation and tooling to accelerate application migration.
 
+## Application Migration Process
+Every application in the execution phase of a migration follows the same six-step process: Discover, Design, Build, Integrate, Validate, and Cutover.
+
+![ApplicationMigrationProcess](../Diagrams/ApplicationMigrationProcess.png)
+
+### Discover
+- The application portfolio analysis and planning backlog are used to understand current and future architectures
+- For each application, the data is analyzed and migration plan for it is confirmed
+
+### Design
+- The target state is developed and documented:
+  - The AWS architecture
+  - The application architecture
+  - Supporting operational components and processes
+- The data used for this step is derived from the Discover stage
+
+### Build
+- The migration design created during the Design stage is executed
+- The required people, tools, and reusable templates are identified and given to the migration teams
+  - Migration teams are selected based on the migration strategy chosen for the application
+
+### Integrate
+- The migration team works with external service providers and consumers of the application to make connections or service calls to the application
+- The team then runs the application to demonstrate functionality and operation before it is ready for the Validate stage
+
+### Validate
+- Each application goes through a series of specific tests before being finalized, such as:
+  - Build verification
+  - Functional
+  - Performance
+  - Business continuity
+- Business acceptance criteria is completed by parallel testing of pre-migrated and post-migrated applications
+
+### Cutover
+- The cutover plan agreed upon by the migration team and application owners is executed
+- Perform a user acceptance test at this point to verify a successful cutover
+  - If it fails, use the rollback procedure in the cutover plan
+
+## Team Models
+
+### Core Cloud Teams
+These teams work across the migration teams. They act as a central hub for managing projects, sharing lessons learned, coordinating resources, and building common solutions. These teams include:
+- **Cloud Business Office (Program Control)**
+  - Drives the program
+  - Manages resources and budgets
+  - Manages and reports risk
+  - Drives communication and change management
+- **Cloud Engineering & Operations**
+  - Builds and validates the fundamental components that ensure development, test, and production environments are:
+    - Scalable
+    - Automated
+    - Maintained
+    - Monitored
+- **Innovation**
+  - Develops repeatable solitions that will expedite migrations in coordination with the platform engineering, migration, and transition teams
+  - They work on larger or more complex technical issues for the migration teams
+- **Portfolio Discovery & Planning**
+  - Accelerates downstream activities by executing application discovery and optimizing application backlogs
+  - Minimizes wasted efforts
+
+### Migration Factory Teams
+During the scale-out phase of a migration project, multiple teams operate concurrently and support large volumes of migrations in the re-host and minor re-platform patterns. These teams are referred to as migration factory teams. Between 20% - 50% of an enterprise application portfolio consists of repeated patterns that can be optimized by a factory approach. The following teams are examples that are focused on specific migration patterns:
+- **Re-Host Migration Team**
+  - Migrates high-volume, low-complexity applications that don't require core changes
+- **Re-Platform Migration Team**
+  - Migrates applications that require a change of platform or a repeatable change in application architecture
+- **Re-Factor/Re-Architect Migration Team**
+  - Designs and migrates complex or core business applications with many dependencies
+  - The migration becomes a release cycle or a few release cycles within the plan for the team
+
+# Conclusion
+This document introduced both the preparation and execution steps required for large migrations to the cloud. Build a business case and refine the ROI as the project progresses. Use the CAF to analyze the environment through the different Perspectives. Use a migration factory construct and iterate the migration patterns to create an optimal move to the cloud.
 
 # References
 - [Whitepaper](https://d1.awsstatic.com/whitepapers/Migration/aws-migration-whitepaper.pdf)
