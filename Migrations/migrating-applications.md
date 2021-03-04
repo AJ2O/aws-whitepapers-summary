@@ -12,6 +12,10 @@
   - [Step 1: Migration Assessment](#step-1-migration-assessment)
   - [Step 2: Schema Conversion](#step-2-schema-conversion)
   - [Step 3: Embedded SQL and Application Code Conversion](#step-3-embedded-sql-and-application-code-conversion)
+  - [Step 4: Data Migration](#step-4-data-migration)
+  - [Step 5: Testing Converted Code](#step-5-testing-converted-code)
+  - [Step 6: Data Replication](#step-6-data-replication)
+  - [Step 7: Go Live (Deployment to AWS)](#step-7-go-live-deployment-to-aws)
 - [References](#references)
 
 # Overview
@@ -81,7 +85,7 @@ During **Migration Assessment**, a team of system architects does the following:
 - identify the application and database components that are not automatically migrated
 - estimate the effort for manual conversion work
 
-The SCT's [database migration assessment report](https://docs.aws.amazon.com/SchemaConversionTool/latest/userguide/CHAP_AssessmentReport.html) tool can be used to summarize all of the schema conversion tasks, and details the action items (and their complexity) for schema that can't be converted to the target database engine. It can also provide recommendations for the best target engine, other AWS services can fill in for missing features, and unique RDS features that can save customer licensing and other costs.
+The SCT's [database migration assessment report](https://docs.aws.amazon.com/SchemaConversionTool/latest/userguide/CHAP_AssessmentReport.html) tool can be used to summarize all of the schema conversion tasks, and details [Action Items](https://docs.aws.amazon.com/SchemaConversionTool/latest/userguide/CHAP_AssessmentReport.ActionItems.html) (and their complexity) for schema that can't be converted to the target database engine. It can also provide recommendations for the best target engine, other AWS services can fill in for missing features, and unique RDS features that can save customer licensing and other costs.
 
 Using the detailed report provided by the SCT, system architects can provide a much more precise estimate for the efforts required to complete migration of the database schema code.
 
@@ -90,9 +94,9 @@ The **Schema Conversion** step consists of translating the data definition langu
 1. Convert the schema.
 2. Apply the schema to the target database.
 
-The SCT automatically creates DDL scripts for as many database objects on the target platform as possible. For the remaining objects, the conversion action items describe why the object cannot be converted automatically and the manual steps required to convert the object to the target platform.
+The SCT automatically creates DDL scripts for as many database objects on the target platform as possible. For the remaining objects, the conversion Action Items describe why the object cannot be converted automatically and the manual steps required to convert the object to the target platform.
 
-The SCT also allows for the user to create custom schema tranformations and mapping rules to use during the conversion that are applied to the target platform. Some of the current transformations include:
+The SCT also allows for the user to create custom schema tranformations and mapping rules to use during the conversion that are applied to the target platform. Some of the transformations include:
 - Rename
 - Add prefix
 - Add suffix
@@ -103,6 +107,22 @@ The SCT also allows for the user to create custom schema tranformations and mapp
 - Change data type (columns only)
 
 ## Step 3: Embedded SQL and Application Code Conversion
+After converting the schema, the next step is to address any custom scripts with embedded SQL statements (ETL scripts, reports, etc.) and the application code so that they work with the target database. This includes rewriting parts of the code that relate to JDBC/ODBC driver usage, establishing connections, data retrieval, and iteration.
+
+The SCT scans a folder containing application code, extracts embedded SQL statements, converts as many as possible automatically, and flags the remaining statements for manual conversion actions. The workflow for application code conversion is similar to the workflow for the database migration:
+1. Run an assessment report to understand the level of effort required to convert the application code to the target platform.
+2. Analyze the code to extract embedded SQL statements.
+3. Allow the SCT to automatically convert as much code as possible.
+4. Work through the remaining conversion Action Items manually.
+5. Save code changes.
+
+## Step 4: Data Migration
+
+## Step 5: Testing Converted Code
+
+## Step 6: Data Replication
+
+## Step 7: Go Live (Deployment to AWS)
 
 # References
 - [Whitepaper](https://d1.awsstatic.com/whitepapers/Migration/migrating-applications-to-aws.pdf)
