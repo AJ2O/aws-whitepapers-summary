@@ -18,6 +18,9 @@
   - [Transformation Activities](#transformation-activities-2)
   - [Outcomes and Maturity](#outcomes-and-maturity-2)
 - [Optimization Stage](#optimization-stage)
+  - [Challenges and Barriers](#challenges-and-barriers-3)
+  - [Transformation Activities](#transformation-activities-3)
+  - [Outcomes and Maturity](#outcomes-and-maturity-3)
 - [Conclusion](#conclusion)
 - [References](#references)
 
@@ -101,19 +104,24 @@ The CTMM is a tool that enterprise customers can use to assess the maturity of t
   </tr>
   <tr>
     <th>Optimization</th>
-    <td><ul>
-      <li></li>
-      <li></li>
+    <td>Need to optimize:<ul>
+      <li>Costs</li>
+      <li>Application services</li>
+      <li>Operations services</li>
+      <li>Enterprise services</li>
     </ul></td>
-    <td><ul>
-      <li></li>
-      <li></li>
+    <td>Implement continuous optimization processes for:<ul>
+      <li>Cost management</li>
+      <li>Application services</li>
+      <li>Operations management</li>
+      <li>Enterprise services</li>
     </ul></td>
-    <td><ul>
-      <li></li>
-      <li></li>
-    </ul>
-    </td>
+    <td>Optimized, ongoing processes for:<ul>
+      <li>Cost savings</li>
+      <li>Application development</li>
+      <li>Operations management</li>
+      <li>Enterprise services</li>
+    </ul></td>
   </tr>
 </table>
 </html>
@@ -249,8 +257,48 @@ During the **migration** stage, the building blocks of the migrational and opera
   - The organiztion is now effectively providing IaaS-based services as part of an ITaaS delivery organization
 
 # Optimization Stage
+To reach the **optimization** stage, means that the organization has successfully migrated all targeted application workloads and is efficiently managing the AWS environment and service delivery process. This stage is an ongoing loop that focuses on optimizing existing processes by lowering costs, improving service, and extending AWS value deeper into the organization.
+
+## Challenges and Barriers
+- **Optimize costs**
+  - AWS and third-party providers frequently release new features and services, including various discounting/consumption-based models that can be evaluated for efficacy within the organization
+- **Optimize operation services**
+  - Need to continuously improve the service delivery model for provisioning, change control, and managing the environment
+  - AWS and third-party solutions can be evaluated to improve automation
+- **Optimize application services**
+  - Need to continuously improve the application services used to build and enhance applications
+  - AWS and third-party solutions can be evaluated for further optimization
+- **Optimize enterprise services**
+  - Organizations are constantly challenged to seek SaaS solutions as opposed to hosted solutions
+  - AWS and third-party solutions innovate at a rapid pace, providing new services that can simplify enterprise services, such as:
+    - Managed databases
+    - Virtual desktop
+    - Email
+    - Document management
+
+## Transformation Activities
+- **Implement a continuous cost optimization process**
+  - Designated resources from the CCoE or IT Finance teams must be trained to support an ongoing process using AWS or third-party cost-management tools to assess cost and optimize savings
+- **Implement a continuous operation management optimization process**
+  - Evaluate ongoing advancements in AWS services and third-party tools to pursue continuous improvement
+- **Implement a continuous application service optimization process**
+  - Evaluate ongoing advancements in AWS services and third-party tools to pursue continuous improvement
+  - Use fully managed application services where possible for significant value in new application development
+- **Implement a continuous enterprise service optimization process**
+  - Evaluate ongoing advancements in AWS services and third-party tools to achieve ease-of-use and enterprise-grade security, without the maintenance overhead
+
+## Outcomes and Maturity
+- **Optimized cost savings**
+  - There is an ongoing process and team focusted on continually reviewing AWS usage and identifying cost-reduction opportunities
+- **Optimized operations management process**
+  - There is an ongoing process to routinely evaluate AWS and third-party tools to identify ways to improve the efficiency and effectiveness of the current operations management process
+- **Optimized application development process**
+  - There is an ongoing process to routinely evaluate AWS and third-party tools to identify ways to improve the efficiency and effectiveness of the current application architecture and development process
+- **Optimized enterprise services**
+  - There is an ongoing process to routinely evaluate AWS and third-party management enterprise offerings to improve the delivery, security, and management of services offered throughout the organization
 
 # Conclusion
+The CTMM provides organizations with ways to anticipate the early challenges of cloud migration, become familiar with the mitigation strategies, and successfully derive value from cloud adoption.
 
 # References
 - [Whitepaper](https://d1.awsstatic.com/whitepapers/AWS-Cloud-Transformation-Maturity-Model.pdf)
