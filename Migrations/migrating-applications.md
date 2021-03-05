@@ -117,12 +117,42 @@ The SCT scans a folder containing application code, extracts embedded SQL statem
 5. Save code changes.
 
 ## Step 4: Data Migration
+After schema and application code conversion, the next step is to migrate the data from the source database to the target database. This can be easily accomplished by using the DMS. The DMS works by setting up a replication server on an EC2 instance called a **replication instance**, and it acts as a middleman between the source and the target.
+
+There are three main steps to start the data migration service:
+1. Set up a replication instance in a VPC (that can connect to both the source and target databases).
+2. Define connections for the source and target databases.
+3. Define data replication tasks.
+
+Data can be migrated in two ways:
+- As a full load of existing data
+- As a full load of existing data, followed by continuous replication of data changes to the target
 
 ## Step 5: Testing Converted Code
+Thorough testing of the migrated application ensures correct functional behaviour on the new platform. It should accomplish two goals:
+1. Verify critical functionality of the application.
+2. Verify that converted SQL objects are functioning as intended.
+
+This should be given the same effort as in both the conversion phases, up to 45% of the total migration effort.
 
 ## Step 6: Data Replication
+Many production applications cannot tolerate a downtime window long enough to migrate all the data in a full load. The DMS can use a proprietary Change Data Capture (CDC) process to implement ongoing replication from the source database to the target database, with minimal load on the source.
+
+The CDC offers two ways to implement ongoing replication:
+1. Migrate existing data, and replicate ongoing changes. Replication is done by:
+   1. Migrating existing data and caching changes to it
+   2. Applying the cached data changes until the database reaches a steady state
+   3. Applying current data changes to the target as soon as they're received by the replication instance
+2. Replicate data changes only.
+    - This option is helpful when the target schema already existins and the intial data load is already completed.
 
 ## Step 7: Go Live (Deployment to AWS)
+Test the data migration to ensure that all data can be successfully migrated during the cutover window. Monitor the source and target databases to ensure that: 
+- The initial data load is completed
+- Cached transactions are applied
+- The data has reached a steady state before cutover
+
+DMS monitors the numbers of rows inserted, deleted, and updated, as well as the number of DDL statements issued per table while a task is running. DMS also publishes metrics to [Amazon CloudWatch Logs](https://docs.aws.amazon.com/AmazonCloudWatch/latest/logs/WhatIsCloudWatchLogs.html), which can be used for post-deployment monitoring and monitoring possible DMS errors.
 
 # References
 - [Whitepaper](https://d1.awsstatic.com/whitepapers/Migration/migrating-applications-to-aws.pdf)
