@@ -14,6 +14,9 @@
   - [Transformation Activities](#transformation-activities-1)
   - [Outcomes and Maturity](#outcomes-and-maturity-1)
 - [Migration Stage](#migration-stage)
+  - [Challenges and Barriers](#challenges-and-barriers-2)
+  - [Transformation Activities](#transformation-activities-2)
+  - [Outcomes and Maturity](#outcomes-and-maturity-2)
 - [Optimization Stage](#optimization-stage)
 - [Conclusion](#conclusion)
 - [References](#references)
@@ -81,16 +84,18 @@ The CTMM is a tool that enterprise customers can use to assess the maturity of t
   <tr>
     <th>Migration</th>
     <td><ul>
-      <li></li>
-      <li></li>
+      <li>Developing and implementing an effective and robust migration process</li>
+      <li>Setting up a cloud environment</li>
+      <li>Going <i>all-in</i></li>
     </ul></td>
     <td><ul>
-      <li></li>
-      <li></li>
+      <li>Conduct a portfolio assessment</li>
+      <li>Implement a migration environment, and a best-management environment</li>
+      <li>Migrate targeted workloads</li>
     </ul></td>
     <td><ul>
-      <li></li>
-      <li></li>
+      <li><i>All-in</i> with AWS</li>
+      <li>IT-as-a-Service (ITaaS)</li>
     </ul>
     </td>
   </tr>
@@ -205,6 +210,43 @@ The **foundation** stage is characterized by the customer's intent to move forwa
 - **Strong value management plan**
 
 # Migration Stage
+During the **migration** stage, the building blocks of the migrational and operational tools are implemented and the mass migration of in-scope workloads is completed. Significant risks exist at this stage, such as project delays, budget overruns, and application failures. There is also a risk that customer confidence and support will diminish if not done properly.
+
+## Challenges and Barriers
+- **Developing an effective and efficient migration strategy**
+  - Needs to minimize risk of project failures, and maximize ROI
+  - Many IT projects fail for lack of appropriate strategies and plans
+- **Implementing a robust migration process**
+  - The process should minimize cost, and be repeatable and sustainable
+  - The selection and use of proven migration tools is a key factor for this challenge
+- **Setting up a cloud environment**
+  - Should be controlled, sustainable, reliable, and enables improved agility
+  - This challenge requires using existing tools and processes, while also developing new ones
+- **Going *all-in***
+  - Migration processes should enable the efficient migraion of all application workloads on time and within budget
+  - Risks include technical failures, unsustainable processes, and performance failures
+    - All can create significant project delays and unplanned costs
+
+## Transformation Activities
+- **Conduct a porfolio assessment**
+  - A portfolio rationalization execise should be used determine which applications to migrate, replace, or eliminate
+  - To read more about the 6 different migration strategies, read the *Migration Strategies* section in the [AWS Migrations summary](./aws-migrations.md#migration-strategies)
+- **Implement a migration environment**
+  - In addition to a migration strategy, a migration process must also be developed for each application workload
+- **Implement a best-management environment**
+  - The organization must develop and implement an effective cloud governance and operating model that addresses its need from the standpoint of access, security, compliance, and automation
+- **Migrate targeted workloads**
+  - It is recommended to use the principles of [agile methodology](https://www.atlassian.com/agile) to effectively execute and manage the migration of workloads from end to end
+
+## Outcomes and Maturity
+- ***All-in* with AWS**
+  - The organization has declared that AWS is its primary cloud host for both legacy and new applications
+- **IT-as-a-Service (ITaaS)**
+  - The organization is realizing the core benefits of cloud adoption:
+    - Measurable cost savings
+    - Agility
+    - Innovation
+  - The organiztion is now effectively providing IaaS-based services as part of an ITaaS delivery organization
 
 # Optimization Stage
 
