@@ -12,46 +12,23 @@
   - [Definition](#definition)
   - [Design Principles](#design-principles)
   - [Best Practices](#best-practices)
-    - [Organization](#organization)
-    - [Prepare](#prepare)
-    - [Operate](#operate)
-    - [Evolve](#evolve)
 - [The Five Pillars: Security](#the-five-pillars-security)
   - [Definition](#definition-1)
   - [Design Principles](#design-principles-1)
   - [Best Practices](#best-practices-1)
-    - [Security](#security)
-    - [Identity and Access Management](#identity-and-access-management)
-    - [Detection](#detection)
-    - [Infrastructure Protection](#infrastructure-protection)
-    - [Data Protection](#data-protection)
-    - [Incident Response](#incident-response)
 - [The Five Pillars: Reliability](#the-five-pillars-reliability)
   - [Definition](#definition-2)
   - [Design Principles](#design-principles-2)
   - [Best Practices](#best-practices-2)
-    - [Foundations](#foundations)
-    - [Workload Architecture](#workload-architecture)
-    - [Change Management](#change-management)
-    - [Failure Management](#failure-management)
 - [The Five Pillars: Performance Efficiency](#the-five-pillars-performance-efficiency)
   - [Definition](#definition-3)
   - [Design Principles](#design-principles-3)
   - [Best Practices](#best-practices-3)
-    - [Selection](#selection)
-    - [Review](#review)
-    - [Monitoring](#monitoring)
-    - [Tradeoffs](#tradeoffs)
 - [The Five Pillars: Cost Optimization](#the-five-pillars-cost-optimization)
   - [Definition](#definition-4)
   - [Design Principles](#design-principles-4)
   - [Best Practices](#best-practices-4)
-    - [Practice Cloud Financial Management](#practice-cloud-financial-management)
-    - [Expenditure and usage awareness](#expenditure-and-usage-awareness)
-    - [Cost-effective resources](#cost-effective-resources)
-    - [Manage demand and supply resources](#manage-demand-and-supply-resources)
-    - [Optimize over time](#optimize-over-time)
-- [References](#references)
+- [Conclusion](#conclusion)
 
 # Overview
 - [Source](https://docs.aws.amazon.com/wellarchitected/latest/framework/welcome.html)
@@ -557,25 +534,94 @@ There are five best practice areas for cost optimization in the cloud:
 - [Practice Cloud Financial Management](#practice-cloud-financial-management)
 - [Expenditure and usage awareness](#expenditure-and-usage-awareness)
 - [Cost-effective resources](#cost-effective-resources)
-- [Manage demand and supply resources](#manage-demand-and-supply-resources)
+- [Manage demand, and supply resources](#manage-demand-and-supply-resources)
 - [Optimize over time](#optimize-over-time)
 
 
 ## Design Principles
 These design principles will be prevalent for cost optimization best practices:
-
+- **Implement Cloud Financial Management**
+  - Your organization needs to dedicate time and resources to build capability in this new domain of technology and usage management.
+- **Adopt a consumption model**
+- **Measure overall efficiency**
+- **Stop spending money on undifferentiated heavy lifting**
+- **Analyze and attribute expenditure**
 
 ## Best Practices
 
 ### Practice Cloud Financial Management
+A new approach to financial management in the cloud is required to realize business value and financial success. This approach builds capability across the organization by implementing organizational wide knowledge building, programs, resources, and processes.
+
+**COST 1: How do you implement cloud financial management?**
+- Create a team that is responsible for establishing and maintaining cost awareness across your organization. The team requires people from finance, technology, and business roles across the organization.
+- Adjust existing organizational budgeting and forecasting processes to be compatible with the highly variable nature of cloud usage and costs.
+- Report and notify on cost optimization. Have regular meetings to analyze workload cost efficiency and to promote cost aware culture.
+- Implement tooling and dashboards to monitor cost proactively for the workload.
+- Keep up to date with new service releases.
 
 ### Expenditure and usage awareness
+The cloud eliminates the manual processes and time associated with provisioning on-premises infrastructure, including negotiating price quotations, managing purchase orders, scheduling shipments, etc. However, the ease of use and virtually unlimited on-demand capacity requires a new way of thinking about expenditures.
+
+**COST 2: How do you govern usage?**
+- Develop policies based on your organization requirements. Cover cost aspects of resources such as creation, modification, and decomission over the resource lifetime.
+- Implment cost and usage goals for the workload.
+- Implement a structure of accounts that maps to your organization.
+- Implement groups and roles that align to your policies and control who can create, modify, or decommission instances and resources in each group.
+- Track, measure, and audit the lifecycle of projects to avoid using and paying for unnecessary resources.
+
+**COST 3: How do you monitor usage and cost?**
+- Configure [AWS Cost and Usage Report](https://aws.amazon.com/aws-cost-management/aws-cost-and-usage-reporting/) and [AWS Cost Explorer](https://aws.amazon.com/aws-cost-management/aws-cost-explorer/) to provide detailed cost and usage information.
+- Configure Cost Explorer and [AWS Budgets](https://aws.amazon.com/aws-cost-management/aws-budgets/) inline with your organization's policies.
+- Identify organization categories and define a tagging schema based on organization to group costs and usage according to organization attributes.
+
+**COST 4: How do you decommission resources?**
+- Track resoures and their system associations over their lifetime. This can be done via tagging.
+- Implement a process to identify and decomission orphaned resources.
+- Decommission resources automatically if they are non-critical, are not required, or have low utilization.
 
 ### Cost-effective resources
+Using the appropriate instances and resources for your workload is key to cost savings.
 
-### Manage demand and supply resources
+**COST 5: How do you evaluate cost when you select services?**
+- Work with team members to define the balance between cost optimization and other pillars for this workload, such as performance and reliability.
+- Perform a thorough cost analysis of each component. Determine the total cost by factoring in cost of operations and management, especially when using managed services.
+- Select components of this workload to optimize cost in line with organization policies.
+- Perform cost analysis for different usage over time.
+
+**COST 6: How do you meet cost targets when you select resource type, size, and number?**
+- Perform cost modeling of the workload and each of its components. Perform benchmark activities for the workload under different predicted loads and compare the costs. The modeling effor should reflect potential benefit.
+- Select resource type and size based on data about the workload and resource characteristics.
+- Use metrics from the currently running workload to select the right size and type to optimize for cost.
+
+**COST 7: How do you use pricing models to reduce cost?**
+- Perform price model analysis on the workload using the Recommendations feature in Cost Explorer. Determine if components will be running for extended periods (use [reserved](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/ec2-reserved-instances.html) instances) or be dynamic and short running (use [spot](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/using-spot-instances.html) or [on-demand](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/ec2-on-demand-instances.html) instances).
+- Implement pricing models for all components of this workload.
+- Perform regular analysis at the master account level for commitment discounts.
+
+**COST 8: How do you plan for data transfer charges?**
+- Perform data transfer modeling of the workload and each of its components. This identifies the lowest cost point for its current data transfer requirements.
+- Select components to optimize data transfer costs.
+  - Use components such as WAN optimization and Multi-AZ configuration.
+- Implement services to reduce data transfer costs. Examples:
+  - A CDN to deliver content to end users.
+  - A caching layer using Memcached or Redis.
+  - Use Direct Connect instead of a VPN for connectivity to AWS.
+
+### Manage demand, and supply resources
+In the cloud, resources can be supplied to meet the workload demand when needed, eliminating the cost for over-provisioning and wasting resources. 
+
+**COST 9: How do you manage demand, and supply resources?**
+- Perform an analysis on the workload demand over time. Ensure this covers seasonal trends, and accurately represents general operating conditions.
+- Implement a buffer or throttle to manage demand, and smooth out demand peaks to your workload. Ensure that buffers and throttles are designed so that clients receieve a response in the required time.
+- Supply resources dynamically to result in the least amount of under- or over-provisioning.
 
 ### Optimize over time
+As AWS releases new services and features, it's a best practice to review existing architectural decisions to ensure they continue to be the most cost-effective.
 
-# References
-- [AWS Well-Architected Framework (Documentation)](https://docs.aws.amazon.com/wellarchitected/latest/framework/welcome.html)
+**COST 10: How do you evaluate new services?**
+- Develop a process that defines the criteria and process for workload review. The review effort should reflect potential benefit.
+  - Example: Core workloads with a value of over 10% of the bill are reviewed quarterly, and those under 10% are reviewed annually.
+- Review and analyze workloads regularly as defined by their processes.
+
+# Conclusion
+The AWS Well-Architected Framework provides best practices across the five pillars for designing systems in the cloud. Measuring and refining your architecture against the framework will help you produce stable and efficient systems, which allows you to focus on your business requirements.
