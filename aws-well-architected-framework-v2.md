@@ -27,6 +27,13 @@
     - [Data Protection](#data-protection)
     - [Incident Response](#incident-response)
 - [The Five Pillars: Reliability](#the-five-pillars-reliability)
+  - [Definition](#definition-2)
+  - [Design Principles](#design-principles-2)
+  - [Best Practices](#best-practices-2)
+    - [Foundations](#foundations)
+    - [Workload Architecture](#workload-architecture)
+    - [Change Management](#change-management)
+    - [Failure Management](#failure-management)
 - [The Five Pillars: Performance Efficiency](#the-five-pillars-performance-efficiency)
 - [The Five Pillars: Cost Optimization](#the-five-pillars-cost-optimization)
 - [References](#references)
@@ -166,6 +173,9 @@ To prepare for operational excellence, team members need to understand their wor
 - Prepare for unsuccessful changes by having a rollback plan to revert to a known good state.
 - Deploy using parallel environments. Once the new deployment is confirmed as successful, the prior environment can be removed.
 - Fully automate integration and deployment to reduce manual error and effort.
+  - The image below displays a [Continuous Integration & Continuous Delivery (CICD)](DevOps/practicing-cicd.md) pipeline that automates deployment changes in a consistent way without any human intervention.
+
+![CICD](Diagrams/ContinuousDeliveryEC2.png)
 
 **OPS 7: How do you know that you are ready to support a workload?**
 - Ensure that you have the appropriate number of trained personnel to provide support for operational needs.
@@ -318,6 +328,119 @@ Even with mature preventative and detective controls, customers should still put
 - Practice incident response game days regularly, and incorporate lessons learned into your incident management plans to continuously improve.
 
 # The Five Pillars: Reliability
+
+## Definition
+The ability of a workload to perform its intended function correctly and consistently when it's expected to. This includes the ability to operate and test the workload through its total lifecycle.
+
+There are four best practice areas for reliability in the cloud:
+- [Foundations](#foundations)
+- [Workload Architecture](#workload-architecture)
+- [Change Management](#change-management)
+- [Failure Management](#failure-management)
+
+## Design Principles
+These design principles will be prevalent for reliability best practices:
+- **Automatically recover from failure**
+- **Test recovery procedures**
+- **Scale horizontally to increase aggregate workload availability**
+- **Stop guessing capacity**
+- **Manage change in automation**
+
+## Best Practices
+
+### Foundations
+Before architecting any system, foundational requirements that influence reliability should be in place. For example, an organization must have sufficient bandwidth to their data center.
+
+**REL 1: How do you manage service quotas and constraints?**
+- Be aware of your default quotas and quota increase requests for your workload.
+- Be aware of unchangeable service quotas and physical resources, and architect to prevent those from impacting reliability.
+- Evaluate your potential usage, and increase your quotas appropriately allowing for planned growth in usage.
+- Implement tools to alert you when thresholds are being approached. You can automate quota increase requests by using the [AWS Service Quota APIs](https://docs.aws.amazon.com/servicequotas/2019-06-24/apireference/Welcome.html).
+
+**REL 2: How do you plan your network topology?**
+- Use highly available network connectivity for your workload public endpoints.
+  - Ways to implement this: highly available DNS, CDNs, API Gateways, load balancers, etc.
+- Provision redundant connectivity between private networks in the cloud and on-premises environments.
+- Ensure subnet IP allocation accounts for expansion and availability.
+- Prefer *hub-and-spoke* topologies over *many-to-many-mesh* if more than two address spaces are connected.
+  - [AWS Transit Gateway](https://aws.amazon.com/transit-gateway/?whats-new-cards.sort-by=item.additionalFields.postDateTime&whats-new-cards.sort-order=desc) is a hub-and-spoke solution.
+- The IP address ranges of different address spaces must not overlap when peered or connected via VPN.
+
+### Workload Architecture
+Your architecture choices for both software and infrastructure will impact your workload behaviour across all five WA-F pillars.
+
+**REL 3: How do you design your workload service architecture?**
+- Build highly scalable and reliable workloads using a service-oriented architecture or [microservices architecture](https://aws.amazon.com/microservices/).
+- When choosing how to segment your workload, balance the benefits against the complexities. The priorities for a new product racing to first launch is different than the priorities for a workload that needs to scale from the start.
+- Build services focused on specific business domains and functionality.
+
+**REL 4: How do you design interactions in a distributed system to prevent failures?**
+- Implement loosely coupled dependencies to help isolate behaviour of a component from other components, increasing resiliency and agility.
+- Make all responses *idempotent.* This means that each request is completed exactly once, such that making multiple identical requests has the same effect as making a single request. 
+  - This meakes it easier for a client to implement retries without fear that a request will be erroneously processed multiple times.
+
+**REL 5: How do you design interactions in a distributed system to mitigate or withstand failures?**
+- When a component's dependencies are unhealthy, the component itself can still function, although in a degraded manner.
+  - Example: if a dependency call fails, failover to a predetermined static response.
+- Throttle requests to mitigate unexpected increases in demand.
+- Set client timeouts.
+- Control and limit retry calls, using exponential backoff to retry after progressively longer intervals, and limit the maximum number of retries.
+- Make services stateless where possible.
+
+### Change Management
+Changes to the workload or its environment must be anticipated and accomodated to achieve reliable operation of the workload. Changes include external sources (such as spikes in demand), and internal sources (such as feature deployments or patches).
+
+**REL 6: How do you monitor workload resources?**
+- Configure your workload to monitor logs and metrics and to automatically send notifications when thresholds are crossed or significant events occur.
+- Consolidate logs in a central location.
+- Automate responses to take action when events are detected, such as to replace failed components.
+- Monitor end-to-end tracing of requests through your system.
+  - Example: [AWS X-Ray](https://aws.amazon.com/xray/) can be used to more easily analyze and debug distributed systems. An X-Ray graph is shown below:
+
+![X-Ray](Diagrams/XRay.png)
+
+**REL 7: How do you design your workload to adapt to changes in demand?**
+- Obtain resources upon detection of impairment to a workload.
+- Obtain resources upon detection that more resources are needed for a workload to meet demand.
+- Use automation when obtaining and scaling resources.
+- Load test your workload to see if scaling activity meets workload requirements.
+
+### Failure Management
+Reliability requires that your workload be aware of failures as they occur and take action to avoid impact on availability.
+
+**REL 9: How do you back up data?**
+- Back up data, applications, and configuration to meet your [*recovery time objectives (RTO) and recovery point objectives (RPO)*](https://docs.aws.amazon.com/wellarchitected/latest/reliability-pillar/disaster-recovery-dr-objectives.html).
+- Identify all data that needs to be backed up.
+- Secure and encrypt backups.
+- Perform data backup automatically based on a periodic schedule, or by changes in the dataset.
+- Perform periodic recovery of the data to verify backup integrity and processes.
+
+**REL 10: How do you use fault isolation to protect your workload?**
+- Deploy the workload to multiple locations, as diverse as required.
+- Automate recovery for components constrained to a single location.
+- Use *bulkhead architectures* to limit the scope of impact. This design pattern ensures that failure is contained to a subset of requests/users so that most requests can continue without error.
+
+**REL 11: How do you design your workload to withstand component failures?**
+- Monitor all workload components to detect failures.
+- Failover to healthy resources in unimpaired locations.
+- Automate healing on all layers.
+- Send notifications when events impact availability.
+
+**REL 12: How do you test reliability?**
+- Use playbooks to investigate failures, similar to in the [operational excellence pillar](#prepare).
+- Perform post-incident analysis, similar to in the [operational excellence pillar](#evolve).
+- Test functional, scaling, and performance requirements.
+- Run tests that inject failures regularly into pre-production and production environments. Hypothesize how the workload will react, then compare it to what actually happens and iterate if they do not match. Ensure that production testing does not impact users.
+  - Some failure scenarios that can be used for testing are described in [The Netflix Simian Army](https://netflixtechblog.com/the-netflix-simian-army-16e57fbab116).
+
+**REL 13: How do you plan for disaster recovery (DR)?**
+- Define [RTOs and RPOs]((https://docs.aws.amazon.com/wellarchitected/latest/reliability-pillar/disaster-recovery-dr-objectives.html)) for your workloads.
+- Create a DR strategy defined to meet objectives. Choose a strategy such as:
+  - Backup and restore
+  - Active/Passive
+  - Active/Active
+- Ensure that the infrastructure, data, and configuration are as needed at the DR site.
+- Test DR implementation to validate that the RTOs and RPOs are met.
 
 # The Five Pillars: Performance Efficiency
 
