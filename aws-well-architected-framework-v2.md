@@ -8,19 +8,27 @@
   - [Terminology](#terminology)
   - [The Five Pillars](#the-five-pillars)
 - [General Design Principles](#general-design-principles)
-- [The Five Pillars of the Framework](#the-five-pillars-of-the-framework)
-  - [Operational Excellence](#operational-excellence)
-    - [Design Principles](#design-principles)
-    - [Definition](#definition)
-    - [Best Practices](#best-practices)
-      - [Organization](#organization)
-      - [Prepare](#prepare)
-      - [Operate](#operate)
-      - [Evolve](#evolve)
-  - [Security](#security)
-  - [Reliability](#reliability)
-  - [Performance Efficiency](#performance-efficiency)
-  - [Cost Optimization](#cost-optimization)
+- [The Five Pillars: Operational Excellence](#the-five-pillars-operational-excellence)
+  - [Definition](#definition)
+  - [Design Principles](#design-principles)
+  - [Best Practices](#best-practices)
+    - [Organization](#organization)
+    - [Prepare](#prepare)
+    - [Operate](#operate)
+    - [Evolve](#evolve)
+- [The Five Pillars: Security](#the-five-pillars-security)
+  - [Definition](#definition-1)
+  - [Design Principles](#design-principles-1)
+  - [Best Practices](#best-practices-1)
+    - [Security](#security)
+    - [Identity and Access Management](#identity-and-access-management)
+    - [Detection](#detection)
+    - [Infrastructure Protection](#infrastructure-protection)
+    - [Data Protection](#data-protection)
+    - [Incident Response](#incident-response)
+- [The Five Pillars: Reliability](#the-five-pillars-reliability)
+- [The Five Pillars: Performance Efficiency](#the-five-pillars-performance-efficiency)
+- [The Five Pillars: Cost Optimization](#the-five-pillars-cost-optimization)
 - [References](#references)
 
 # Overview
@@ -98,18 +106,9 @@ The W-AF identifies some general principles to facilitate good design in the clo
 - **Improve through game days**
   - Regularly schedule simulation events in production to understand where improvements can be made, and to gain experience dealing with events
 
-# The Five Pillars of the Framework
-## Operational Excellence
+# The Five Pillars: Operational Excellence
 
-### Design Principles
-These design principles will be prevalent for operational excellence best practices:
-- **Perform operations as code**
-- **Make frequent, small, reversible changes**
-- **Refine operations procedures frequently**
-- **Anticipate failure**
-- **Learn from all operational failures**
-
-### Definition
+## Definition
 The ability to support development and run workloads effectively, gain insight into their operations, and to continuously improve supporting processes and procedures to deliver business value.
 
 There are four best practice areas for operational excellence in the cloud:
@@ -118,9 +117,17 @@ There are four best practice areas for operational excellence in the cloud:
 - [Operate](#operate)
 - [Evolve](#evolve)
 
-### Best Practices
+## Design Principles
+These design principles will be prevalent for operational excellence best practices:
+- **Perform operations as code**
+- **Make frequent, small, reversible changes**
+- **Refine operations procedures frequently**
+- **Anticipate failure**
+- **Learn from all operational failures**
 
-#### Organization
+## Best Practices
+
+### Organization
 Teams need to have a shared understanding of the entire workload, their role in it, and shared business goals to set well-defined priorities that will enable business success. 
 
 **OPS 1: How do you determine what your priorities are?**
@@ -139,7 +146,7 @@ Teams need to have a shared understanding of the entire workload, their role in 
 - Team members are enabled and encouraged to maintain and grow their skill sets. Growth of skills in new technologies is frequently a source of team member satisfaction and supports innovation.
 - Resource teams appropriately, with team member capacity and tools for them to support their workload needs.
 
-#### Prepare
+### Prepare
 To prepare for operational excellence, team members need to understand their workloads and their expected behaviours. Then the workloads can be designed to provide insight into their status, and procedures can be built to support them.
 
 **OPS 4: How do you design your workload so that you can understand its state?**
@@ -166,7 +173,7 @@ To prepare for operational excellence, team members need to understand their wor
 - Use documented procedures (called *runbooks*) to achieve specific outcomes for well-understood events. Implement runbooks as code and trigger them in response to events where appropriate to ensure speed and consistency, while reducing  manual error.
 - Document the investigation process of issues not well known, in *playbooks*. Playbooks are predefined steps to perform to identify factors contributing to a failure scenario.
 
-#### Operate
+### Operate
 Successful operation of a workload is measured by the achievement of business and customer outcomes. Define expected outcomes, determine how success will be measured, and identify the metrics that will be used in those calculations to determine workload and operations success.
 
 **OPS 8: How do you understand the health of your workload?**
@@ -193,7 +200,7 @@ Successful operation of a workload is measured by the achievement of business an
 - Where possible, automate responses to events.
 - Communicate status through dashboards tailored to their target audiences.
 
-#### Evolve
+### Evolve
 You must learn, share, and continuously improve to sustain operational excellence.
 
 **OPS 11: How do you evolve operations?**
@@ -203,13 +210,118 @@ You must learn, share, and continuously improve to sustain operational excellenc
 - Regularly perform retrospective analysis of operations metrics with cross-team participants to identify opportunities for improvement, potential courses of action, and to share lessons learned.
 - Document and share lessons learned from operations activities so that they can be used internally and across teams.
 
-## Security
+# The Five Pillars: Security
 
-## Reliability
+## Definition
+The ability to protect data, systems, and assets to take advantage of cloud technologies to improve the organization's security.
 
-## Performance Efficiency
+There are six best practice areas for security in the cloud:
+- [Security](#security-1)
+- [Identity and Access Management](#identity-and-access-management)
+- [Detection](#detection)
+- [Infrastructure Protection](#infrastructure-protection)
+- [Data Protection](#data-protection)
+- [Incident Response](#incident-response)
 
-## Cost Optimization
+## Design Principles
+These design principles will be prevalent for security best practices:
+- **Implement a strong identity foundation**
+- **Enable traceability**
+- **Apply security at all layers**
+- **Automate security best practices**
+- **Protect data at rest and in transit**
+- **Keep people away from data**
+- **Prepare for security events**
+
+## Best Practices
+
+### Security
+To operate a workload securely, overarching best practices must be applied to every area of security. 
+
+**SEC 1: How do you securely operate your workload?**
+- Secure access to your AWS account(s), for example enabling MFA, restricting use of the root user, and configure account contacts.
+- Separate workloads using separate accounts based on function, or a common set of controls.
+- Keep up to date with AWS and industry security threats and recommendations.
+- Establish secure baselines and templates for security mechanisms that are tested and validated as part of your build, pipelines, and processes.
+  - Example: scanning container images for security vulnerabilities, irregularities, and drift from established baselines.
+- Identify and prioritize risks using a threat model, and continually revisit and maintain this list in an evolving security landscape.
+
+### Identity and Access Management
+Identity and access management (IAM) are key parts of an information security program, ensuring that only authorized and authenticated users and components are able to access resources and only in the manner that they are inteded to be accessed.
+
+**SEC 2: How do you manage identities for people and machines?**
+- There are two types of identities to manage:
+  - **Human identities:** Administrators, developers, operators, end users, etc.
+    - These interact with workloads via web browser, client application, or command-line tools.
+  - **Machine identities:** Service applications, operational tools, workloads themselves, etc.
+    - These interact with workloads via API requests to AWS services.
+- Use strong sign-in mechanisms, such as MFA, password length, password complexity, etc.
+- Rely on a centralized identity provider, which is easier to manage.
+- Require identities to dynamically acquire temporary credentials.
+- Audit and rotate credentials periodically where temporary credentials cannot be used.
+
+**SEC 3: How do you manage permissions for people and machines?**
+- Have a clear definition of who or what should have access to each component, and choose the appropriate identity type and method of authentication and authorization.
+- Grant least privilege access. As teams and workloads determine what access they need, remove permissions they no longer use to establish least privilege access.
+- Establish a process that allows emergency access to the workload in the event of an automated process or pipeline issue.
+- Govern the consumption of shared resources across accounts, and review shared resource access.
+
+### Detection
+Detective controls can be used to identify a potential security threat or incident. They are essential, and can be used to support a quality process, a compliance obligation, and for threat identification and response efforts.
+
+**SEC 4: How do you detect and investigate security events?**
+- Configure service and application logging, then capture and analyze events from the logs and metrics to gain visibility. Store these findings in a central location, and use dashboards to give insight into real-time system health.
+- Implement actionable security events. Ensure that alerts include relevant information for the team to take action.
+- Where possible, automate responses to events.
+
+### Infrastructure Protection
+Infrastructure protections encompasses control methodologies necessary to meet best practices and organizational or regulatory obligations. Multiple layers of defense (for example, VPC, NACLs, security groups, firewalls) are advisable in any type of environment.
+
+**SEC 5: How do you protect your network resources?**
+- Group components that share reachability requirements into layers.
+  - Example: A database in a VPC with no need for internet access should be placed in subnets with no route to or from the Internet.
+- Control and monitor traffic at all layers (for example, NACLs, security groups, subnets)
+- Automate network protection mechanisms based on threat intelligence and anomaly detection.
+
+**SEC 6: How do you protect your compute resources?**
+- Frequently scan and patch for vulnerabilities in your code, dependencies, and your infrastructure to protect against new threats.
+- Reduce attack surface by hardening operating systems, minimizing components, libraries, and external services in use.
+- Implement managed surfaces to reduce your security maintenance tasks as part of the shared responsibility model.
+- Remove the ability for direct, interactive access, and automate protection where possible. This reduces the risk of human error and manual configuration or management.
+
+### Data Protection
+Data protection supports objectives such as preventing financial loss or complying with regulatory obligations. Data classification provides a way to organize data based on its sensitivity level, and encryption protects data by rendering it unintelligible to unauthorized access.
+
+**SEC 7: How do you classify your data?**
+- Identify the data within your workload. This includes its type, associated business processes, data owner, applicable legal and compliance requirements, where it's stored, etc.
+- Automate identification and classification to reduce the risk of human error from manual interactions.
+- Protect data according to its classification level (for example, sensitive data will have additonal controls compared to public data).
+
+**SEC 8: How do you protect your data at rest?**
+- Encryption keys must be stored securely and periodically rotated, with strict access control. Consider using different keys, and manage access control to the keys using IAM and resource-based policies, to align with data classification levels.
+- Enforce encryption at rest. Use automated tools to continuously validate and enforce data protection.
+  - Example: Verify that there are only encrypted storage resources.
+- Keep all users aways from directly accessing sensitive data and systems under normal operational circumstances.
+
+**SEC 9: How do you protect your data in transit?**
+- Authenticate network communications by using protocols that support authentication, such as TLS or IPsec.
+- Enforce encryption in transit.
+- Automate detection of unintended data access.
+
+### Incident Response
+Even with mature preventative and detective controls, customers should still put processes in place to respond to and mitigate the potential impact of security incidents.
+
+**SEC 10: How do you anticipate, respond to, and recover from incidents?**
+- Ensure that you have a way to quickly grant access for your security team, and automate the isolation of instances as well as capturing the data and state for forensics.
+- Create plans to help you respond to, communicate during, and recover from an incident. Include how you would communicate and escalate both internally and externally.
+- Ensure that security personnel have the right tool pre-deployed into AWS to reduce time for investigation through to recovery.
+- Practice incident response game days regularly, and incorporate lessons learned into your incident management plans to continuously improve.
+
+# The Five Pillars: Reliability
+
+# The Five Pillars: Performance Efficiency
+
+# The Five Pillars: Cost Optimization
 
 # References
 - [AWS Well-Architected Framework (Documentation)](https://docs.aws.amazon.com/wellarchitected/latest/framework/welcome.html)
