@@ -35,7 +35,22 @@
     - [Change Management](#change-management)
     - [Failure Management](#failure-management)
 - [The Five Pillars: Performance Efficiency](#the-five-pillars-performance-efficiency)
+  - [Definition](#definition-3)
+  - [Design Principles](#design-principles-3)
+  - [Best Practices](#best-practices-3)
+    - [Selection](#selection)
+    - [Review](#review)
+    - [Monitoring](#monitoring)
+    - [Tradeoffs](#tradeoffs)
 - [The Five Pillars: Cost Optimization](#the-five-pillars-cost-optimization)
+  - [Definition](#definition-4)
+  - [Design Principles](#design-principles-4)
+  - [Best Practices](#best-practices-4)
+    - [Practice Cloud Financial Management](#practice-cloud-financial-management)
+    - [Expenditure and usage awareness](#expenditure-and-usage-awareness)
+    - [Cost-effective resources](#cost-effective-resources)
+    - [Manage demand and supply resources](#manage-demand-and-supply-resources)
+    - [Optimize over time](#optimize-over-time)
 - [References](#references)
 
 # Overview
@@ -444,7 +459,123 @@ Reliability requires that your workload be aware of failures as they occur and t
 
 # The Five Pillars: Performance Efficiency
 
+## Definition
+The ability to use computing resources efficiently to meet system requirements, and to maintain that efficiency as demand changes and technologies evolve.
+
+There are four best practice areas for performance efficiency in the cloud:
+- [Selection](#selection)
+- [Review](#review)
+- [Monitoring](#monitoring)
+- [Tradeoffs](#tradeoffs)
+
+## Design Principles
+These design principles will be prevalent for performance efficiency best practices:
+- **Democratize advanced technologies**
+  - Make advanced technology implementation easier for your team by delegating complex tasks to your cloud vendor.
+- **Go global in minutes**
+- **Use serverless architectures**
+- **Experiment more often**
+- **Consider mechanical sympathy**
+  - Understand how cloud services are consumed and always use the technology approach that best aligns with your workload goals.
+
+## Best Practices
+
+### Selection
+The optimal solution for a particular workload varies, and solutions often combine multiple approaches. Well-architected workloads use multiple solutions and enable different features to improve performance.
+
+**PERF 1: How do you select the best performing architecture?**
+- Understand the available services and resources, and identify services and configuration options relevant to your workload.
+- Define a process for architectural choices, based on internal experiences, or external resources such as case studies, documentation, or whitepapers. The process should encourage experimentation and benchmarking.
+- Factor cost requirements into decisions.
+- Use policies, existing reference architectures, and your analysis to select services for your workload.
+
+**PERF 2: How do you select your compute solution?**
+- Evaluate the available compute options, and understand how the available configuration options can complement your workload.
+- Collect compute-related metrics, and analyze them to choose resources that best match your workload's profile.
+- Use the available elasticity of resources.
+- Re-evaluate compute needs based on metrics over time, and make appropriate changes to right-size resources based on the workload's profile.
+
+**PERF 3: How do you select your storage solution?**
+- Understand the different storage characteristics that are required to select the services that best fit your workload, such as block storage, object storage, file storage, or instance storage.
+  - Characteristics: access patterns, file size, shareable, latency, persistence, etc.
+- Evaluate available configuration options and how they relate to storage.
+  - Examples: provisioned IOPS, SSDs, archival storage, ephemeral storage, etc.
+
+**PERF 4: How do you select your database solution?**
+- Understand the data characteristics of your workload to select the best performing database approach. Determine if the workload requires transactions, how it interacts with data, and what its performance demands are.
+  - Examples: relational databases, NoSQL Key-value, document, graph, in-memory, etc.
+- Evaluate the available options, and understand how and when to use a given system or service for data storage. Learn about options that can improve performance, such as provisioned IOPS, memory or compute resources, and caching.
+- Collect and record database performance metrics.
+- Choose data storage based on access patterns.
+- Optimize data storage based on metrics and access patterns.
+
+**PERF 5: How do you configure your networking solution?**
+- Understand how network-related decisions impact workload performance.
+  - Example: network latency often impairs user experience.
+- Choose your workload's location based on network requirements.
+- Leverage load-balancing to take advantage of elasticity in the cloud.
+- Leverage encryption termination on load-balancers to improve performance and and to manage and route traffic effecitvely.
+- Choose appropriately sized dedicated connectivity or VPN for hybrid workloads.
+- Optimize network configuration based on metrics. Measure the impact of the changes and use the impact measurements to make future decisions.
+
+### Review
+Continuous evaluation and consideration of changes to workload components needs to be done to ensure that it is meeting its performance and cost objectives.
+
+**PERF 6: How do you evolve your workload to take advantage of new releases?**
+- Stay up-to-date on new resources and services. Determine which of these could improve performance or increase the efficiency of the workload, through ad-hoc evaluation, internal discussion, or external analysis.
+- Define a process to evaluate new services, design patterns, resource types, and configurations as they become available.
+- Evolve workload performance over time.
+
+### Monitoring
+Workloads need to be monitored after deployment to allow for the identification and potential remediation of any issues before they impact end users.
+
+**PERF 7: How do you monitor your resources to ensure they are performing?**
+- Record performance-related metrics, such as I/O latency, HTTP request throughput, slow queries, database transactions, etc.
+- Analyze metrics using dashboards or reports when events or incidents occur to understand and diagnose the impact.
+- Establish KPIs to measure workload performance, and generate alarm-based notifications when metrics are outside the KPIs' expected boundaries. 
+- Implement proactive monitoring and alarming to trigger automated actions to remediate issues where possible.
+
+### Tradeoffs
+Tradeoffs must be considered to ensure an optimal approach. Depending on the situation, to deliver high performance, consistency, durability, or space could be traded for time or latency.
+
+**PERF 8: How do you use tradeoffs to improve performance?**
+- Understand the areas where increasing the workload performance will have a positive impact on efficiency or customer experience.
+- Research and understand the various design patterns and services that help improve workload performance. Identify what you could trade to achieve higher performance.
+  - Example: Using a caching engine will reduce load on backend databases, but it requires some engineering to implement safe caching or to introduce eventual consistency in some areas.
+- Measure the impact of performance improvements. This helps you understand the improvements gained from the tradeoff, and also to determine if any negative side-effects were introduced.
+- Use various performance strategies where applicable. Some examples are below:
+  - Cache data to avoid execessive database calls
+  - Use read replicas to improve read rates
+  - Use sharding or compression to reduce data volumes
+
 # The Five Pillars: Cost Optimization
+
+## Definition
+The ability to run systems to deliver business value at the lowest price point.
+
+There are five best practice areas for cost optimization in the cloud:
+- [Practice Cloud Financial Management](#practice-cloud-financial-management)
+- [Expenditure and usage awareness](#expenditure-and-usage-awareness)
+- [Cost-effective resources](#cost-effective-resources)
+- [Manage demand and supply resources](#manage-demand-and-supply-resources)
+- [Optimize over time](#optimize-over-time)
+
+
+## Design Principles
+These design principles will be prevalent for cost optimization best practices:
+
+
+## Best Practices
+
+### Practice Cloud Financial Management
+
+### Expenditure and usage awareness
+
+### Cost-effective resources
+
+### Manage demand and supply resources
+
+### Optimize over time
 
 # References
 - [AWS Well-Architected Framework (Documentation)](https://docs.aws.amazon.com/wellarchitected/latest/framework/welcome.html)
