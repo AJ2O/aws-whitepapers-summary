@@ -56,7 +56,7 @@ The W-AF poses fundamental questions to the customer to help them evaluate if th
   - The manner in which multiple components work together to form a workload. How components communicate with each other is usually the focus of architecture diagrams.
   - Example: Simple architecture diagram of the workload example above
 
-![SimpleArchitecture](./Diagrams/SimpleArchitecture.png)
+![SimpleArchitecture](../Diagrams/SimpleArchitecture.png)
 
 ## The Five Pillars
 The WA-F is based on five pillars, **operational excellence**, **security**, **reliability**, **performance efficiency**, and **cost optimization**. They're each described in the table below, and will be explained further in their own sections.
@@ -165,9 +165,9 @@ To prepare for operational excellence, team members need to understand their wor
 - Prepare for unsuccessful changes by having a rollback plan to revert to a known good state.
 - Deploy using parallel environments. Once the new deployment is confirmed as successful, the prior environment can be removed.
 - Fully automate integration and deployment to reduce manual error and effort.
-  - The image below displays a [Continuous Integration & Continuous Delivery (CICD)](DevOps/practicing-cicd.md) pipeline that automates deployment changes in a consistent way without any human intervention.
+  - The image below displays a [Continuous Integration & Continuous Delivery (CICD)](../DevOps/practicing-cicd.md) pipeline that automates deployment changes in a consistent way without any human intervention.
 
-![CICD](Diagrams/ContinuousDeliveryEC2.png)
+![CICD](../Diagrams/ContinuousDeliveryEC2.png)
 
 **OPS 7: How do you know that you are ready to support a workload?**
 - Ensure that you have the appropriate number of trained personnel to provide support for operational needs.
@@ -389,7 +389,7 @@ Changes to the workload or its environment must be anticipated and accomodated t
 - Monitor end-to-end tracing of requests through your system.
   - Example: [AWS X-Ray](https://aws.amazon.com/xray/) can be used to more easily analyze and debug distributed systems. An X-Ray graph is shown below:
 
-![X-Ray](Diagrams/XRay.png)
+![X-Ray](../Diagrams/XRay.png)
 
 **REL 7: How do you design your workload to adapt to changes in demand?**
 - Obtain resources upon detection of impairment to a workload.

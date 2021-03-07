@@ -6,10 +6,11 @@ This repository contains summarized versions of AWS whitepapers. I've also added
 - [Microservices](ContainersAndMicroservices/implementing-microservices.md)
 - [Introduction to DevOps](DevOps/introduction-to-devops.md)
 - [Performance at Scale with ElastiCache](Storage/performance-at-scale-elasticache.md)
+- [The 12-Factor App (Not AWS)](ApplicationDevelopment/12-factor.md)
 - [Modern Application Development](ApplicationDevelopment/modern-application-development.md)
 - [SaaS Storage Strategies](Storage/saas-storage-strategies.md)
 
-## For Cloud Architects, IT Administrators
+## For IT Administrators, Systems Architects
 - [The Cloud Adoption Framework](Migrations/caf.md)
 - [AWS Migrations](Migrations/aws-migrations.md)
 - [VPC Connectivity Options](Networking/vpc-connectivity-options.md)
@@ -20,6 +21,5 @@ This repository contains summarized versions of AWS whitepapers. I've also added
 - [Multi-Account Security](Security/multi-account-security.md)
 - [The Security Pillar](Security/security-pillar.md)
 
-## For any role
-- [The 12-Factor App (Not AWS)](12-factor.md)
-- [AWS Well-Architected Framework](well-architected-framework.md)
+## For Everyone
+- [AWS Well-Architected Framework](General/well-architected-framework.md)
