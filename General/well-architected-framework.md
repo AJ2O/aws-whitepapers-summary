@@ -12,22 +12,46 @@
   - [Definition](#definition)
   - [Design Principles](#design-principles)
   - [Best Practices](#best-practices)
+    - [Organization](#organization)
+    - [Prepare](#prepare)
+    - [Operate](#operate)
+    - [Evolve](#evolve)
 - [The Five Pillars: Security](#the-five-pillars-security)
   - [Definition](#definition-1)
   - [Design Principles](#design-principles-1)
   - [Best Practices](#best-practices-1)
+    - [Security](#security)
+    - [Identity and Access Management](#identity-and-access-management)
+    - [Detection](#detection)
+    - [Infrastructure Protection](#infrastructure-protection)
+    - [Data Protection](#data-protection)
+    - [Incident Response](#incident-response)
 - [The Five Pillars: Reliability](#the-five-pillars-reliability)
   - [Definition](#definition-2)
   - [Design Principles](#design-principles-2)
   - [Best Practices](#best-practices-2)
+    - [Foundations](#foundations)
+    - [Workload Architecture](#workload-architecture)
+    - [Change Management](#change-management)
+    - [Failure Management](#failure-management)
+  - [Extra Reading](#extra-reading)
 - [The Five Pillars: Performance Efficiency](#the-five-pillars-performance-efficiency)
   - [Definition](#definition-3)
   - [Design Principles](#design-principles-3)
   - [Best Practices](#best-practices-3)
+    - [Selection](#selection)
+    - [Review](#review)
+    - [Monitoring](#monitoring)
+    - [Tradeoffs](#tradeoffs)
 - [The Five Pillars: Cost Optimization](#the-five-pillars-cost-optimization)
   - [Definition](#definition-4)
   - [Design Principles](#design-principles-4)
   - [Best Practices](#best-practices-4)
+    - [Practice Cloud Financial Management](#practice-cloud-financial-management)
+    - [Expenditure and usage awareness](#expenditure-and-usage-awareness)
+    - [Cost-effective resources](#cost-effective-resources)
+    - [Manage demand, and supply resources](#manage-demand-and-supply-resources)
+    - [Optimize over time](#optimize-over-time)
 - [Conclusion](#conclusion)
 
 # Overview
@@ -433,6 +457,9 @@ Reliability requires that your workload be aware of failures as they occur and t
   - Active/Active
 - Ensure that the infrastructure, data, and configuration are as needed at the DR site.
 - Test DR implementation to validate that the RTOs and RPOs are met.
+
+## Extra Reading
+- To learn more about the reliability pillar in-depth, read [its own summary here](./reliability.md).
 
 # The Five Pillars: Performance Efficiency
 
