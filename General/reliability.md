@@ -127,7 +127,7 @@ In addition to availability, a resiliency strategy should also take into account
 The availability needs that are required for a workload must be aligned to the business need and criticality. By first defining business criticality framework with defined RTO, RPO, and availability, you can then assess each workload. This approach requires that the people involved with the workload's implementation are knowledgabe of the of the framework, and the impact that their workload has on business needs.
 
 # Foundations
-
+ 
 # Workload Architecture
 
 # Change Management
