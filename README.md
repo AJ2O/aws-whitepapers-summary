@@ -13,6 +13,7 @@ This repository contains summarized versions of AWS whitepapers. I've also added
 - [The Cloud Adoption Framework](Migrations/caf.md)
 - [AWS Migrations](Migrations/aws-migrations.md)
 - [VPC Connectivity Options](Networking/vpc-connectivity-options.md)
+- [Integrating AWS with MPLS](Networking/mpls.md)
 
 ## For Information Security Analysts
 - [DDoS Resiliency](Security/ddos.md)
