@@ -1,6 +1,6 @@
 # AWS Whitepapers Summary
 
-This repository contains summarized versions of AWS whitepapers. I've also added my own diagrams and used references from other sources to enrich the content. Below are highlighted reads depending on your role or interests. They assume that you have some basic knowledge about AWS services.
+This repository contains summarized versions of AWS whitepapers. I've also added my own diagrams and used references from other sources to enrich the content. Below are highlighted reads depending on your role or interests. They assume that you have some basic knowledge about AWS (such as how to launch an EC2 instance, or how to create an S3 bucket and upload files to it).
 
 ## For Software Developers, DevOps Engineers
 - [Microservices](ContainersAndMicroservices/implementing-microservices.md)
