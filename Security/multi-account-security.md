@@ -15,8 +15,6 @@
 - [Hybrid Security Account Structures](#hybrid-security-account-structures)
   - [Information Security Account](#information-security-account)
   - [Central IT Account](#central-it-account)
-    - [User Directory](#user-directory)
-    - [Centrally Manage IAM Identities & Shared Resources](#centrally-manage-iam-identities--shared-resources)
 - [References](#references)
 
 # Overview
