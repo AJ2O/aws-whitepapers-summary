@@ -22,8 +22,13 @@
       - [Inventory](#inventory)
   - [AWS OpsWorks](#aws-opsworks)
     - [Best Practices](#best-practices-1)
-    - [Summary](#summary-1)
+  - [Summary](#summary-1)
 - [Monitoring & Performance](#monitoring--performance)
+  - [Amazon CloudWatch](#amazon-cloudwatch)
+  - [Amazon CloudWatch Logs](#amazon-cloudwatch-logs)
+  - [Amazon CloudWatch Events / Amazon EventBridge](#amazon-cloudwatch-events--amazon-eventbridge)
+  - [Best Practices](#best-practices-2)
+  - [Summary](#summary-2)
 - [Compliance & Governance](#compliance--governance)
 - [Resource Optimization](#resource-optimization)
 - [Conclusion](#conclusion)
@@ -67,7 +72,7 @@ The table below summarizes each stage and provides AWS services that can support
   <tr>
     <td><b>Monitoring & Performance</td>
     <td>Monitoring tools validate the operational status of the resources by examining items such as metrics, log files, etc.</td>
-    <td>Amazon CloudWatch</td>
+    <td>Amazon CloudWatch<br>Amazon EventBridge</td>
   </tr>
   <tr>
     <td><b>Compliance & Governance</td>
@@ -298,11 +303,39 @@ This document will not go into the details of using Chef or Puppet, as they are 
 - Consider storing your Chef recipes and Puppet modules in a source control repository, just as you would with application code.
 - Use IAM to limit access to OpsWorks API calls.
 
-### Summary
+## Summary
 AWS Systems Manager lets you deploy, customize, enforce, and audit an expected state configuration for your servers. AWS OpsWorks enables you to use Chef or Puppet to support the configuration of an environment after it's been provisioned. SSM documents, Chef recipes, and Puppet modules can become part of the infrastructure code base and be version-controlled, just like application source code.
 
 # Monitoring & Performance
+It's important to capture key metrics to assess the health of the environment and take corrective action when problems arise. Metrics provide visibility into the environment's state, and can allow your organization to automatically respond to events. To address the need to collect and analyze metrics and log files, AWS offers the [Amazon CloudWatch](https://aws.amazon.com/cloudwatch/) service.
 
+CloudWatch is a set of services that ingests, interprets, and responds to runtime metrics, logs, and events. It automatically aggregates metrics from resources across AWS services, and can be configured to respond with built-in actions such as notifications, or with custom actions such as invoking an [AWS Lambda](https://aws.amazon.com/lambda/) function. The code for the Lamdba functions become part of the infrastructure code base, extending IaC to the monitoring level. CloudWatch is composed of three main services: the main CloudWatch service, CloudWatch Logs, and CloudWatch Events. These will now be explored in more detail.
+
+## Amazon CloudWatch
+The main CloudWatch service collects and tracks metrics for many AWS services, including EC2, DynamoDB, RDS, API Gateway, etc. Custom metrics can also be created and pushed from your applications to be monitored by CloudWatch. In CloudWatch, you can implement metric-based alarms that can invoke notifications or custom actions such as Lambda functions.
+
+## Amazon CloudWatch Logs
+CloudWatch Logs monitors and stores logs from EC2, CloudTrail, Lambda, and other sources. Ingested log data can be the basis for new CloudWatch metrics, that can in turn, trigger your CloudWatch alarms. You can use this capability to monitor and alert on any resource that generates logs, without needing to write additional application code.
+
+## Amazon CloudWatch Events / Amazon EventBridge
+CloudWatch Events produces a stream of changes from AWS environments, applies a rules engine, and delivers matching events to specified targets. Example events that can be streamed include changing an EC2 instance's state, taking an EBS snapshot, AWS API calls, AWS Trusted Advisor optimization notifications, and much more. Targets include built-in actions such as SNS notifications, or custom responses such as Lambda functions.
+
+[Amazon EventBridge](https://aws.amazon.com/eventbridge/) is the new implementation of CloudWatch, with more robust functionality. It can use sources from third-party Software-as-a-Service (SaaS) applications, and your own applications. It uses the same API as CloudWatch Events, so all of your existing API usage can remain the same.
+
+The ability of an infrastructure to respond to selected events offers benefits in both operations and security. For operations, events automate maintenance activities without having to manage a separate scheduling system, and for information security, events can can provide notifications of console logins, authentication failures, and risky API calls discovered by CloudTrail.
+
+[Linked here](https://github.com/AJ2O/aws-free-tier) is a solution using Terraform (a third-party IaC tool), Lambda, and EventBridge to keep your AWS account from exceeding free tier. Once deployed, it uses its many rules to detect events and API calls made in your account and respond accordingly. Here are some things it can do automatically at the time of this writing:
+- If you launch an EC2 instance with a type outside of free tier (example: `m5.large`), the instance will be terminated.
+- If you take an EBS snapshot and your snapshot storage will exceed free tier, the snapshot is deleted.
+- If you try to create a DynamoDB table, and the aggregate RCUs and WCUs across all your DynamoDB tables will exceed free tier, the new table will be terminated.
+
+## Best Practices
+- Ensure that all AWS resources are emitting metrics.
+- Send logs from AWS resources, including S3 and EC2 to CloudWatch Logs for analysis using log stream triggers and Lambda functions.
+- Use CloudWatch Events / EventBridge to respond to application-level issues.
+
+## Summary
+Monitoring is essential to understand systems behaviour and to automate data-driven reactions. CloudWatch can collect the relevant metrics, EventBridge can alert on environment changes, and Lambda functions can respond to events triggered by the former two services, thereby extending IaC into operations-related activities.
 
 # Compliance & Governance
 
@@ -314,4 +347,5 @@ AWS Systems Manager lets you deploy, customize, enforce, and audit an expected s
 - [Whitepaper](https://d1.awsstatic.com/whitepapers/DevOps/infrastructure-as-code.pdf)
 - [What is DevOps? (AWS)](https://aws.amazon.com/devops/what-is-devops/)
 - [AWS CloudFormation User Guide](https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/Welcome.html)
-- [SSM Capabilities (AWS Systems Manager User Guide)](https://docs.aws.amazon.com/systems-manager/latest/userguide/features.html)
+- [Systems Manager Capabilities (AWS User Guide)](https://docs.aws.amazon.com/systems-manager/latest/userguide/features.html)
+- [Getting Started with Cookbooks in AWS OpsWorks Stacks (AWS User Guide)](https://docs.aws.amazon.com/opsworks/latest/userguide/gettingstarted-cookbooks.html)
