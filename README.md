@@ -8,6 +8,7 @@ This repository contains summarized versions of AWS whitepapers. I've also added
 - [Performance at Scale with ElastiCache](Storage/performance-at-scale-elasticache.md)
 - [The 12-Factor App (Not AWS)](ApplicationDevelopment/12-factor.md)
 - [Modern Application Development](ApplicationDevelopment/modern-application-development.md)
+- [Infrastructure As Code](DevOps/iac.md)
 - [SaaS Storage Strategies](Storage/saas-storage-strategies.md)
 
 ## For IT Administrators, Systems Architects
