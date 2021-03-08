@@ -13,6 +13,16 @@
     - [Template Linting](#template-linting)
     - [Summary](#summary)
 - [Configuration Management](#configuration-management)
+  - [AWS Systems Manager](#aws-systems-manager)
+    - [Document Structure](#document-structure)
+    - [Best Practices](#best-practices)
+      - [Run Command](#run-command)
+      - [Automation](#automation)
+      - [State Manager](#state-manager)
+      - [Inventory](#inventory)
+  - [AWS OpsWorks](#aws-opsworks)
+    - [Best Practices](#best-practices-1)
+    - [Summary](#summary-1)
 - [Monitoring & Performance](#monitoring--performance)
 - [Compliance & Governance](#compliance--governance)
 - [Resource Optimization](#resource-optimization)
@@ -74,8 +84,8 @@ The table below summarizes each stage and provides AWS services that can support
 
 # Resource Provisioning
 Administrators can use IaC to for a streamlined, repeatable process for instantiating resources consistently. The following sitauations are an example for where this would be useful:
-- A release manager needs to build a replica of a cloud-based production environment for disaster recovery purposes
-- A service has to meet certain industry protection standards, and so requires that its infrastructure is configured with a set of security controls each time the service is installed
+- A release manager needs to build a replica of a cloud-based production environment for disaster recovery purposes.
+- A service has to meet certain industry protection standards, and so requires that its infrastructure is configured with a set of security controls each time the service is installed.
 - The students in a university class each need an environment that contains the appropriate tools for their studies in the course.
 
  To address these situations and needs, AWS offers [AWS CloudFormation](https://aws.amazon.com/cloudformation/).
@@ -134,8 +144,165 @@ As with application code, CloudFormation templates also should go through some f
 The resource lifecycle starts with resource provisioning, and CloudFormation provides a template-based way to achieve this purpose with IaC, just like with application code.
 
 # Configuration Management
+Once the infrastructure is provisioned and running, you need to manage the ongoing configuration needs of its environment. These are some examples where this would be useful:
+- A release manager wants to deploy an application across a group of servers and perform a rollback if any problems occur.
+- A system administrator is tasked with installing a new operating system package in all developer environments, but the other environments must remain untouched.
+- An application administrator needs to periodically update a configuration file across all application servers.
+
+One approach to address this need is with *infrastructure immutability*, where the existing resources are taken down, and a new infrastructure with new configuration is provisioned in its place.
+
+If environments have high levels of durability however, it's much faster to make incremental changes instead of reprovisioning. AWS offers [AWS Systems Manager](https://aws.amazon.com/systems-manager/) and [AWS OpsWorks](https://aws.amazon.com/opsworks/) for these purposes.
+
+## AWS Systems Manager
+AWS Systems Manager (SSM) is a collection of tools and services that allow for the visibility and control of your AWS infrastructure, all under a unified interface. For configuration management, it helps you understand and control your AWS environment, EC2 instances, and even on-premises servers. You can track and remotely manage systems, OS patch levels, application configurations, and other functionalities across fleets of servers. These capabilities help with automating complex and repetitive tasks, preventing drift, and maintaining software compliance across all your systems.
+
+The table below lists some of the configuration management capabilities of SSM, and examples for each.
+
+<html>
+<table>
+  <tr>
+    <th width="160">Task</th>
+    <th width="300">Description</th>
+    <th width="300">Example</th>
+  </tr>
+  <tr>
+    <th>Run Command</th>
+    <td>Run commands on EC2 instances without SSH or RDP.</td>
+    <td>Run a shell script on 50 instances at one time.</td>
+  </tr>
+  <tr>
+    <th>Automation</th>
+    <td>Automate routine maintenance tasks and scripts.</td>
+    <td>Stop developer instances on Friday evenings, and start them up again on Monday morning.</td>
+  </tr>
+  <tr>
+    <th>Patch Manager</th>
+    <td>Automates the process of patching instances for updates.</td>
+    <td>Keep a fleet of servers at the same patch level for security.</td>
+  </tr>
+  <tr>
+    <th>State Manager</th>
+    <td>Creates states that represent a certain configuration applied to instances.</td>
+    <td>Keep track of which instances have been updated to the current, stable version of Apache HTTP.</td>
+  </tr>
+  <tr>
+    <th>Maintenance Windows</th>
+    <td>Define schedules to apply patches, updates, scripts, and other tasks to instances.</td>
+    <td>Run security patches every Sunday between 0:00 AM - 2:00 AM.</td>
+  </tr>
+  <tr>
+    <th>Inventory</th>
+    <td>Collect OS, application, and instance metadata.</td>
+    <td>Determine what versions of Apache HTTP the servers currently have.</td>
+  </tr>
+</table>
+</html>
+
+To read about all the SSM features, read the [*Systems Manager Capabilities* section in the AWS Systems Manager User Guide](https://docs.aws.amazon.com/systems-manager/latest/userguide/features.html).
+
+### Document Structure
+An SSM document defines the actions that SSM performs on its managed instances. There are already numerous pre-configured SSM documents provided by AWS, and you can create custom documents as well. Documents can also be version-controlled and shared across AWS accounts.
+
+Documents can be written in JSON or YAML format, and include steps and parameters that you specify. The following is an example of a document for a Windows-based host with two steps, and no parameters. It uses PowerShell to run the `ipconfig` command to gather network configuration of the instance, and then installs MySQL.
+
+```
+{
+ "schemaVersion": "2.0",
+ "description": "Sample version 2.0 document v2",
+ "parameters": {},
+ "mainSteps": [
+    {
+      "action": "aws:runPowerShellScript",
+      "name": "runShellScript",
+      "inputs": {
+        "runCommand": ["ipconfig"]
+      }
+    },
+    {
+      "action": "aws:applications",
+      "name": "installapp",
+      "inputs": {
+        "action": "Install",
+        "source":
+        "http://dev.mysql.com/get/Downloads/MySQLInstaller/mysqlinstaller-community-5.6.22.0.msi"
+      }
+    }
+  ]
+}
+```
+
+### Best Practices
+Below are some best practices for some of SSM's capabilities:
+
+#### Run Command
+- Improve your security posture by leveraging Run Command to access your EC2 instances, instead of SSH/RDP.
+- Audit all API calls made by or on behalf of Run Command using AWS CloudTrail.
+- Use the rate control feature in Run Command to perform a [staged command execution](https://docs.aws.amazon.com/systems-manager/latest/userguide/send-commands-multiple.html#send-commands-rate).
+
+#### Automation
+- Use Automation to simplify creating AMIs from the AWS Marketplace or custom AMIs, using public documents or by creating your own.
+- Use the documents `AWS-UpdateLinuxAmi` or `AWS-UpdateWindowsAmi` or create a custom Automation document to build and maintain images.
+
+#### State Manager
+- Update the SSM agent periodically using the preconfigured `AWS-UpdateSSMAgent` document
+- Use tags to create application groups. Then target instances using the `Targets` parameter, instead of specifying individual instance IDs.
+- Use a centralized configuration repository for all your SSM documents, and share documents across the organization.
+
+#### Inventory
+- Use Inventory in combination with AWS Config to audit your application configuration overtime.
+
+## AWS OpsWorks
+AWS OpsWorks is a configuration management service that provides fully managed instances of [Chef Automate](https://www.chef.io/products/chef-automate) and [Puppet Enterprise](https://puppet.com/products/puppet-enterprise/). OpsWorks is also offered as [AWS OpsWorks Stacks](https://aws.amazon.com/opsworks/stacks/), which lets you manage application stacks using Chef recipes.
+
+Known as recipes in Chef, and modules in puppet, these tools use configuration files that are analagous to CloudFormation templates. They are a form of source code that can be version-controlled, extending the principle of IaC to the configuration management stage of the resource lifecycle.
+
+Below is a sample Chef recipe used in OpsWorks Stacks. It checks the EC2 instance's operating system, and runs the appropriate command to install the `tree` package if applicable.
+
+```
+instance = search("aws_opsworks_instance").first
+os = instance["os"]
+
+if os == "Red Hat Enterprise Linux 7"
+    Chef::Log.info("********** Operating system is Red Hat Enterprise Linux. **********")
+elsif os == "Ubuntu 12.04 LTS" || os == "Ubuntu 14.04 LTS" || os == "Ubuntu 16.04 LTS" || os == "Ubuntu 18.04 LTS"
+    Chef::Log.info("********** Operating system is Ubuntu. **********") 
+elsif os == "Microsoft Windows Server 2012 R2 Base"
+    Chef::Log.info("********** Operating system is Windows. **********")
+elsif os == "Amazon Linux 2018.03" || os == "Amazon Linux 2"
+    Chef::Log.info("********** Operating system is Amazon Linux. **********")
+elsif os == "CentOS Linux 7"
+    Chef::Log.info("********** Operating system is CentOS 7. **********")
+else
+    Chef::Log.info("********** Cannot determine operating system. **********")
+end
+
+case os
+when "Ubuntu 12.04 LTS", "Ubuntu 14.04 LTS", "Ubuntu 16.04 LTS", "Ubuntu 18.04 LTS"
+  apt_package "Install a package with apt-get" do
+    package_name "tree"
+  end
+when "Amazon Linux 2018.03", "Amazon Linux 2", "Red Hat Enterprise Linux 7", "CentOS Linux 7"
+  yum_package "Install a package with yum" do
+    package_name "tree"
+  end
+else
+  Chef::Log.info("********** Cannot determine operating system type, or operating system is not Linux. Package not installed. **********")
+end
+```
+
+To experiment with OpsWorks Stacks in particular, try out the tutorial [*Getting Started with Cookbooks in AWS OpsWorks Stacks*](https://docs.aws.amazon.com/opsworks/latest/userguide/gettingstarted-cookbooks.html).
+
+This document will not go into the details of using Chef or Puppet, as they are widely used and heavily documented, but know that these configuration management tools exist and that AWS provides managed instances of each, so that you don't have to configure a Chef or Puppet server from scratch.
+
+### Best Practices
+- Consider storing your Chef recipes and Puppet modules in a source control repository, just as you would with application code.
+- Use IAM to limit access to OpsWorks API calls.
+
+### Summary
+AWS Systems Manager lets you deploy, customize, enforce, and audit an expected state configuration for your servers. AWS OpsWorks enables you to use Chef or Puppet to support the configuration of an environment after it's been provisioned. SSM documents, Chef recipes, and Puppet modules can become part of the infrastructure code base and be version-controlled, just like application source code.
 
 # Monitoring & Performance
+
 
 # Compliance & Governance
 
@@ -147,3 +314,4 @@ The resource lifecycle starts with resource provisioning, and CloudFormation pro
 - [Whitepaper](https://d1.awsstatic.com/whitepapers/DevOps/infrastructure-as-code.pdf)
 - [What is DevOps? (AWS)](https://aws.amazon.com/devops/what-is-devops/)
 - [AWS CloudFormation User Guide](https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/Welcome.html)
+- [SSM Capabilities (AWS Systems Manager User Guide)](https://docs.aws.amazon.com/systems-manager/latest/userguide/features.html)
