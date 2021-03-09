@@ -11,26 +11,41 @@
     - [Change Sets](#change-sets)
     - [Reusable Templates](#reusable-templates)
     - [Template Linting](#template-linting)
-    - [Summary](#summary)
+    - [Best Practices](#best-practices)
+      - [Planning and Organizing](#planning-and-organizing)
+      - [Creating Templates](#creating-templates)
+      - [Managing Stacks](#managing-stacks)
+  - [Summary](#summary)
 - [Configuration Management](#configuration-management)
   - [AWS Systems Manager](#aws-systems-manager)
     - [Document Structure](#document-structure)
-    - [Best Practices](#best-practices)
+    - [Best Practices](#best-practices-1)
       - [Run Command](#run-command)
       - [Automation](#automation)
       - [State Manager](#state-manager)
       - [Inventory](#inventory)
   - [AWS OpsWorks](#aws-opsworks)
-    - [Best Practices](#best-practices-1)
+    - [Best Practices](#best-practices-2)
   - [Summary](#summary-1)
 - [Monitoring & Performance](#monitoring--performance)
   - [Amazon CloudWatch](#amazon-cloudwatch)
-  - [Amazon CloudWatch Logs](#amazon-cloudwatch-logs)
-  - [Amazon CloudWatch Events / Amazon EventBridge](#amazon-cloudwatch-events--amazon-eventbridge)
-  - [Best Practices](#best-practices-2)
+    - [Amazon CloudWatch](#amazon-cloudwatch-1)
+    - [Amazon CloudWatch Logs](#amazon-cloudwatch-logs)
+    - [Amazon CloudWatch Events / Amazon EventBridge](#amazon-cloudwatch-events--amazon-eventbridge)
+    - [Best Practices](#best-practices-3)
   - [Summary](#summary-2)
 - [Compliance & Governance](#compliance--governance)
+  - [AWS Config](#aws-config)
+    - [AWS Config Rules](#aws-config-rules)
+    - [Rule Structure](#rule-structure)
+    - [Best Practices](#best-practices-4)
+  - [Summary](#summary-3)
 - [Resource Optimization](#resource-optimization)
+  - [AWS Trusted Advisor](#aws-trusted-advisor)
+    - [Checks](#checks)
+    - [Best Practices](#best-practices-5)
+  - [Summary](#summary-4)
+- [Next Steps](#next-steps)
 - [Conclusion](#conclusion)
 - [References](#references)
 
@@ -145,8 +160,26 @@ Cross-stack references allow for stacks to export values that other stacks can t
 ### Template Linting
 As with application code, CloudFormation templates also should go through some form of static analysis (*linting*) to ensure that the template is syntactically correct and adheres to style guidelines. CloudFormation provides the [ValidateTemplate](https://docs.aws.amazon.com/AWSCloudFormation/latest/APIReference/API_ValidateTemplate.html) API for this purpose. If the validation check fails, CloudFormation will return a template validation error.
 
-### Summary
-The resource lifecycle starts with resource provisioning, and CloudFormation provides a template-based way to achieve this purpose with IaC, just like with application code.
+### Best Practices
+The following are some best practices to apply when using CloudFormation:
+
+#### Planning and Organizing
+- Use IAM to control access
+- Organize your stacks by lifecycle and ownership
+- Reuse templates to replicate stacks in multiple environments
+
+#### Creating Templates
+- Do not embed credentials in your templates
+- Use parameter constraints
+- Validate templates before using them
+
+#### Managing Stacks
+- Use stack policies to protect stack resources from accidental modification or deletion
+- Use code reviews and revision controls to manage your templates
+- Create change sets before updating your stacks
+
+## Summary
+The resource lifecycle starts with resource provisioning, and CloudFormation provides a template-based way to achieve this with IaC, just like with application code.
 
 # Configuration Management
 Once the infrastructure is provisioned and running, you need to manage the ongoing configuration needs of its environment. These are some examples where this would be useful:
@@ -309,18 +342,19 @@ AWS Systems Manager lets you deploy, customize, enforce, and audit an expected s
 # Monitoring & Performance
 It's important to capture key metrics to assess the health of the environment and take corrective action when problems arise. Metrics provide visibility into the environment's state, and can allow your organization to automatically respond to events. To address the need to collect and analyze metrics and log files, AWS offers the [Amazon CloudWatch](https://aws.amazon.com/cloudwatch/) service.
 
+## Amazon CloudWatch
 CloudWatch is a set of services that ingests, interprets, and responds to runtime metrics, logs, and events. It automatically aggregates metrics from resources across AWS services, and can be configured to respond with built-in actions such as notifications, or with custom actions such as invoking an [AWS Lambda](https://aws.amazon.com/lambda/) function. The code for the Lamdba functions become part of the infrastructure code base, extending IaC to the monitoring level. CloudWatch is composed of three main services: the main CloudWatch service, CloudWatch Logs, and CloudWatch Events. These will now be explored in more detail.
 
-## Amazon CloudWatch
+### Amazon CloudWatch
 The main CloudWatch service collects and tracks metrics for many AWS services, including EC2, DynamoDB, RDS, API Gateway, etc. Custom metrics can also be created and pushed from your applications to be monitored by CloudWatch. In CloudWatch, you can implement metric-based alarms that can invoke notifications or custom actions such as Lambda functions.
 
-## Amazon CloudWatch Logs
+### Amazon CloudWatch Logs
 CloudWatch Logs monitors and stores logs from EC2, CloudTrail, Lambda, and other sources. Ingested log data can be the basis for new CloudWatch metrics, that can in turn, trigger your CloudWatch alarms. You can use this capability to monitor and alert on any resource that generates logs, without needing to write additional application code.
 
-## Amazon CloudWatch Events / Amazon EventBridge
+### Amazon CloudWatch Events / Amazon EventBridge
 CloudWatch Events produces a stream of changes from AWS environments, applies a rules engine, and delivers matching events to specified targets. Example events that can be streamed include changing an EC2 instance's state, taking an EBS snapshot, AWS API calls, AWS Trusted Advisor optimization notifications, and much more. Targets include built-in actions such as SNS notifications, or custom responses such as Lambda functions.
 
-[Amazon EventBridge](https://aws.amazon.com/eventbridge/) is the new implementation of CloudWatch, with more robust functionality. It can use sources from third-party Software-as-a-Service (SaaS) applications, and your own applications. It uses the same API as CloudWatch Events, so all of your existing API usage can remain the same.
+[Amazon EventBridge](https://aws.amazon.com/eventbridge/) is the new implementation of CloudWatch, with more robust functionality. It can use sources from third-party Software-as-a-Service (SaaS) applications, and your own applications. It uses the same API as CloudWatch Events, so all of your existing API usage can remain the same. A full list of EventBridge targets is listed in the [*Amazon EventBridge User Guide*](https://docs.aws.amazon.com/eventbridge/latest/userguide/eventbridge-targets.html).
 
 The ability of an infrastructure to respond to selected events offers benefits in both operations and security. For operations, events automate maintenance activities without having to manage a separate scheduling system, and for information security, events can can provide notifications of console logins, authentication failures, and risky API calls discovered by CloudTrail.
 
@@ -329,7 +363,7 @@ The ability of an infrastructure to respond to selected events offers benefits i
 - If you take an EBS snapshot and your snapshot storage will exceed free tier, the snapshot is deleted.
 - If you try to create a DynamoDB table, and the aggregate RCUs and WCUs across all your DynamoDB tables will exceed free tier, the new table will be terminated.
 
-## Best Practices
+### Best Practices
 - Ensure that all AWS resources are emitting metrics.
 - Send logs from AWS resources, including S3 and EC2 to CloudWatch Logs for analysis using log stream triggers and Lambda functions.
 - Use CloudWatch Events / EventBridge to respond to application-level issues.
@@ -338,10 +372,122 @@ The ability of an infrastructure to respond to selected events offers benefits i
 Monitoring is essential to understand systems behaviour and to automate data-driven reactions. CloudWatch can collect the relevant metrics, EventBridge can alert on environment changes, and Lambda functions can respond to events triggered by the former two services, thereby extending IaC into operations-related activities.
 
 # Compliance & Governance
+Many organizations require visibility into their infrastructure to address industry or regulatory requirements. Consider the following situations:
+- A user is added to a privileged administrators group, and nobody can explain when or how this occurred.
+- The RAM and CPU configurations for several servers has unexpectedly doubled, resulting in a much larger bill than in previous months.
+- The security groups for your backend servers; previously locked down and secure; are now open publicly to the whole Internet.
+
+To understand how resources have changed over time, and to set compliance standards for your cloud environment, AWS offers [AWS Config](https://aws.amazon.com/config/) as a solution.
+
+## AWS Config
+Config enables you to assess, audit, and evaluate the configurations of your AWS resoruces. It provides a view of all your AWS resources, and resource change timeline for each of them. The image below displays a timeline for an Amazon Aurora cluster, and the highlighted configuration change was a modification to enable Multi-AZ:
+
+![ConfigTimeline](../Diagrams/AWSConfigTimeline.png)
+
+### AWS Config Rules
+With Config rules, every change triggers an evaluation by the rules associated with the resources. There are preconfigured rules by AWS that can be used for common cases, such as requiring IAM users to have strong passwords, or restricting SSH access to EC2 instances. Once a rule is enabled, and a resource is non-compliant according to the rule, Config can send notifications via SNS, which can also in-turn trigger a Lambda function to remediate the issue.
+
+The example illustrated below shows how Lambda and Config can be used in tandem:
+- In this application, the organization has decided that API Gateway must only accept HTTPS requests, and set up a Config rule to track it.
+- If a user changes the API Gateway to allow non-compliant HTTP traffic, the following events will occur: 
+- The team will be notified of it via SNS.
+- The configuration change will be logged to S3.
+- The system will take automatic corrective action to revert API Gateway using Lambda.
+
+![Config](../Diagrams/Config.png)
+
+Config also supports the creation of custom rules using Lambda, and these rules become part of the infrastructure code base, extending IaC to the compliance and governance stages of the resource lifecycle.
+
+### Rule Structure
+When a custom rule is invoked through Config rules, the associated Lambda function receives the configuration events, processes them, and returns results. The following Lambda function (in python) determines if VPC Flow Logs are enabled on a given VPC:
+
+```
+import boto3
+import json
+
+def evaluate_compliance(config_item, vpc_id):
+    if (config_item['resourceType'] != 'AWS::EC2::VPC'):
+        return 'NOT_APPLICABLE'
+    elif is_flow_logs_enabled(vpc_id):
+        return 'COMPLIANT'
+    else:
+        return 'NON_COMPLIANT'
+
+def is_flow_logs_enabled(vpc_id):
+    ec2 = boto3.client('ec2')
+    response = ec2.describe_flow_logs(
+        Filter=[{'Name': 'resource-id','Values': [vpc_id]},],
+    )
+    if len(response[u'FlowLogs']) != 0: return True
+
+def lambda_handler(event, context):
+    invoking_event = json.loads(event['invokingEvent'])
+    compliance_value = 'NOT_APPLICABLE'
+    vpc_id = invoking_event['configurationItem']['resourceId']
+    compliance_value = evaluate_compliance(invoking_event['configurationItem'], vpc_id)
+
+    config = boto3.client('config')
+    response = config.put_evaluations(
+        Evaluations=[
+            {
+                'ComplianceResourceType': invoking_event['configurationItem']['resourceType'],
+                'ComplianceResourceId': vpc_id,
+                'ComplianceType': compliance_value,
+                'OrderingTimestamp': invoking_event['configurationItem']['configurationItemCaptureTime']
+            },
+        ],
+        ResultToken=event['resultToken'])
+```
+
+### Best Practices
+- Enable AWS Config for all regions to record configuration item history.
+- Implement a process to respond to changes detected by AWS Config, such as in the [API Gateway example above](#aws-config-rules).
+
+## Summary
+AWS Config extends the concept of IaC into compliance and governance. This service's capabilities can assist your organization with the monitoring of compliance controls.
 
 # Resource Optimization
+The final stage is resource optimization, where administrators review performance data and identify changes need to optimize the environment around areas such as security, performance, and cost management. Consider the following questions surrounding optimization:
+- Are there provisioned resources that are underutilized?
+- Are there ways to reduce the charges associated with the operating environment?
+- Are there any service limits that apply to the resources, and if there are, how close are we to exceeding those limits?
+
+To answer questions like these, AWS offers [AWS Trusted Advisor](https://aws.amazon.com/premiumsupport/technology/trusted-advisor/), to help analyze the environment and retrieve data relating to optimization.
+
+## AWS Trusted Advisor
+Trusted Advisor helps you observe best practices by scanning your AWS resources and comparing their usage against AWS best practices in four categories:
+- Cost Optimization
+- Fault Tolerance
+- Performance
+- Security
+
+It also displays your service limits and how close they are to being reached. The image below is a snippet from the Trusted Advisor Dashboard:
+
+![TrustedAdvisor](https://d1.awsstatic.com/support/jp/Trusted%20Advisor%20best%20practice%20checks%20categories.76a13b0b2bf982c874d0d03e6138b7b73e45680c.png)
+
+### Checks
+Trusted Advisor provides a variety of checks to determine if infrastructure is following best practices. Checks include detailed descriptions of recommendations, alert criteria, and a list of useful resources on the topic. Trusted Advisor returns the results of the checks and can provide weekly notifications for status updates and cost savings. It also integrates with CloudWatch Events, so it's now possible to tie Lambda functions to the state change of a check. This example shows how IaC can be extended to the resource optimization stage of an infrastructure resource's lifecycle.
+
+It is also important to note that all AWS customers have access to a core set of Trusted Advisor checks, but the full suite of Trusted Advisor Checks is only available to customers with a Business- or Enterprise-level Support Plan.
+
+### Best Practices
+- Subscribe to Trusted Advisor notifications through email or an alternative delivery system.
+- If you have a Business- or Enterprise-level Support Plan, use the [AWS Support API](https://docs.aws.amazon.com/awssupport/latest/user/Welcome.html) in conjunction with Trusted Advisor notifications to create cases with AWS Support to perform remediation.
+
+## Summary
+You must continually monitor your infrastructure to optimize the infrastructure resources with regard to performance, security, and cost, and AWS Trusted Advisor can be used to satisfy this need. You can use the APIs and Lambda in conjunction with Trusted Advisor, extending the principles of IaC to resource optimization.
+
+# Next Steps
+To begin with your adoption of IaC, here are some key actions that you can take within your organization:
+- Use a source control repository to store and manage infrastructure code.
+  - Examples: [GitHub](https://github.com/), [AWS CodeCommit](https://aws.amazon.com/codecommit/)
+- Incorporate a QA process via unit tests and linting before deployments.
+- Embrace end-to-end automation, by removing manual steps.
+- Roll out every new update to your infrastructure via code by updating your stacks. Avoid making one-off changes manually.
+- Make your changes auditable, and make logging mandatory.
 
 # Conclusion
+IaC enables you to manage your infrastructure just like application code, and it can be applied to all stages of an infrastructure resource's lifecycle. Using IaC will increase the velocity of your SDLC, and in turn, increase the rate at which business value is delivered.
 
 # References
 - [Whitepaper](https://d1.awsstatic.com/whitepapers/DevOps/infrastructure-as-code.pdf)
@@ -349,3 +495,5 @@ Monitoring is essential to understand systems behaviour and to automate data-dri
 - [AWS CloudFormation User Guide](https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/Welcome.html)
 - [Systems Manager Capabilities (AWS User Guide)](https://docs.aws.amazon.com/systems-manager/latest/userguide/features.html)
 - [Getting Started with Cookbooks in AWS OpsWorks Stacks (AWS User Guide)](https://docs.aws.amazon.com/opsworks/latest/userguide/gettingstarted-cookbooks.html)
+- [Amazon EventBridge Targets (AWS User Guide)](https://docs.aws.amazon.com/eventbridge/latest/userguide/eventbridge-targets.html)
+- [About the AWS Support API (AWS User Guide)](https://docs.aws.amazon.com/awssupport/latest/user/Welcome.html)
