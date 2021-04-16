@@ -11,13 +11,13 @@ This repository contains summarized versions of AWS whitepapers. I've also added
 - [Infrastructure As Code](DevOps/iac.md)
 - [SaaS Storage Strategies](Storage/saas-storage-strategies.md)
 
-## For IT Administrators, Systems Architects
+## For IT Administrators, Solutions Architects
 - [The Cloud Adoption Framework](Migrations/caf.md)
 - [AWS Migrations](Migrations/aws-migrations.md)
 - [VPC Connectivity Options](Networking/vpc-connectivity-options.md)
 - [Integrating AWS with MPLS](Networking/mpls.md)
 
-## For Information Security Analysts
+## For Information Security Engineers
 - [DDoS Resiliency](Security/ddos.md)
 - [Multi-Account Security](Security/multi-account-security.md)
 - [The Security Pillar](Security/security-pillar.md)
